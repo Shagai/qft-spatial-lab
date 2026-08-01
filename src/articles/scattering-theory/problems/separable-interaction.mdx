@@ -1,0 +1,380 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout } from '../../../components/MdxComponents'
+import {
+  scatteringTheoryProblems,
+  scatteringTheoryProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 2 · Problem 1 of 7"
+  title="Solving a Separable Interaction Exactly"
+  subtitle="A rank-one interaction looks like an integral equation, but it only acts in one Hilbert-space direction. That turns the full scattering problem into a geometric series we can sum exactly."
+  updated="2026-08-01"
+  readingTime={scatteringTheoryProblems[0].readingTime}
+  parent={{ label: 'Scattering Theory problems', to: scatteringTheoryProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#rank-one', label: 'Expose the rank-one structure' },
+    { href: '#states', label: 'Solve the scattering states' },
+    { href: '#transition', label: 'Transition kernel' },
+    { href: '#s-matrix', label: 'The S-matrix' },
+    { href: '#unitarity', label: 'Unitarity check' },
+    { href: '#interpretation', label: 'Interpretation and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">Rank-one interaction</span>
+  <p>
+    Let the free states $|\Phi_\alpha\rangle$ obey $H_0|\Phi_\alpha\rangle=E_\alpha|\Phi_\alpha\rangle$. Suppose the interaction has matrix elements
+  </p>
+
+  $$
+  \langle\Phi_\beta|V|\Phi_\alpha\rangle
+  =g\,u_\beta u_\alpha^*,
+  \qquad
+  g\in\mathbb R,
+  \qquad
+  \int d\alpha\,|u_\alpha|^2=1.
+  $$
+
+  <p>
+    Find the incoming and outgoing scattering states exactly, and then construct the corresponding $S$-matrix.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    Package the coefficients $u_\alpha$ into one normalized vector $|u\rangle$. Then take the scalar product of the Lippmann-Schwinger equation with $\langle u|$. The only unknown becomes the single number $\langle u|\Psi_\alpha^\pm\rangle$.
+  </p>
+</details>
+
+<p>
+  This exercise is the cleanest solvable model behind the discussion in <Link to={scatteringTheoryProblems[0].theoryRoute}>the Lippmann-Schwinger section</Link>. We use $+$ for an incoming boundary condition and $-$ for an outgoing one.
+</p>
+
+<Callout title="Convention ledger">
+The Hamiltonian transition kernel introduced below is called $\tau$, so it is not confused with the notebook's operator $\mathcal T$ in $S=1+i\mathcal T$. The two are related only after the energy-conserving delta function has been restored.
+</Callout>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Turn the kernel into one projector</strong>
+      <p>Write $V=g|u\rangle\langle u|$ and identify the one direction that feels the interaction.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Solve one algebraic equation</strong>
+      <p>Project Lippmann-Schwinger onto $\langle u|$ and resum the repeated propagation.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Put the state back on shell</strong>
+      <p>Extract the transition kernel, restore the energy delta function, and check unitarity.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="rank-one">1. Expose the rank-one structure</h2>
+
+Define
+
+$$
+|u\rangle
+=
+\int d\gamma\,u_\gamma|\Phi_\gamma\rangle.
+$$
+
+The stated normalization gives $\langle u|u\rangle=1$, and the interaction is simply
+
+$$
+\boxed{V=g|u\rangle\langle u|.}
+$$
+
+This equation contains the central physical simplification. If $|w\rangle$ is orthogonal to $|u\rangle$, then
+
+$$
+V|w\rangle=0.
+$$
+
+So the interaction cannot explore arbitrary directions in the free Hilbert space. It repeatedly leaves and re-enters the same vector $|u\rangle$.
+
+Introduce the scalar resolvent integral
+
+$$
+J^\pm(E)
+=
+\langle u|\frac{1}{E-H_0\pm i0}|u\rangle
+=
+\int d\gamma\,
+\frac{|u_\gamma|^2}{E-E_\gamma\pm i0},
+$$
+
+and abbreviate
+
+$$
+D^\pm(E)=1-gJ^\pm(E).
+$$
+
+Every repeated interaction will contribute another factor $gJ^\pm(E)$. The full answer must therefore contain the geometric denominator $D^\pm(E)$.
+
+<h2 id="states">2. Solve the incoming and outgoing states</h2>
+
+The Lippmann-Schwinger equations are
+
+$$
+|\Psi_\alpha^\pm\rangle
+=
+|\Phi_\alpha\rangle
++
+\frac{1}{E_\alpha-H_0\pm i0}
+V|\Psi_\alpha^\pm\rangle.
+$$
+
+Because $V$ is separable, define the only scalar that remains unknown:
+
+$$
+A_\alpha^\pm
+=
+\langle u|\Psi_\alpha^\pm\rangle.
+$$
+
+Acting with $\langle u|$ gives
+
+$$
+A_\alpha^\pm
+=
+\langle u|\Phi_\alpha\rangle
++gJ^\pm(E_\alpha)A_\alpha^\pm.
+$$
+
+Since $\langle u|\Phi_\alpha\rangle=u_\alpha^*$,
+
+$$
+\big[1-gJ^\pm(E_\alpha)\big]A_\alpha^\pm
+=u_\alpha^*,
+$$
+
+and therefore
+
+$$
+\boxed{
+A_\alpha^\pm
+=
+\frac{u_\alpha^*}{D^\pm(E_\alpha)}.
+}
+$$
+
+Substitute this number back into the original equation:
+
+$$
+\boxed{
+|\Psi_\alpha^\pm\rangle
+=
+|\Phi_\alpha\rangle
++
+\frac{g\,u_\alpha^*}{D^\pm(E_\alpha)}
+\frac{1}{E_\alpha-H_0\pm i0}|u\rangle.
+}
+$$
+
+Expanding the last vector in the free basis makes the boundary prescription visible:
+
+$$
+\boxed{
+|\Psi_\alpha^\pm\rangle
+=
+|\Phi_\alpha\rangle
++
+\int d\beta\,
+\frac{g\,u_\beta u_\alpha^*}
+{D^\pm(E_\alpha)(E_\alpha-E_\beta\pm i0)}
+|\Phi_\beta\rangle.
+}
+$$
+
+The two states solve the same energy-eigenvalue equation. Their difference is the boundary condition encoded by $\pm i0$.
+
+<h2 id="transition">3. Read off the exact transition kernel</h2>
+
+Define the Hamiltonian transition kernel by
+
+$$
+\tau_{\beta\alpha}^\pm
+=
+\langle\Phi_\beta|V|\Psi_\alpha^\pm\rangle.
+$$
+
+The rank-one form of $V$ immediately gives
+
+$$
+\tau_{\beta\alpha}^\pm
+=
+g\,u_\beta A_\alpha^\pm,
+$$
+
+so
+
+$$
+\boxed{
+\tau_{\beta\alpha}^\pm
+=
+\frac{g\,u_\beta u_\alpha^*}
+{1-gJ^\pm(E_\alpha)}.
+}
+$$
+
+This is the exact resummation
+
+$$
+g+gJg+gJgJg+\cdots
+=
+\frac{g}{1-gJ}.
+$$
+
+Zeros of $D^\pm(E)$ are poles of the transition kernel. Depending on their position and on the available continuum, they signal bound states, virtual states, or resonant behavior.
+
+<h2 id="s-matrix">4. Restore the S-matrix</h2>
+
+For energy-normalized Hamiltonian states, the relation between the on-shell kernel and the full scattering operator is
+
+$$
+S_{\beta\alpha}
+=
+\delta(\beta-\alpha)
+-2\pi i\,\delta(E_\beta-E_\alpha)
+\tau_{\beta\alpha}^+.
+$$
+
+Thus
+
+$$
+\boxed{
+S_{\beta\alpha}
+=
+\delta(\beta-\alpha)
+-2\pi i\,\delta(E_\beta-E_\alpha)
+\frac{g\,u_\beta u_\alpha^*}
+{D^+(E_\alpha)}.
+}
+$$
+
+The minus sign here is not a conflict with the project convention $S=1+i\mathcal T$. It means that the matrix elements of the project's operator are
+
+$$
+\boxed{
+\langle\beta|\mathcal T|\alpha\rangle
+=
+-2\pi\,\delta(E_\beta-E_\alpha)
+\frac{g\,u_\beta u_\alpha^*}{D^+(E_\alpha)}.
+}
+$$
+
+In a relativistic problem, the spatial momentum delta function is restored as well, and the result is repackaged in the invariant amplitude multiplying $(2\pi)^4\delta^4(P_\beta-P_\alpha)$.
+
+<h2 id="unitarity">5. Check unitarity without multiplying distributions</h2>
+
+Use the distribution identity
+
+$$
+\frac{1}{x+i0}
+=
+\mathcal P\frac1x-i\pi\delta(x).
+$$
+
+Define
+
+$$
+A(E)
+=
+\mathcal P\int d\gamma\,
+\frac{|u_\gamma|^2}{E-E_\gamma},
+$$
+
+$$
+\rho_u(E)
+=
+\int d\gamma\,|u_\gamma|^2\delta(E-E_\gamma).
+$$
+
+Then
+
+$$
+J^+(E)=A(E)-i\pi\rho_u(E),
+$$
+
+$$
+D^+(E)=1-gA(E)+i\pi g\rho_u(E),
+\qquad
+D^-(E)=D^+(E)^*.
+$$
+
+At a fixed energy, only the energy-shell projection of $|u\rangle$ scatters. In that single active channel the S-matrix eigenvalue is
+
+$$
+\boxed{
+S_u(E)=\frac{D^-(E)}{D^+(E)}.
+}
+$$
+
+Therefore
+
+$$
+|S_u(E)|=1.
+$$
+
+Every energy-shell vector orthogonal to the projected $|u\rangle$ has eigenvalue one. The complete S-matrix is consequently unitary.
+
+<div className="answer-check">
+  <strong>Answer check</strong>
+  <p>
+    The solution must reduce to $|\Psi_\alpha^\pm\rangle=|\Phi_\alpha\rangle$ and $S=1$ when $g\to0$. It does. Its only nontrivial energy-shell eigenvalue is $D^-/D^+$, which has modulus one for real $g$. Those two limits check both the algebra and the boundary prescription.
+  </p>
+</div>
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+The model is simple because the interaction has rank one, not because scattering has been approximated. The denominator contains arbitrarily many returns to the interaction and can therefore generate nonperturbative poles even when the individual matrix element looks elementary.
+
+Three traps are worth remembering:
+
+1. Do not discard the $i0$ after solving the algebra. Its imaginary delta-function part is exactly what permits probability to flow through open on-shell states.
+2. Do not confuse $\tau_{\beta\alpha}$ with the operator $\mathcal T$ in $S=1+i\mathcal T$; an energy-conserving delta function and a sign separate them.
+3. The symbol $\int d\alpha$ includes every discrete sum and continuum integral carried by the channel label.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+You should now be able to explain why
+
+$$
+V=g|u\rangle\langle u|
+\quad\Longrightarrow\quad
+\text{one scalar denominator }1-gJ^\pm(E),
+$$
+
+derive both scattering states from one projected equation, identify the pole condition $D^\pm(E)=0$, and see unitarity directly in the ratio $D^-/D^+$.
+
+<ChapterSectionNav
+  currentSlug="separable-interaction"
+  sections={scatteringTheoryProblems}
+  overviewRoute={scatteringTheoryProblemsRoute}
+  overviewLabel="Problem set overview"
+  chapterTitle="Scattering Theory problems"
+  completionRoute="/chapters/scattering-theory"
+  completionEyebrow="Problem set complete"
+  completionLabel="Scattering Theory overview"
+/>
+
+</ArticleLayout>

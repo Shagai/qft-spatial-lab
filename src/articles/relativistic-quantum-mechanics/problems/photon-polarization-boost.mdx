@@ -1,0 +1,277 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout, Sidenote } from '../../../components/MdxComponents'
+import {
+  relativisticQuantumMechanicsProblems,
+  relativisticQuantumMechanicsProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 1 · Problem 2 of 6"
+  title="A Boosted Photon Polarization"
+  subtitle="A Lorentz boost can give a polarization four-vector a time component without creating a new photon mode. Gauge freedom removes the redundant part and leaves a transverse, aberrated polarization."
+  updated="2026-08-01"
+  readingTime={relativisticQuantumMechanicsProblems[1].readingTime}
+  parent={{ label: 'Relativistic Quantum Mechanics problems', to: relativisticQuantumMechanicsProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#boost', label: 'Boost both vectors' },
+    { href: '#gauge', label: 'Choose a physical representative' },
+    { href: '#geometry', label: 'Read the geometry' },
+    { href: '#interpretation', label: 'Interpretation and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">Linear polarization under a transverse observer boost</span>
+  <p>
+    Observer $O$ sees a photon moving along $+y$ with linear polarization along $z$. Observer $O'$ moves with velocity $v$ along $+z$ relative to $O$. What momentum, propagation direction, and physical polarization does $O'$ report?
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    Boost both the null momentum $k^\mu$ and a polarization representative $\epsilon^\mu$. If the transformed polarization has a nonzero time component, use $\epsilon^\mu\sim\epsilon^\mu+\alpha k^\mu$ before interpreting its spatial direction.
+  </p>
+</details>
+
+<p>
+  The representation-theory reason for the gauge step is explained in <Link to="/chapters/relativistic-quantum-mechanics/one-particle-states#photon">the photon-polarization section</Link>: null rotations change a four-vector representative without changing the physical helicity state.
+</p>
+
+<Callout title="What counts as the same polarization">
+For a photon, $\epsilon^\mu$ and $\epsilon^\mu+\alpha k^\mu$ describe the same physical state. The field strength and every amplitude coupled to a conserved current are unchanged.
+</Callout>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Boost the null ray</strong>
+      <p>Find the Doppler-shifted energy and the aberrated direction measured by $O'$.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Boost a polarization representative</strong>
+      <p>Keep its time component instead of discarding it by hand.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Use gauge freedom once</strong>
+      <p>Return to temporal gauge and verify normalization and transversality.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="boost">1. Boost the momentum and polarization</h2>
+
+Use the initial representatives
+
+$$
+k^\mu=(p,0,p,0),
+\qquad
+\epsilon^\mu=(0,0,0,1).
+$$
+
+They satisfy
+
+$$
+k^2=0,
+\qquad
+k\cdot\epsilon=0,
+\qquad
+\epsilon^2=-1.
+$$
+
+Because $O'$ moves along $+z$, apply $B_z(-\eta)$ with $\tanh\eta=v$ and $\gamma_v=(1-v^2)^{-1/2}$. The momentum becomes
+
+$$
+\boxed{
+k'^\mu
+=
+(\gamma_vp,\,0,\,p,\,-\gamma_vvp).
+}
+$$
+
+Its energy is $\gamma_vp$. This is the transverse Doppler shift: the initial photon direction is perpendicular to the observer velocity, but it is not perpendicular after the frame change.
+
+The polarization representative becomes
+
+$$
+\widetilde\epsilon'^\mu
+=
+B_z(-\eta)\epsilon^\mu
+=
+(-\gamma_vv,\,0,\,0,\,\gamma_v).
+$$
+
+The time component is not an error. Direct substitution confirms
+
+$$
+k'\cdot\widetilde\epsilon'=0,
+\qquad
+\widetilde\epsilon'^2=-1.
+$$
+
+So the boosted vector is still a valid covariant polarization representative. It is merely inconvenient for reading the electric-field direction.
+
+<h2 id="gauge">2. Choose a purely spatial representative</h2>
+
+Use the gauge equivalence
+
+$$
+\epsilon'^\mu
+=
+\widetilde\epsilon'^\mu+\alpha k'^\mu.
+$$
+
+To set $\epsilon'^0=0$, solve
+
+$$
+-\gamma_vv+\alpha\gamma_vp=0,
+$$
+
+which gives
+
+$$
+\alpha=\frac vp.
+$$
+
+Therefore
+
+$$
+\begin{aligned}
+\epsilon'^\mu
+&=
+(-\gamma_vv,0,0,\gamma_v)
++\frac vp(\gamma_vp,0,p,-\gamma_vvp)\\
+&=
+\boxed{(0,\,0,\,v,\,\gamma_v^{-1})}.
+\end{aligned}
+$$
+
+The physical spatial polarization is consequently
+
+$$
+\boxed{
+\mathbf e'=(0,v,\gamma_v^{-1}).
+}
+$$
+
+It has unit length:
+
+$$
+|\mathbf e'|^2
+=v^2+\gamma_v^{-2}
+=v^2+(1-v^2)
+=1.
+$$
+
+<Sidenote>
+The gauge shift changed the representative, not the photon. In helicity language, a proper Lorentz transformation preserves the $+1$ and $-1$ sectors; their relative phase changes the direction of linear polarization.
+</Sidenote>
+
+<h2 id="geometry">3. Read the aberrated geometry</h2>
+
+Divide the spatial momentum by the new photon energy:
+
+$$
+\widehat{\mathbf k}'
+=
+\frac{\mathbf k'}{k'^0}
+=
+\boxed{(0,\gamma_v^{-1},-v)}.
+$$
+
+The physical transversality check is now ordinary Euclidean orthogonality:
+
+$$
+\widehat{\mathbf k}'\cdot\mathbf e'
+=
+\frac v{\gamma_v}-\frac v{\gamma_v}
+=0.
+$$
+
+Define an angle $\alpha$ by
+
+$$
+\sin\alpha=v,
+\qquad
+\cos\alpha=\gamma_v^{-1}.
+$$
+
+Then
+
+$$
+\widehat{\mathbf k}'=(0,\cos\alpha,-\sin\alpha),
+$$
+
+$$
+\mathbf e'=(0,\sin\alpha,\cos\alpha).
+$$
+
+The propagation-polarization frame has rotated rigidly through $-\alpha$ about $x$. The photon remains transverse throughout; only the observer's decomposition into space and time has changed.
+
+<div className="answer-check">
+  <strong>Answer check</strong>
+  <p>
+    We have $k'^2=0$, $\epsilon'^2=-1$, $k'\cdot\epsilon'=0$, and $\epsilon'^0=0$. These four checks establish that the final representative is null-compatible, normalized, transverse, and directly interpretable as a spatial polarization.
+  </p>
+</div>
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+There are two equivalent descriptions:
+
+1. Boost the polarization four-vector and retain its time component. This keeps Lorentz covariance manifest.
+2. Add a multiple of $k'^\mu$ and use a purely spatial unit polarization. This makes the detector interpretation manifest.
+
+They are not two different photon states.
+
+**Common trap:** interpreting $\widetilde\epsilon'^0\neq0$ as a longitudinal photon. A massive vector has a physical longitudinal spin state, but a photon does not acquire one under a change of frame. The unwanted component lies exactly along the gauge-redundant direction.
+
+Another trap is boosting only the spatial vector $(0,0,1)$. Polarization belongs in spacetime before a gauge is chosen; treating it as an ordinary Euclidean arrow hides the compensating gauge transformation.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+Observer $O'$ reports
+
+$$
+\boxed{
+k'^\mu=(\gamma_vp,0,p,-\gamma_vvp),
+}
+$$
+
+with propagation and polarization directions
+
+$$
+\boxed{
+\widehat{\mathbf k}'=(0,\gamma_v^{-1},-v),
+\qquad
+\mathbf e'=(0,v,\gamma_v^{-1}).
+}
+$$
+
+The boost aberrates both directions while gauge freedom keeps the physical polarization purely transverse.
+
+<ChapterSectionNav
+  currentSlug="photon-polarization-boost"
+  sections={relativisticQuantumMechanicsProblems}
+  overviewRoute={relativisticQuantumMechanicsProblemsRoute}
+  overviewLabel="Problem set"
+  chapterTitle="Relativistic Quantum Mechanics problems"
+  completionRoute="/chapters/relativistic-quantum-mechanics"
+  completionEyebrow="Problem set complete"
+  completionLabel="Relativistic Quantum Mechanics"
+/>
+
+</ArticleLayout>

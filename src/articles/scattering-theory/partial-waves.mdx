@@ -1,0 +1,462 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import { PartialWaveUnitarityFigure } from '../../components/InteractiveFigures'
+import {
+  scatteringTheoryRoute,
+  scatteringTheorySections,
+} from '../../data/scatteringTheory'
+
+<ArticleLayout
+  kicker="Chapter 2 · Section 6 of 7"
+  title="Partial Waves and Phase Shifts"
+  subtitle="Rotational symmetry reorganizes one angular scattering problem into separate angular-momentum channels. In that basis, unitarity becomes a circle, inelasticity becomes motion into its interior, and low-energy behavior becomes predictable."
+  updated="2026-08-01"
+  readingTime="17 min"
+  parent={{ label: 'Scattering Theory', to: '/chapters/scattering-theory' }}
+  toc={[
+    { href: '#question', label: 'Why angular channels?' },
+    { href: '#expansion', label: 'Spinless expansion' },
+    { href: '#channel-s-matrix', label: 'One-channel S-matrix' },
+    { href: '#unitarity-circle', label: 'The unitarity circle' },
+    { href: '#cross-sections', label: 'Cross-section ledger' },
+    { href: '#thresholds', label: 'Threshold laws' },
+    { href: '#scattering-length', label: 'Scattering length' },
+    { href: '#coupled-channels', label: 'Spin and coupled channels' },
+    { href: '#black-disk', label: 'The black disk' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="question">Why replace the scattering angle by angular momentum?</h2>
+
+In the center-of-momentum frame, two spinless incoming particles approach with momenta $\mathbf k$ and $-\mathbf k$. After an elastic collision their momentum magnitudes remain $k$, while the outgoing direction changes. The amplitude is therefore a function of the angle
+
+$$
+\cos\theta
+=
+\widehat{\mathbf k}\cdot\widehat{\mathbf k'}.
+$$
+
+One could study that angular function directly. Rotational symmetry suggests a better basis. Expand it into states of definite orbital angular momentum $\ell$. Each value of $\ell$ is a separate way for the incoming wave to meet the interaction.
+
+The analogy with Fourier analysis is exact in spirit:
+
+$$
+\boxed{
+\text{angle space}
+\longleftrightarrow
+\text{angular-momentum channels}.
+}
+$$
+
+A complicated angular pattern may require many partial waves, but rotational invariance prevents different total angular momenta from mixing. The $S$-matrix becomes block diagonal, and unitarity can be applied one finite block at a time.
+
+<h2 id="expansion">The spinless partial-wave expansion</h2>
+
+For elastic scattering of distinguishable spinless particles, choose the normalization
+
+$$
+\frac{d\sigma}{d\Omega}=|f(\theta)|^2.
+$$
+
+The rotational basis on the sphere is supplied by Legendre polynomials:
+
+$$
+\boxed{
+f(\theta)
+=
+\sum_{\ell=0}^{\infty}
+(2\ell+1)f_\ell(k)P_\ell(\cos\theta).
+}
+$$
+
+$f_\ell$ has dimensions of length. It is often cleaner to introduce the dimensionless partial-wave amplitude
+
+$$
+a_\ell(k)=k f_\ell(k).
+$$
+
+Orthogonality lets us recover an individual channel:
+
+$$
+f_\ell(k)
+=
+\frac12\int_{-1}^{1}
+d(\cos\theta)\,
+P_\ell(\cos\theta)f(\theta).
+$$
+
+The low values have a geometric interpretation. The $s$ wave, $\ell=0$, is isotropic. A $p$ wave, $\ell=1$, has one unit of orbital angular momentum and a simple forward-backward angular dependence. Higher partial waves carry increasingly fine angular structure.
+
+<Sidenote>
+For identical particles, the amplitude must also be symmetrized or antisymmetrized. This removes the inappropriate odd or even partial waves rather than changing the unitarity argument itself.
+</Sidenote>
+
+<h2 id="channel-s-matrix">One complex number for each elastic channel</h2>
+
+At fixed $k$, the $S$-matrix eigenvalue in a spinless partial wave is related to $a_\ell$ by
+
+$$
+\boxed{S_\ell=1+2ia_\ell}
+$$
+
+or equivalently
+
+$$
+f_\ell
+=
+\frac{S_\ell-1}{2ik}.
+$$
+
+If the only possible outcome is elastic scattering back into the same channel, unitarity requires
+
+$$
+|S_\ell|=1.
+$$
+
+Every complex number of unit magnitude is a phase, so write
+
+$$
+\boxed{S_\ell=e^{2i\delta_\ell}.}
+$$
+
+$\delta_\ell(k)$ is the <Term>phase shift</Term>. The factor of two is conventional and useful. It gives
+
+$$
+a_\ell
+=
+e^{i\delta_\ell}\sin\delta_\ell
+$$
+
+and
+
+$$
+f_\ell
+=
+\frac{e^{i\delta_\ell}\sin\delta_\ell}{k}.
+$$
+
+The interaction has changed the phase of the outgoing component relative to free propagation. That phase change alone encodes the entire elastic response of this angular-momentum channel.
+
+When other channels are open, use
+
+$$
+\boxed{
+S_\ell
+=
+\eta_\ell e^{2i\delta_\ell},
+\qquad
+0\leq\eta_\ell\leq1.
+}
+$$
+
+$\eta_\ell$ is the <Term>inelasticity</Term>. The phase shift $\delta_\ell$ remains real. $\eta_\ell=1$ means no probability leaves the elastic channel, while $\eta_\ell<1$ measures leakage into other final states with the same conserved quantum numbers.
+
+<h2 id="unitarity-circle">Elastic unitarity is a circle</h2>
+
+For a purely elastic channel,
+
+$$
+a_\ell=e^{i\delta_\ell}\sin\delta_\ell.
+$$
+
+Its real and imaginary parts satisfy
+
+$$
+\boxed{
+(\operatorname{Re}a_\ell)^2
++
+\left(\operatorname{Im}a_\ell-\frac12\right)^2
+=
+\frac14.
+}
+$$
+
+As the energy changes, the amplitude moves around a circle centered at $i/2$ with radius $1/2$. Equivalently,
+
+$$
+\operatorname{Im}a_\ell=|a_\ell|^2.
+$$
+
+That is the optical theorem resolved channel by channel.
+
+If inelastic states are available, the elastic amplitude obeys
+
+$$
+\operatorname{Im}a_\ell
+=
+|a_\ell|^2
++I_\ell,
+\qquad
+I_\ell\geq0,
+$$
+
+$I_\ell$ collects the positive contribution of the inelastic channels. The corresponding point lies inside the elastic circle. The full coupled-channel matrix remains unitary; only the one elastic entry has lost magnitude.
+
+<PartialWaveUnitarityFigure />
+
+<Callout title="A picture that diagnoses consistency">
+The figure plots $S_\ell$ in the unit disk; the readout maps the same point to the shifted $a_\ell$ circle derived above. An $S_\ell$ outside its disk—or an $a_\ell$ outside the corresponding circle—cannot describe a probability-conserving theory. Motion into the interior is allowed only when the missing probability appears in channels not represented by that one complex number.
+</Callout>
+
+<h2 id="cross-sections">Each channel keeps its own probability ledger</h2>
+
+Orthogonality of the Legendre polynomials eliminates interference between different $\ell$ values after integrating over all angles. The elastic cross-section is
+
+$$
+\boxed{
+\sigma_{\mathrm{el}}
+=
+\frac{\pi}{k^2}
+\sum_{\ell=0}^{\infty}
+(2\ell+1)|1-S_\ell|^2.
+}
+$$
+
+The cross-section for leaving the elastic channel is
+
+$$
+\boxed{
+\sigma_{\mathrm{reaction}}
+=
+\frac{\pi}{k^2}
+\sum_{\ell=0}^{\infty}
+(2\ell+1)(1-|S_\ell|^2).
+}
+$$
+
+The optical theorem gives their sum:
+
+$$
+\boxed{
+\sigma_{\mathrm{tot}}
+=
+\frac{2\pi}{k^2}
+\sum_{\ell=0}^{\infty}
+(2\ell+1)(1-\operatorname{Re}S_\ell).
+}
+$$
+
+Indeed,
+
+$$
+\sigma_{\mathrm{tot}}
+=
+\sigma_{\mathrm{el}}
++
+\sigma_{\mathrm{reaction}}.
+$$
+
+For a purely elastic channel,
+
+$$
+\sigma_\ell
+=
+\frac{4\pi}{k^2}
+(2\ell+1)\sin^2\delta_\ell.
+$$
+
+Because $\sin^2\delta_\ell\leq1$, every partial wave has a maximum:
+
+$$
+\boxed{
+\sigma_\ell
+\leq
+\frac{4\pi}{k^2}(2\ell+1).
+}
+$$
+
+The bound is saturated at $\delta_\ell=\pi/2$ modulo $\pi$. Stronger coupling cannot make that one channel arbitrarily large; unitarity has already used all of its available probability.
+
+<h2 id="thresholds">Angular momentum predicts threshold behavior</h2>
+
+Consider a short-range reaction with incoming relative momentum $k$, outgoing relative momentum $k'$, and orbital angular momenta $\ell$ and $\ell'$. Regularity near zero momentum gives the schematic behavior
+
+$$
+\mathcal M_{\ell'\ell}
+\propto
+k^{\ell}k'^{\ell'}.
+$$
+
+Two-body phase space contributes another factor $k'/k$, so
+
+$$
+\sigma_{\ell\to\ell'}
+\propto
+\frac{k'}{k}
+k^{2\ell}k'^{2\ell'}.
+$$
+
+This one expression produces three useful regimes.
+
+### Exothermic reaction
+
+The outgoing momentum remains nonzero while $k\to0$:
+
+$$
+\sigma
+\propto
+k^{2\ell-1}.
+$$
+
+For an $s$-wave entrance channel, $\sigma\propto1/k\sim1/v$. The cross-section grows for a slow incident particle, but the rate coefficient $v\sigma$ approaches a constant.
+
+### Endothermic reaction
+
+The incoming momentum is finite at threshold while $k'\to0$:
+
+$$
+\sigma
+\propto
+k'^{2\ell'+1}.
+$$
+
+Since $k'\propto\sqrt{E-E_{\mathrm{th}}}$ for a two-body final state,
+
+$$
+\boxed{
+\sigma
+\propto
+(E-E_{\mathrm{th}})^{\ell'+1/2}.
+}
+$$
+
+An $s$-wave channel turns on as a square root. A $p$-wave channel turns on as the three-halves power because the centrifugal barrier suppresses it near threshold.
+
+### Elastic reaction
+
+Here $k'=k\to0$. Higher partial waves disappear rapidly, leaving the $s$ wave as the generic low-energy contribution. This is why very slow short-range scattering often becomes nearly isotropic even when the underlying interaction is not simple.
+
+<Callout title="Where the threshold law can fail">
+These powers assume a short-range interaction and an amplitude regular at zero momentum. Coulomb forces, massless exchange, or a pole extremely close to threshold can change the counting.
+</Callout>
+
+<h2 id="scattering-length">One number controls ordinary low-energy scattering</h2>
+
+For the $s$ wave, define the scattering length $a$ through the effective-range expansion
+
+$$
+\boxed{
+k\cot\delta_0(k)
+=
+-\frac1a
++
+\frac12 r_e k^2
++
+O(k^4).
+}
+$$
+
+$r_e$ is the effective range. Using
+
+$$
+f_0(k)
+=
+\frac{1}{k\cot\delta_0-ik},
+$$
+
+we obtain
+
+$$
+f_0(k)\longrightarrow-a
+$$
+
+as $k\to0$. For distinguishable spinless particles with no competing spin channels,
+
+$$
+\boxed{\sigma_{\mathrm{el}}\longrightarrow4\pi a^2.}
+$$
+
+The sign of $a$ affects the phase and the location of nearby poles even though this zero-energy cross-section depends only on $a^2$. An unusually large $|a|$ signals a shallow bound state or virtual state close to threshold. In the regime $|a|\gg1/k$, the amplitude approaches the $s$-wave unitarity limit rather than growing without bound.
+
+<h2 id="coupled-channels">Spin turns each partial wave into a matrix</h2>
+
+For particles with spin, orbital angular momentum is not generally conserved by itself. The conserved rotational label is total angular momentum
+
+$$
+\mathbf J=\mathbf L+\mathbf S.
+$$
+
+At fixed $J$ and other exact quantum numbers, several orbital-spin combinations and several particle species may mix. The single number $S_\ell$ becomes a channel matrix
+
+$$
+S^J_{ba}(s).
+$$
+
+If every open channel with those quantum numbers is included, then
+
+$$
+(S^J)^\dagger S^J=1.
+$$
+
+Diagonalizing that matrix gives eigenchannels with eigenphases. If some many-particle channels are omitted, the displayed block is a contraction instead, and its eigenvalues can lie inside the unit circle.
+
+For relativistic particles it is often convenient to use helicity states. Legendre polynomials are then replaced by Wigner $d$-matrices, and the partial waves carry helicity indices. The bookkeeping becomes richer, but the structure does not change: rotational symmetry isolates fixed $J$, and unitarity constrains the matrix within each $J$ block.
+
+<h2 id="black-disk">A perfectly absorbing disk still scatters elastically</h2>
+
+At high momentum, orbital angular momentum has the semiclassical interpretation
+
+$$
+b\simeq\frac{\ell}{k},
+$$
+
+where $b$ is the impact parameter. Imagine an interaction region of radius $R$ that completely absorbs waves with $b<R$ and leaves the others untouched:
+
+$$
+S_\ell\simeq
+\begin{cases}
+0, & \ell\lesssim kR,\\
+1, & \ell\gtrsim kR.
+\end{cases}
+$$
+
+Using
+
+$$
+\sum_{\ell=0}^{L}(2\ell+1)=(L+1)^2,
+$$
+
+the cross-sections become
+
+$$
+\boxed{
+\sigma_{\mathrm{el}}\simeq\pi R^2,
+\qquad
+\sigma_{\mathrm{reaction}}\simeq\pi R^2,
+\qquad
+\sigma_{\mathrm{tot}}\simeq2\pi R^2.
+}
+$$
+
+The inelastic area $\pi R^2$ agrees with the geometric shadow. The equal elastic contribution is a wave effect: removing the incident wave from the disk region produces diffraction around its boundary. Perfect absorption therefore does not eliminate elastic scattering.
+
+<Sidenote>
+Do not confuse black absorption, $S_\ell=0$, with saturation of the purely elastic bound, $S_\ell=-1$. They use probability differently and give different cross-sections per channel.
+</Sidenote>
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The essential chain is:
+
+1. Rotational symmetry expands a spinless amplitude in Legendre partial waves.
+2. Each elastic channel has $S_\ell=1+2ia_\ell$.
+3. Pure elasticity gives $S_\ell=e^{2i\delta_\ell}$ and places $a_\ell$ on the unitarity circle.
+4. Open channels introduce $S_\ell=\eta_\ell e^{2i\delta_\ell}$ with $\eta_\ell<1$, moving the elastic amplitude inside the circle.
+5. Elastic, reaction, and total cross-sections form an exact channel-by-channel ledger.
+6. Angular momentum barriers determine how reactions turn on at threshold.
+7. Low-energy short-range scattering is usually dominated by the $s$-wave scattering length.
+8. With spin or several species, each fixed-$J$ partial wave becomes a unitary channel matrix.
+9. The black-disk limit shows how absorption and diffraction divide the total cross-section equally.
+
+Partial waves make scattering less mysterious by assigning every piece of probability to a definite angular-momentum channel.
+
+<ChapterSectionNav
+  currentSlug="partial-waves"
+  sections={scatteringTheorySections}
+  overviewRoute={scatteringTheoryRoute}
+  chapterTitle="Scattering Theory"
+/>
+
+</ArticleLayout>

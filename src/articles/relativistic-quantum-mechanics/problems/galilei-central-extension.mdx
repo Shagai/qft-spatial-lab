@@ -1,0 +1,345 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../../components/MdxComponents'
+import {
+  relativisticQuantumMechanicsProblems,
+  relativisticQuantumMechanicsProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 1 · Problem 3 of 6"
+  title="The Centrally Extended Galilei Algebra"
+  subtitle="Classical Galilean transformations compose without mentioning mass. Quantum rays remember an additional phase, and that phase becomes the mass central charge."
+  updated="2026-08-01"
+  readingTime={relativisticQuantumMechanicsProblems[2].readingTime}
+  parent={{ label: 'Relativistic Quantum Mechanics problems', to: relativisticQuantumMechanicsProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#group-law', label: 'The finite group law' },
+    { href: '#ordinary-algebra', label: 'Differentiate the group law' },
+    { href: '#projective', label: 'Allow quantum phases' },
+    { href: '#classification', label: 'Classify central terms' },
+    { href: '#interpretation', label: 'Meaning and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">Galilean symmetry from its own multiplication law</span>
+  <p>
+    Derive the commutation relations of the Galilei group directly from the composition of rotations, boosts, spatial translations, and time translations. Then allow the most general central terms compatible with quantum mechanics and determine which cannot be removed by redefining generators in three spatial dimensions.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    Apply two finite transformations in succession. The term $\mathbf v_2b_1$ in the composed spatial translation already contains $[K_i,H]$. Then remember that quantum transformations act on rays, so two geometrically commuting operations may still have a central phase in their operator commutator.
+  </p>
+</details>
+
+<p>
+  Compare the final result with <Link to="/chapters/relativistic-quantum-mechanics/poincare-algebra#rotation-boost">the Poincaré commutators</Link>. The Galilei algebra is not being obtained by taking a relativistic limit here; the group law will produce it on its own.
+</p>
+
+<Callout title="Convention ledger">
+We use self-adjoint generators and the notebook signs $[K_i,H]=iP_i$ and $[K_i,P_j]=i\delta_{ij}M$. Sources that define $K_i$ with the opposite sign display both commutators with minus signs. The central-extension content is identical.
+</Callout>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Compose finite transformations</strong>
+      <p>Keep track of the origin shift caused when a boost follows a time translation.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Read infinitesimal commutators</strong>
+      <p>Use small group commutators to obtain the ordinary Galilei algebra without invoking Lorentz symmetry.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Classify projective phases</strong>
+      <p>Apply rotations and Jacobi identities to show that only the mass term survives in $3+1$ dimensions.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="group-law">1. Write the finite group law</h2>
+
+Represent a Galilei transformation by
+
+$$
+g=(R,\mathbf v,\mathbf a,b),
+$$
+
+acting on an event as
+
+$$
+t\longmapsto t+b,
+$$
+
+$$
+\mathbf x
+\longmapsto
+R\mathbf x+\mathbf v\,t+\mathbf a.
+$$
+
+Apply $g_1$ first:
+
+$$
+t_1=t+b_1,
+\qquad
+\mathbf x_1=R_1\mathbf x+\mathbf v_1t+\mathbf a_1.
+$$
+
+Then apply $g_2$:
+
+$$
+\begin{aligned}
+t_2
+&=t_1+b_2
+=t+b_1+b_2,\\
+\mathbf x_2
+&=R_2\mathbf x_1+\mathbf v_2t_1+\mathbf a_2\\
+&=R_2R_1\mathbf x
++(R_2\mathbf v_1+\mathbf v_2)t
++R_2\mathbf a_1+\mathbf v_2b_1+\mathbf a_2.
+\end{aligned}
+$$
+
+Therefore
+
+$$
+\boxed{
+g_2g_1
+=
+\left(
+R_2R_1,
+\mathbf v_2+R_2\mathbf v_1,
+\mathbf a_2+R_2\mathbf a_1+\mathbf v_2b_1,
+b_2+b_1
+\right).
+}
+$$
+
+The term to notice is
+
+$$
+\mathbf v_2b_1.
+$$
+
+Waiting for a time $b_1$ and then changing to a frame moving with velocity $\mathbf v_2$ shifts the spatial origin by $b_1\mathbf v_2$.
+
+<h2 id="ordinary-algebra">2. Differentiate the group law</h2>
+
+Let $J_i$, $K_i$, $P_i$, and $H$ generate rotations, boosts, spatial translations, and time translations.
+
+Rotations compose as $SO(3)$, so
+
+$$
+[J_i,J_j]=i\epsilon_{ijk}J_k.
+$$
+
+Conjugating a boost or spatial translation by a rotation rotates its parameter. Hence
+
+$$
+[J_i,K_j]=i\epsilon_{ijk}K_k,
+$$
+
+$$
+[J_i,P_j]=i\epsilon_{ijk}P_k.
+$$
+
+Time is unchanged by spatial rotations:
+
+$$
+[J_i,H]=0.
+$$
+
+The mixed finite commutator of a boost and a time translation follows directly from the $\mathbf v b$ term:
+
+$$
+B(\mathbf v)T(b)B(\mathbf v)^{-1}T(b)^{-1}
+=S(b\mathbf v).
+$$
+
+Expanding to first order in both $b$ and $\mathbf v$ gives
+
+$$
+\boxed{[K_i,H]=iP_i.}
+$$
+
+The remaining transformations commute geometrically:
+
+$$
+[K_i,K_j]=0,
+\qquad
+[P_i,P_j]=0,
+\qquad
+[P_i,H]=0.
+$$
+
+At the level of classical spacetime transformations, boosts and spatial translations commute as well. This would suggest $[K_i,P_j]=0$—but quantum rays allow one more possibility.
+
+<h2 id="projective">3. Let quantum transformations differ by a phase</h2>
+
+Physical states are rays, so a group can be represented projectively:
+
+$$
+U(g_2)U(g_1)
+=e^{i\omega(g_2,g_1)}U(g_2g_1).
+$$
+
+The phase does not change the associated classical spacetime transformation. It can nevertheless survive in an operator group commutator. For a boost and a spatial translation, rotational invariance permits
+
+$$
+U(B(\mathbf v))U(S(\mathbf a))
+U(B(\mathbf v))^{-1}U(S(\mathbf a))^{-1}
+=e^{-iM\mathbf v\cdot\mathbf a}.
+$$
+
+Expand both sides. The left-hand side is
+
+$$
+1-v_ia_j[K_i,P_j]+O(v^2,a^2),
+$$
+
+while the right-hand side is
+
+$$
+1-iM\mathbf v\cdot\mathbf a+O(v^2,a^2).
+$$
+
+Therefore
+
+$$
+\boxed{
+[K_i,P_j]=i\delta_{ij}M,
+}
+$$
+
+where
+
+$$
+[M,J_i]=[M,K_i]=[M,P_i]=[M,H]=0.
+$$
+
+$M$ is a <Term>central generator</Term>: it commutes with the whole algebra. In an irreducible sector, Schur's lemma makes it a number,
+
+$$
+M=m\mathbf1.
+$$
+
+<h2 id="classification">4. Show that no other central charge survives</h2>
+
+We now ask whether a central quantity could be added to any other commutator.
+
+### Central vectors are incompatible with rotations
+
+A term such as
+
+$$
+[K_i,H]=iP_i+iZ_i
+$$
+
+would require a central vector $Z_i$. But central means $[J_j,Z_i]=0$, while rotational covariance would require $Z_i$ to rotate as a vector. A nonzero object cannot satisfy both conditions without selecting a preferred direction. Such terms therefore vanish, or represent removable choices of generator origin rather than invariant extensions.
+
+### Equal-vector brackets need an invariant antisymmetric tensor
+
+Possible terms in
+
+$$
+[K_i,K_j]
+\quad\text{or}\quad
+[P_i,P_j]
+$$
+
+must be antisymmetric in $i,j$. In three spatial dimensions an antisymmetric rank-two tensor is equivalent to a vector through $\epsilon_{ijk}$. A central coefficient would again be a fixed preferred vector, so rotational invariance sets it to zero.
+
+### Rotation brackets do not carry an independent extension
+
+Potential constants in $[J_i,J_j]$, $[J_i,K_j]$, or $[J_i,P_j]$ are removed by generator shifts or ruled out by Jacobi identities. For example, adding $i c\delta_{ij}$ to $[J_i,P_j]$ fails the $(J_i,J_j,P_k)$ Jacobi identity unless $c=0$.
+
+### The mixed boost-momentum bracket is different
+
+$K_i$ and $P_j$ are distinct vector families. Their mixed bracket may use the rotationally invariant tensor $\delta_{ij}$ without conflicting with antisymmetry, because antisymmetry exchanges both the operators and their family labels:
+
+$$
+[P_j,K_i]=-[K_i,P_j].
+$$
+
+Thus $M$ is allowed, and no redefinition of $H$, $\mathbf P$, $\mathbf K$, or $\mathbf J$ removes it while preserving the rest of the algebra.
+
+The most general nontrivial central extension in three spatial dimensions is therefore one-dimensional:
+
+$$
+\boxed{\text{central extension}=\{M\}.}
+$$
+
+<Sidenote>
+In two spatial dimensions, $\epsilon_{ij}$ itself is an invariant antisymmetric tensor, so an additional “exotic” term $[K_i,K_j]=i\kappa\epsilon_{ij}$ is possible. That is a dimension-specific extension and is not part of this $3+1$-dimensional problem.
+</Sidenote>
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+<div className="answer-check">
+  <strong>Physical check</strong>
+  <p>
+    In a fixed-mass sector, $[K_i,P_j]=i\delta_{ij}m$. A boost must change momentum by an amount proportional to mass—the quantum algebra is encoding the Galilean relation $\mathbf p=m\mathbf u$.
+  </p>
+</div>
+
+The mass did not appear in the spacetime map because Galilean geometry knows only how coordinates transform. It appears when that geometry is lifted to quantum state vectors. If one works only with rays, different masses carry different projective phases; if one enlarges the group by the central generator $M$, the same states furnish ordinary representations of the enlarged group.
+
+**Common trap:** setting $[K_i,P_j]=0$ merely because boosts and translations commute as coordinate maps. Projective representations can turn an identity transformation of spacetime into a nontrivial phase on state vectors.
+
+Another trap is calling $M$ an arbitrary additive constant in the Hamiltonian. Shifting $H$ by a multiple of the identity does not create the bracket $[K_i,P_j]$. The mass central charge is cohomologically nontrivial; an energy-zero convention is not.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The centrally extended Galilei algebra in three spatial dimensions is
+
+$$
+\boxed{
+\begin{aligned}
+[J_i,J_j]&=i\epsilon_{ijk}J_k,
+& [J_i,K_j]&=i\epsilon_{ijk}K_k,\\
+[J_i,P_j]&=i\epsilon_{ijk}P_k,
+& [J_i,H]&=0,\\
+[K_i,H]&=iP_i,
+& [K_i,P_j]&=i\delta_{ij}M,
+\end{aligned}
+}
+$$
+
+with
+
+$$
+[K_i,K_j]=[P_i,P_j]=[P_i,H]=0,
+\qquad
+[M,\text{everything}]=0.
+$$
+
+Mass is the unique non-removable central charge in (3+1)-dimensional Galilean quantum mechanics.
+
+<ChapterSectionNav
+  currentSlug="galilei-central-extension"
+  sections={relativisticQuantumMechanicsProblems}
+  overviewRoute={relativisticQuantumMechanicsProblemsRoute}
+  overviewLabel="Problem set"
+  chapterTitle="Relativistic Quantum Mechanics problems"
+  completionRoute="/chapters/relativistic-quantum-mechanics"
+  completionEyebrow="Problem set complete"
+  completionLabel="Relativistic Quantum Mechanics"
+/>
+
+</ArticleLayout>

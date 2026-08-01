@@ -1,0 +1,501 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+
+<ArticleLayout
+  kicker="Chapter 1 · Section 5 of 7"
+  title="Discrete and Projective Symmetries"
+  subtitle="Parity and time reversal sit outside the connected Lorentz group, while quantum rays allow group multiplication to carry phases. Together they reveal why antiunitarity, double covers, and half-integer spin belong to the architecture of relativistic quantum theory."
+  updated="2026-08-01"
+  readingTime="18 min"
+  parent={{ label: 'Relativistic Quantum Mechanics', to: '/chapters/relativistic-quantum-mechanics' }}
+  toc={[
+    { href: '#question', label: 'The missing transformations' },
+    { href: '#components', label: 'Four Lorentz components' },
+    { href: '#antiunitary', label: 'Antiunitary symmetry' },
+    { href: '#positive-energy', label: 'Why time reversal is antiunitary' },
+    { href: '#generators', label: 'Action on generators' },
+    { href: '#particle-states', label: 'Action on particle states' },
+    { href: '#time-reversal-square', label: 'The square of time reversal' },
+    { href: '#projective', label: 'Projective composition' },
+    { href: '#cocycle', label: 'Cocycles and rephasing' },
+    { href: '#two-sources', label: 'Local algebra and topology' },
+    { href: '#double-cover', label: 'The Lorentz double cover' },
+    { href: '#superselection', label: 'Superselection caveat' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="question">What did the continuous algebra leave out?</h2>
+
+The Poincaré algebra describes transformations that can be reached by taking sufficiently many small steps from the identity: translations, rotations, and boosts. It does not contain every transformation that preserves the spacetime interval.
+
+Two familiar operations remain outside that continuous neighborhood:
+
+$$
+P:(t,\mathbf x)\longmapsto(t,-\mathbf x)
+$$
+
+and
+
+$$
+T:(t,\mathbf x)\longmapsto(-t,\mathbf x).
+$$
+
+$P$ is <Term>parity</Term>, or space inversion. $T$ is time reversal. No continuously varying proper Lorentz transformation becomes either one, so neither has a new infinitesimal generator.
+
+This creates two distinct questions:
+
+1. How can a disconnected spacetime transformation act on quantum states?
+2. How faithfully must quantum symmetry operators obey the group multiplication law?
+
+The first question leads to unitary and antiunitary operators. The second leads to projective representations and the double cover of the Lorentz group.
+
+<Callout title="A conditional discussion">
+Parity and time reversal are possible spacetime symmetries, not promises about every interaction. A particular Hamiltonian may respect either one, both, or neither. The transformation laws below say what follows when the corresponding symmetry is present.
+</Callout>
+
+<h2 id="components">The Lorentz group has four components</h2>
+
+For any Lorentz matrix,
+
+$$
+\Lambda^T\eta\Lambda=\eta,
+\qquad
+\eta=\operatorname{diag}(+,-,-,-).
+$$
+
+The determinant is restricted to $\det\Lambda=\pm1$. There is also a discrete choice of time orientation: a future-pointing timelike vector can remain future-pointing or be sent to the past cone. These two binary choices divide $O(1,3)$ into four disconnected components.
+
+| Representative | $\det\Lambda$ | Time orientation | Description |
+| --- | --- | --- | --- |
+| $1$ | $+1$ | preserved | proper orthochronous |
+| $P$ | $-1$ | preserved | space reversed |
+| $T$ | $-1$ | reversed | time reversed |
+| $PT$ | $+1$ | reversed | space and time reversed |
+
+The identity component is
+
+$$
+SO^+(1,3).
+$$
+
+Its elements are built from ordinary rotations and boosts. Multiplying that component by $P$, $T$, or $PT$ gives each of the other three components.
+
+The distinction matters because a Lie algebra sees only the local shape of a group near its identity. It cannot tell us how to attach disconnected pieces, and it cannot by itself detect every global loop in the connected piece.
+
+<h2 id="antiunitary">A probability-preserving map need not be linear</h2>
+
+A physical symmetry must preserve transition probabilities between rays. On Hilbert space, such a transformation can be represented in one of two ways.
+
+A <Term>unitary</Term> operator $U$ is linear,
+
+$$
+U(c_1|\psi\rangle+c_2|\phi\rangle)
+=
+c_1U|\psi\rangle+c_2U|\phi\rangle,
+$$
+
+and preserves inner products.
+
+An <Term>antiunitary</Term> operator $\Theta$ is antilinear,
+
+$$
+\Theta(c_1|\psi\rangle+c_2|\phi\rangle)
+=
+c_1^*\Theta|\psi\rangle+c_2^*\Theta|\phi\rangle,
+$$
+
+with
+
+$$
+\langle\Theta\phi|\Theta\psi\rangle
+=
+\langle\phi|\psi\rangle^*.
+$$
+
+Both preserve the absolute square of the inner product and therefore preserve all transition probabilities. Their crucial difference is
+
+$$
+\Theta i\Theta^{-1}=-i.
+$$
+
+Antiunitarity does not mean that probabilities are conjugated into something new—probabilities are real already. It means that the complex structure used to encode amplitudes is reversed while every measurable overlap remains intact.
+
+<Sidenote>
+The fact that probability-preserving ray maps are represented by unitary or antiunitary operators is often called Wigner's theorem. The choice between the two is not arbitrary once we ask how the map acts on time evolution and the energy spectrum.
+</Sidenote>
+
+<h2 id="positive-energy">Positive energy decides the unitary type</h2>
+
+Time evolution is
+
+$$
+U(t)=e^{-iHt}.
+$$
+
+Parity does not reverse the order of time evolution, so a parity symmetry must satisfy
+
+$$
+\mathsf P U(t)\mathsf P^{-1}=U(t).
+$$
+
+If $\mathsf P$ were antiunitary, conjugating the exponential would reverse the sign of $i$. The equation would then require
+
+$$
+\mathsf P H\mathsf P^{-1}=-H.
+$$
+
+That would pair every positive-energy state with a negative-energy state. In a nontrivial theory whose energy is bounded below, parity must therefore be represented unitarily, with
+
+$$
+\mathsf P H\mathsf P^{-1}=H.
+$$
+
+Time reversal has the opposite requirement. Reversing a history changes evolution through $t$ into evolution through $-t$:
+
+$$
+\mathsf T U(t)\mathsf T^{-1}=U(-t).
+$$
+
+If $\mathsf T$ were unitary, this would again demand $\mathsf T H\mathsf T^{-1}=-H$. An antiunitary $\mathsf T$ supplies the needed sign through $i\mapsto-i$, allowing
+
+$$
+\boxed{\mathsf T H\mathsf T^{-1}=H}
+$$
+
+while still reversing the direction of evolution.
+
+Thus, in a positive-energy relativistic theory,
+
+$$
+\boxed{\mathsf P\ \text{is unitary},
+\qquad
+\mathsf T\ \text{is antiunitary}.}
+$$
+
+This is not merely a convention for naming operators. It is the way time reversal can reverse motion without turning a stable positive-energy spectrum upside down.
+
+<h2 id="generators">How parity and time reversal act on generators</h2>
+
+Write the connected generators as energy $H$, momentum $\mathbf P$, angular momentum $\mathbf J$, and boosts $\mathbf K$. Their transformation rules are
+
+| Generator | Parity $\mathsf P$ | Time reversal $\mathsf T$ |
+| --- | --- | --- |
+| $H$ | $H$ | $H$ |
+| $\mathbf P$ | $-\mathbf P$ | $-\mathbf P$ |
+| $\mathbf J$ | $\mathbf J$ | $-\mathbf J$ |
+| $\mathbf K$ | $-\mathbf K$ | $\mathbf K$ |
+
+The pattern can be remembered geometrically. Momentum is an ordinary vector, so both operations reverse it: parity reverses space, while time reversal reverses velocity. Angular momentum behaves like
+
+$$
+\mathbf J\sim\mathbf x\times\mathbf P.
+$$
+
+Parity reverses both factors and leaves $\mathbf J$ unchanged. Time reversal leaves position fixed at the reversed instant but changes momentum, so it reverses $\mathbf J$.
+
+The boost rule is consistent with the schematic orbital expression
+
+$$
+\mathbf K\sim \mathbf xH-t\mathbf P.
+$$
+
+Under parity, $\mathbf x$ and $\mathbf P$ reverse. Under time reversal, $t$ and $\mathbf P$ reverse together. This gives the final row of the table.
+
+<Callout title="Why the antiunitary sign must be remembered">
+When checking commutators under time reversal, transform $i$ as well as the generators. For example, $[J_i,J_j]=i\epsilon_{ijk}J_k$ remains consistent because $\mathsf T$ reverses both $\mathbf J$ and $i$.
+</Callout>
+
+<h2 id="particle-states">What happens to one-particle states?</h2>
+
+Let
+
+$$
+\bar p^\mu=(p^0,-\mathbf p)
+$$
+
+denote momentum with its spatial part reversed and its positive energy unchanged. For a massive particle, use the canonical spin basis $|p,j,\sigma\rangle$ built by rotation-free standard boosts. Parity reverses the spatial momentum but leaves the spin label unchanged:
+
+$$
+\mathsf P|p,j,\sigma\rangle
+=
+\eta_P|\bar p,j,\sigma\rangle.
+$$
+
+$\eta_P$ is the particle's intrinsic-parity phase in that basis. Applying time reversal reverses both momentum and spin:
+
+$$
+\mathsf T|p,j,\sigma\rangle
+=
+\eta_T(-1)^{j-\sigma}
+|\bar p,j,-\sigma\rangle,
+$$
+
+where the equation is understood anti-linearly: coefficients multiplying a superposition are complex conjugated.
+
+The displayed phases depend on basis conventions, but the momentum and spin reversals do not. If several particle species have exactly the same mass, spin, and compatible internal quantum numbers, $\mathsf P$ or $\mathsf T$ may also mix those degenerate species by a unitary matrix. A single phase is the nondegenerate special case.
+
+For a massless finite-helicity state, helicity is
+
+$$
+h=\frac{\mathbf J\cdot\mathbf P}{|\mathbf P|}.
+$$
+
+Parity reverses $\mathbf P$ while leaving $\mathbf J$ unchanged, so
+
+$$
+\mathsf P|p,h\rangle
+\sim
+|\bar p,-h\rangle.
+$$
+
+Time reversal reverses both $\mathbf P$ and $\mathbf J$, so their projection is unchanged:
+
+$$
+\mathsf T|p,h\rangle
+\sim
+|\bar p,h\rangle,
+$$
+
+again anti-linearly and with possible mixing among degenerate states.
+
+This gives a useful test. If parity is an exact symmetry and a massless particle of nonzero helicity exists, the spectrum must also contain the opposite-helicity partner. A theory with only one handed helicity sector cannot preserve parity on that sector.
+
+<h2 id="time-reversal-square">Why time reversal can square to minus one</h2>
+
+Using the standard spin phase convention at rest,
+
+$$
+\mathsf T|j,\sigma\rangle
+=
+(-1)^{j-\sigma}|j,-\sigma\rangle.
+$$
+
+Apply the antiunitary operator a second time:
+
+$$
+\mathsf T^2|j,\sigma\rangle
+=
+(-1)^{j-\sigma}(-1)^{j+\sigma}
+|j,\sigma\rangle.
+$$
+
+Therefore
+
+$$
+\boxed{\mathsf T^2=(-1)^{2j}.}
+$$
+
+For integer spin, $\mathsf T^2=+1$. For half-integer spin, $\mathsf T^2=-1$. The minus sign is invisible on a single ray, but it has measurable consequences when states are compared.
+
+Suppose a Hamiltonian respects time reversal and $\mathsf T^2=-1$. If $|\psi\rangle$ is an energy eigenstate, then $\mathsf T|\psi\rangle$ has the same energy. The two states cannot be proportional; in fact they are orthogonal. They therefore form a degenerate pair. This is <Term>Kramers pairing</Term>.
+
+<Sidenote>
+Additional internal degeneracies can make the full action of time reversal matrix-valued. The simple formula isolates the universal spin factor; a concrete theory must also specify how $\mathsf T$ acts on its internal labels.
+</Sidenote>
+
+<h2 id="projective">Why symmetry multiplication may carry a phase</h2>
+
+Quantum states are rays. If two operators differ only by an overall phase, they produce the same map on physical states. A symmetry may therefore obey
+
+$$
+\boxed{
+U(g_2)U(g_1)
+=
+e^{i\alpha(g_2,g_1)}U(g_2g_1)
+}
+$$
+
+rather than the strict linear rule. This is a <Term>projective representation</Term> of the group.
+
+For this discussion, take the $g$'s to lie in the identity-connected, unitarily represented part of the spacetime symmetry group. When antiunitary elements such as time reversal are included, they conjugate phases and the cocycle relation acquires the corresponding twist. The central idea—ray transformations need agree only up to phase—remains the same.
+
+The phase does not mean that group multiplication has become ambiguous. Acting on any ray, both sides agree exactly. The question is whether phases can be chosen for all $U(g)$ so that every $\alpha(g_2,g_1)$ disappears simultaneously.
+
+Sometimes the answer is yes: the extra phases were only a poor choice of representatives. Sometimes it is no: the phases record genuine algebraic or topological structure.
+
+<h2 id="cocycle">Associativity constrains the phase</h2>
+
+Operator multiplication is associative. Comparing
+
+$$
+U(g_3)\bigl(U(g_2)U(g_1)\bigr)
+$$
+
+with
+
+$$
+\bigl(U(g_3)U(g_2)\bigr)U(g_1)
+$$
+
+gives, modulo $2\pi$,
+
+$$
+\boxed{
+\alpha(g_2,g_1)+\alpha(g_3,g_2g_1)
+=
+\alpha(g_3,g_2)+\alpha(g_3g_2,g_1).
+}
+$$
+
+This is the <Term>cocycle condition</Term>. It says that the total phase cannot depend on where we place parentheses in a three-step transformation.
+
+Now change the phase convention for every representative:
+
+$$
+U(g)\longrightarrow U'(g)=e^{i\beta(g)}U(g).
+$$
+
+Then
+
+$$
+\alpha'(g_2,g_1)
+=
+\alpha(g_2,g_1)
++\beta(g_2)+\beta(g_1)-\beta(g_2g_1).
+$$
+
+The added combination is called a <Term>coboundary</Term>. In physical language, it is the part of the multiplication phase that can be moved around—or removed—by choosing different vector representatives for the same ray transformations. Only the phase structure that survives every such rephasing has invariant content.
+
+<h2 id="two-sources">Two places where projective structure can hide</h2>
+
+There are two logically different obstructions to making a projective representation ordinary.
+
+<div className="two-panel-grid">
+  <div>
+    <strong>Local algebra</strong>
+    <p>Infinitesimal generators may close only after adding multiples of the identity. These are central terms.</p>
+  </div>
+  <div>
+    <strong>Global topology</strong>
+    <p>The Lie algebra may be ordinary while closed paths in the group still lift to non-closed paths on quantum states.</p>
+  </div>
+</div>
+
+Locally, a projective action can produce commutators of the form
+
+$$
+[G_a,G_b]
+=
+if_{ab}{}^cG_c+i z_{ab}\mathbf 1.
+$$
+
+The identity commutes with every generator, hence the name <Term>central term</Term>. Some $z_{ab}$ can be removed by shifting the generators by constants; a genuinely non-removable remainder defines a central extension.
+
+For the connected Poincaré algebra in $3+1$ dimensions, the candidate central terms can be removed under the usual assumptions. There is no additional Poincaré central charge analogous to the mass central charge of Galilean quantum mechanics.
+
+That does not make every representation of the Lorentz group ordinary. The remaining obstruction is global: the connected Lorentz group is not simply connected.
+
+<h2 id="double-cover">See the double cover with a Hermitian matrix</h2>
+
+Package a Minkowski vector into the Hermitian matrix
+
+$$
+X=x^0\mathbf1+x^i\sigma_i
+=
+\begin{pmatrix}
+x^0+x^3 & x^1-ix^2\\
+x^1+ix^2 & x^0-x^3
+\end{pmatrix}.
+$$
+
+Its determinant is the Minkowski norm in our $(+,-,-,-)$ convention:
+
+$$
+\det X=(x^0)^2-|\mathbf x|^2=x^2.
+$$
+
+For any $A\in SL(2,\mathbb C)$, define
+
+$$
+X\longmapsto X'=AXA^\dagger.
+$$
+
+Because $\det A=1$,
+
+$$
+\det X'=\det X.
+$$
+
+The transformation therefore induces an element of $SO^+(1,3)$. But $A$ and $-A$ produce exactly the same $X'$:
+
+$$
+AXA^\dagger=(-A)X(-A)^\dagger.
+$$
+
+So the map is two-to-one,
+
+$$
+\boxed{SO^+(1,3)\simeq SL(2,\mathbb C)/\mathbb Z_2.}
+$$
+
+$SL(2,\mathbb C)$ is the simply connected double cover used by quantum theory. The familiar sign of a spinor is now a statement about paths. A $2\pi$ rotation is the identity Lorentz matrix, yet the corresponding loop cannot be continuously shrunk to a point inside $SO^+(1,3)$. Its lift begins at $A=\mathbf1$ and ends at $A=-\mathbf1$. Traversing the loop twice—a $4\pi$ rotation—returns the lift to $+\mathbf1$ and is contractible.
+
+Thus a half-integer-spin state may transform as
+
+$$
+U(2\pi)=-\mathbf1,
+\qquad
+U(4\pi)=+\mathbf1.
+$$
+
+The minus sign is allowed because a state vector and its negative define the same ray. On the double cover, the representation is no longer projective: it is an ordinary representation of the larger group.
+
+The same global periodicity constrains the rotation character of the ordinary finite-helicity massless representations. It is the topological reason their helicities occur in integer or half-integer units; the little-group construction on the previous page supplies the particle interpretation.
+
+<Callout title="Local versus global information">
+The Lie algebra determines what happens under infinitesimal rotations and boosts. The double cover determines what happens after following those infinitesimal steps all the way around a noncontractible loop. Half-integer spin needs both viewpoints.
+</Callout>
+
+<h2 id="superselection">The sign does not prove a superselection rule</h2>
+
+It is tempting to say that integer-spin and half-integer-spin states cannot be superposed because a $2\pi$ rotation gives them different signs. That conclusion is too quick.
+
+After replacing $SO^+(1,3)$ by its double cover, both sectors carry ordinary linear representations. Their direct sum is mathematically consistent, and a vector such as
+
+$$
+|\Psi\rangle
+=
+a|\text{integer spin}\rangle
++b|\text{half-integer spin}\rangle
+$$
+
+is a perfectly good Hilbert-space vector.
+
+A <Term>superselection rule</Term> is a stronger physical statement: no allowed observable or preparation can detect the relative phase between the two sectors. Establishing such a rule requires more input than Lorentz-group topology alone—for example, the observable algebra, locality, or fermion-parity structure of the theory.
+
+The safe conclusion is therefore:
+
+$$
+\boxed{
+\text{the double cover permits half-integer spin;
+it does not by itself forbid cross-sector superpositions.}
+}
+$$
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The essential chain is:
+
+1. The Lorentz group has four disconnected components; only the proper orthochronous component has the familiar rotation and boost generators.
+2. Probability-preserving ray symmetries may be unitary or antiunitary.
+3. A lower-bounded energy spectrum makes parity unitary and time reversal antiunitary, with both preserving $H$.
+4. Parity flips massless helicity; time reversal preserves it while reversing momentum and angular momentum separately.
+5. For spin $j$, the standard time-reversal action gives $\mathsf T^2=(-1)^{2j}$ and Kramers pairing when the square is $-1$.
+6. Ray symmetry operators may compose up to a cocycle phase, but rephasing removes coboundary pieces.
+7. The $3+1$-dimensional Poincaré algebra has no needed central extension; its important projective structure comes from Lorentz-group topology.
+8. $SL(2,\mathbb C)$ double-covers $SO^+(1,3)$, turning the spinor sign under a $2\pi$ rotation into an ordinary representation of the cover.
+
+What looked like a loose collection of exceptions is one coherent lesson:
+
+$$
+\boxed{
+\text{quantum symmetry depends on rays,
+disconnected components, and global paths—not only generators.}
+}
+$$
+
+<ChapterSectionNav currentSlug="discrete-projective-symmetries" />
+
+</ArticleLayout>

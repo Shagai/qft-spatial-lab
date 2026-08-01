@@ -1,0 +1,241 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import { relativisticQuantumMechanicsProblemsRoute } from '../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 1 · Section 7 of 7"
+  title="Why the Story Ends with Fields"
+  subtitle="Relativistic one-particle theory tells us what a particle is. Local quantum fields provide the larger framework in which particles can be created, destroyed, and scattered without abandoning causality."
+  updated="2026-08-01"
+  readingTime="12 min"
+  parent={{ label: 'Relativistic Quantum Mechanics', to: '/chapters/relativistic-quantum-mechanics' }}
+  toc={[
+    { href: '#what-we-have', label: 'What we have built' },
+    { href: '#fixed-number', label: 'The fixed-number limit' },
+    { href: '#fock-space', label: 'Fock space' },
+    { href: '#creation-operators', label: 'Creating particle states' },
+    { href: '#fields', label: 'What a field adds' },
+    { href: '#locality', label: 'Locality' },
+    { href: '#scattering', label: 'Scattering' },
+    { href: '#cluster', label: 'Cluster decomposition' },
+    { href: '#chapter-result', label: 'The chapter result' },
+  ]}
+>
+
+<h2 id="what-we-have">What the one-particle theory has already accomplished</h2>
+
+Relativistic quantum mechanics is not a failed detour on the way to QFT. It answers a precise and permanent question:
+
+> What can one stable one-particle state look like if quantum probabilities and Poincaré symmetry are both exact?
+
+The answer is a unitary irreducible representation of the identity-connected Poincaré group, or more precisely its quantum cover. Its invariant labels are mass and spin for a massive particle, or helicity for the familiar massless cases. The state
+
+$$
+|p,\sigma\rangle
+$$
+
+records a point on a momentum orbit together with the little-group label carried at that point. Those states remain the building blocks of QFT.
+
+What changes is not the definition of a particle. What changes is the size of the Hilbert space needed to describe physical processes.
+
+<h2 id="fixed-number">Why a fixed number of particles is too small</h2>
+
+A free relativistic particle can be treated consistently in a one-particle Hilbert space. Relativity by itself does not forbid that sector. The trouble begins when we ask for local interactions at energies high enough to change particle content.
+
+Energy can be converted into rest mass. If an interaction supplies enough center-of-mass energy, a state that began with two particles may end with three, four, or more. Particle-antiparticle pairs can also appear while every final excitation still has positive energy.
+
+A fixed two-particle wavefunction has nowhere to put those outcomes. This is not a small correction to its Hamiltonian; it is a change in the list of possible states.
+
+<Callout title="The careful conclusion">
+Special relativity plus free quantum mechanics does not logically force us to quantize a field. The compelling step to QFT comes when we demand a framework that also handles local interactions, variable particle number, antiparticles, and relativistic causality.
+</Callout>
+
+<h2 id="fock-space">Fock space lets particle number vary</h2>
+
+For free fields and asymptotic scattering states, instead of choosing one particle number forever, combine all particle-number sectors:
+
+$$
+\boxed{
+\mathcal F
+=
+\mathcal H_0
+\oplus
+\mathcal H_1
+\oplus
+\mathcal H_2
+\oplus\cdots
+}
+$$
+
+Here $\mathcal H_0$ contains the vacuum, $\mathcal H_1$ contains one-particle states, and $\mathcal H_n$ contains $n$-particle states. For identical bosons the multiparticle states are symmetric under exchange; for identical fermions they are antisymmetric.
+
+The vacuum $|0\rangle$ is not “nothing” in a classical sense. It is the lowest-energy state from which particle excitations can be created and into which they can be annihilated.
+
+This simple Fock decomposition is exact for a free field and is the standard organization of perturbative scattering. A general interacting QFT need not possess one global particle Fock basis: confinement, massless infrared effects, and the interacting vacuum can make the particle description more subtle. The asymptotic particle sectors remain the right language whenever isolated incoming and outgoing particles exist.
+
+<h2 id="creation-operators">Creation operators carry the one-particle representation</h2>
+
+In that free or asymptotic particle basis, write a one-particle state as
+
+$$
+|p,\sigma\rangle
+=
+a^\dagger(p,\sigma)|0\rangle.
+$$
+
+The operator $a^\dagger(p,\sigma)$ adds a particle with momentum $p$ and spin or helicity label $\sigma$. Its adjoint $a(p,\sigma)$ removes one.
+
+Because the created state must transform with the Wigner little-group law, the creation operator transforms with the same momentum-dependent mixing:
+
+$$
+U(\Lambda)a^\dagger(p,\sigma)U^{-1}(\Lambda)
+=
+\sum_{\sigma'}
+D_{\sigma'\sigma}\!\left(W(\Lambda,p)\right)
+a^\dagger(\Lambda p,\sigma'),
+$$
+
+up to the normalization factor chosen for momentum states.
+
+This is an important continuity between relativistic quantum mechanics and QFT: the particle classification is not discarded. It determines how the mode operators must transform.
+
+<h2 id="fields">A field packages the modes into a local operator</h2>
+
+Creation and annihilation operators are naturally labeled by momentum. A field operator reorganizes those global momentum modes into an object labeled by a spacetime event.
+
+For a free real scalar field,
+
+$$
+\phi(x)
+=
+\int d\Pi_p
+\left[
+a(\mathbf p)e^{-ip\cdot x}
++
+a^\dagger(\mathbf p)e^{ip\cdot x}
+\right],
+$$
+
+where
+
+$$
+d\Pi_p
+=
+\frac{d^3p}{(2\pi)^3 2E_{\mathbf p}}
+$$
+
+is the Lorentz-invariant positive-energy measure.
+
+The two frequency branches that looked troublesome in a one-particle wave equation now have complementary jobs:
+
+<div className="two-panel-grid">
+  <div>
+    <strong>Positive-frequency mode</strong>
+    <p>Multiplies an annihilation operator and removes a particle excitation.</p>
+  </div>
+  <div>
+    <strong>Negative-frequency mode</strong>
+    <p>Multiplies a creation operator and adds a positive-energy excitation.</p>
+  </div>
+</div>
+
+For a complex field, particle and antiparticle modes use independent operators. The “negative-energy problem” is replaced by a positive-energy particle-antiparticle spectrum.
+
+<Sidenote>
+The field is not a many-particle wavefunction spread through ordinary space. It is an operator-valued distribution whose action can change the state in Fock space.
+</Sidenote>
+
+<h2 id="locality">Locality protects relativistic causality</h2>
+
+Relativity divides pairs of events into timelike, lightlike, and spacelike separation. Spacelike-separated events have no invariant time ordering: different inertial observers can disagree about which came first.
+
+The theory must therefore prevent an operation at one event from changing the outcome of a compatible measurement at the other. For bosonic local observables this is encoded by
+
+$$
+[\mathcal O(x),\mathcal O(y)]=0
+\qquad
+\text{when}
+\qquad
+(x-y)^2<0.
+$$
+
+For fundamental fermionic fields, anticommutators enter the corresponding microscopic condition; observable fermion bilinears still commute at spacelike separation.
+
+This condition is called <Term>microcausality</Term>. It does not say that a particle has a sharply localized classical path. It says that the algebra of local operations cannot be used to send a controllable influence outside the light cone.
+
+<h2 id="scattering">Particles return as the asymptotic language of scattering</h2>
+
+Interactions can make the number of particles uncertain during a collision. Far before and far after the interaction, however, widely separated excitations can behave approximately like free particles. This gives asymptotic states
+
+$$
+|\alpha,\mathrm{in}\rangle,
+\qquad
+|\beta,\mathrm{out}\rangle.
+$$
+
+The scattering operator connects them:
+
+$$
+S_{\beta\alpha}
+=
+\langle\beta,\mathrm{out}|\alpha,\mathrm{in}\rangle.
+$$
+
+Thus the logical flow is a circle rather than a replacement:
+
+$$
+\boxed{
+\text{Poincaré particle states}
+\longrightarrow
+\text{local quantum fields}
+\longrightarrow
+\text{particle scattering amplitudes}.
+}
+$$
+
+The fields organize locality and interactions. The particle states organize what detectors see far from the collision.
+
+<Callout title="Continue the argument">
+The next chapter makes this circle operational. Follow the complete path from localized in-states to measurable rates in <Link to="/chapters/scattering-theory">Scattering Theory</Link>.
+</Callout>
+
+<h2 id="cluster">Why distant experiments should separate</h2>
+
+Suppose two scattering experiments are performed very far apart. Moving one laboratory farther away should not change the connected outcome in the other. This expectation is the <Term>cluster decomposition principle</Term>.
+
+Schematically, disconnected experiments factorize:
+
+$$
+S_{A+B}
+\longrightarrow
+S_A S_B
+$$
+
+as their separation becomes large, while genuinely connected correlations fade. Cluster decomposition is stronger than merely conserving energy and momentum. It expresses the independence of distant experiments and helps explain why local interaction densities are such a natural organizing principle.
+
+The <Link to="/chapters/scattering-theory/s-matrix#cluster-decomposition">S-matrix section</Link> develops this statement in the language of connected amplitudes. Here the principle serves as a signpost: a relativistic quantum theory must join exact spacetime symmetry to locality across both nearby and widely separated processes.
+
+<h2 id="chapter-result">What this chapter has established</h2>
+
+The full argument can now be compressed into seven steps:
+
+1. Quantum physics describes rays, amplitudes, and operators in a Hilbert space.
+2. The identity-connected Poincaré group is represented unitarily on states while acting geometrically on spacetime.
+3. The Poincaré algebra supplies the generators and invariant Casimirs.
+4. Little groups classify one-particle states by mass, spin, or helicity.
+5. Discrete transformations and projective phases reveal global structure that the Lie algebra alone cannot see.
+6. Relativistic wave equations realize particle representations in local spacetime components.
+7. Variable particle number and locality enlarge the theory to quantum fields and Fock space.
+
+Relativistic quantum mechanics therefore does not end with one perfect replacement for the Schrödinger equation. Its deeper result is a map of the structures that a quantum field theory must preserve.
+
+<ChapterSectionNav
+  currentSlug="toward-fields"
+  completionRoute={relativisticQuantumMechanicsProblemsRoute}
+  completionEyebrow="Chapter complete · Practice next"
+  completionLabel="Solved problem set"
+/>
+
+</ArticleLayout>

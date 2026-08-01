@@ -1,0 +1,343 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout, Sidenote } from '../../../components/MdxComponents'
+import {
+  relativisticQuantumMechanicsProblems,
+  relativisticQuantumMechanicsProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 1 · Problem 6 of 6"
+  title="Massless States in 2+1 Dimensions"
+  subtitle="A massless particle in one fewer dimension has no transverse rotation and therefore no ordinary helicity. Its connected little group is a line of null rotations with a real-valued phase label."
+  updated="2026-08-01"
+  readingTime={relativisticQuantumMechanicsProblems[5].readingTime}
+  parent={{ label: 'Relativistic Quantum Mechanics problems', to: relativisticQuantumMechanicsProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#little-group', label: 'The null little group' },
+    { href: '#representations', label: 'Its representations' },
+    { href: '#invariant', label: 'The invariant label' },
+    { href: '#inversions', label: 'The full O(2,1) group' },
+    { href: '#interpretation', label: 'Interpretation and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">What replaces helicity in (2+1) dimensions?</span>
+  <p>
+    Classify the spin states of one massless particle in two spatial and one time dimension. Determine their transformation under the connected Lorentz group and then explain how parity and time reversal extend the result to the full $O(2,1)$ group.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    Choose $k^\mu=(\kappa,0,\kappa)$. A particular combination of the planar rotation and the boost transverse to the ray leaves this momentum fixed. Its finite transformations form the additive group $\mathbb R$, not a circle.
+  </p>
+</details>
+
+<p>
+  In (3+1) dimensions, <Link to="/chapters/relativistic-quantum-mechanics/one-particle-states#massless">the massless little group</Link> contains rotations around the momentum direction and those rotations produce helicity. Here there is no plane transverse to the ray, so that part of the argument must change.
+</p>
+
+<Callout title="Read the group named in the problem carefully">
+The connected component first classifies the possible continuous particle labels. The disconnected elements in $O(2,1)$ then decide whether one such sector is complete or must be paired with another.
+</Callout>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Find the momentum-preserving generator</strong>
+      <p>Combine the only spatial rotation with a transverse boost so their changes of $k$ cancel.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Represent a noncompact line</strong>
+      <p>Use the one-dimensional characters of $\mathbb R$ and express their label invariantly.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Restore inversions</strong>
+      <p>Show that a reflection reverses the null-rotation parameter and pairs opposite Pauli-Lubanski eigenvalues.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="little-group">1. Find the null little group</h2>
+
+Work with
+
+$$
+\eta_{\mu\nu}=\operatorname{diag}(+,-,-)
+$$
+
+and choose a standard future-directed null momentum along $+y$:
+
+$$
+k^\mu=(\kappa,0,\kappa),
+\qquad
+k^2=0.
+$$
+
+Let
+
+$$
+J=M^{12}
+$$
+
+generate rotations in the spatial plane and let
+
+$$
+K_x=M^{10}
+$$
+
+generate boosts along $x$. With the notebook commutator conventions, the combination
+
+$$
+\boxed{N=J-K_x}
+$$
+
+preserves $k$. We can verify this without writing a finite matrix. The relevant commutators are
+
+$$
+[J,P_x]=iP_y,
+\qquad
+[J,P_y]=-iP_x,
+$$
+
+$$
+[K_x,H]=iP_x,
+\qquad
+[K_x,P_x]=iH,
+\qquad
+[K_x,P_y]=0.
+$$
+
+Thus
+
+$$
+[N,H]=-iP_x,
+$$
+
+$$
+[N,P_x]=i(P_y-H),
+$$
+
+$$
+[N,P_y]=-iP_x.
+$$
+
+On the state with $H=P_y=\kappa$ and $P_x=0$, every right-hand side vanishes. Acting with $N$ therefore keeps all momentum eigenvalues fixed.
+
+There is only one continuous little-group generator. Its finite transformations satisfy
+
+$$
+N(a)=e^{-iaN},
+$$
+
+$$
+N(a)N(b)=N(a+b).
+$$
+
+The connected massless little group is
+
+$$
+\boxed{(\mathbb R,+).}
+$$
+
+It is a line of null rotations, not a circle of ordinary spatial rotations.
+
+<h2 id="representations">2. Represent the little group</h2>
+
+Every irreducible unitary representation of the additive group $\mathbb R$ is a one-dimensional character:
+
+$$
+\boxed{
+U(N(a))|k,\lambda\rangle
+=e^{-ia\lambda}|k,\lambda\rangle,
+\qquad
+\lambda\in\mathbb R.
+}
+$$
+
+Choose standard transformations $L(p)$ with $L(p)k=p$. For a general proper orthochronous Lorentz transformation,
+
+$$
+W(\Lambda,p)
+=
+L^{-1}(\Lambda p)\Lambda L(p)
+=N(a(\Lambda,p)).
+$$
+
+The one-particle state transforms as
+
+$$
+\boxed{
+U(\Lambda)|p,\lambda\rangle
+=e^{-ia(\Lambda,p)\lambda}
+|\Lambda p,\lambda\rangle.
+}
+$$
+
+There is one state per momentum for a fixed character. The label is not quantized because the group parameter never returns to the identity after a finite nonzero period.
+
+This already shows why “helicity” is the wrong word. Helicity comes from a compact rotation around the ray. Here the momentum-preserving operation is a noncompact mixture of a rotation and a boost.
+
+<h2 id="invariant">3. Package the label invariantly</h2>
+
+In (2+1) dimensions the Pauli-Lubanski object is the pseudoscalar
+
+$$
+W
+=
+\frac12\epsilon_{\mu\nu\rho}
+P^\mu M^{\nu\rho}.
+$$
+
+For the chosen momentum,
+
+$$
+W=\kappa(J-K_x)=\kappa N.
+$$
+
+It is therefore better to label the representation by the invariant eigenvalue $\rho$:
+
+$$
+\boxed{
+W|p,\rho\rangle=\rho|p,\rho\rangle,
+\qquad
+\rho=\kappa\lambda.
+}
+$$
+
+The scale $\kappa$ was arbitrary, while $\rho$ is a Casimir eigenvalue and does not depend on the chosen reference ray.
+
+Two branches are possible:
+
+<div className="two-panel-grid">
+  <div>
+    <strong>Trivial null rotation: $\rho=0$</strong>
+    <p>The little group acts trivially. Familiar massless finite-component fields in (2+1) dimensions realize this branch.</p>
+  </div>
+  <div>
+    <strong>Nontrivial null rotation: $\rho\neq0$</strong>
+    <p>The state acquires a genuine momentum-preserving phase. This is the lower-dimensional analogue of a continuous-spin representation.</p>
+  </div>
+</div>
+
+Representation theory allows the second branch even though familiar particle models generally use the first. Symmetry classifies possibilities; it does not promise that nature realizes every one.
+
+<Sidenote>
+The nonzero branch is sometimes called a massless anyonic or “panyon” representation. The useful statement here is the group-theoretic one: it is a nontrivial character of the null little group, labeled invariantly by $\rho$.
+</Sidenote>
+
+<h2 id="inversions">4. Extend to the full (O(2,1)) group</h2>
+
+Reflect the transverse coordinate $x$:
+
+$$
+\mathsf P_x:(t,x,y)\mapsto(t,-x,y).
+$$
+
+This reflection leaves the reference momentum $k=(\kappa,0,\kappa)$ fixed, but it reverses the little-group generator:
+
+$$
+\mathsf P_xN\mathsf P_x^{-1}=-N.
+$$
+
+Equivalently, because $W$ is a pseudoscalar,
+
+$$
+\mathsf P_xW\mathsf P_x^{-1}=-W.
+$$
+
+Therefore
+
+$$
+\boxed{\mathsf P_x:\rho\longmapsto-\rho.}
+$$
+
+Time reversal also reverses the Pauli-Lubanski pseudoscalar, after its antiunitary action and reversal of spatial momentum are taken into account:
+
+$$
+\boxed{\mathsf T:\rho\longmapsto-\rho.}
+$$
+
+For $\rho\neq0$, a single character of the connected little group cannot be extended by itself to the full group. The minimal inversion-closed multiplet is
+
+$$
+\boxed{
+|p,+\rho\rangle,
+\qquad
+|p,-\rho\rangle,
+}
+$$
+
+with parity or time reversal exchanging the two.
+
+For $\rho=0$, the connected little group acts trivially, so an inversion may keep the single sector fixed. A reflection can then act by an intrinsic sign or phase consistent with its group relations.
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+<div className="answer-check">
+  <strong>Dimensional check</strong>
+  <p>
+    In (d) spacetime dimensions the familiar massless little group has Euclidean form $ISO(d-2)$. Setting $d=3$ leaves $ISO(1)$: its connected component is precisely the translation group $\mathbb R$, with no continuous transverse rotation.
+  </p>
+</div>
+
+The massive and massless cases in (2+1) dimensions should not be conflated:
+
+- massive spin is a phase under the compact rest-frame rotation $SO(2)$;
+- massless $\rho$ is a phase under a noncompact null rotation $\mathbb R$.
+
+Both labels can be real, but for different geometric reasons.
+
+**Common trap:** setting the little-group action to zero simply because there is no helicity. The trivial branch $\rho=0$ is familiar, but a nontrivial one-dimensional character is mathematically allowed and must be included in a complete classification.
+
+Another trap is forgetting that the problem asks about $O(2,1)$ rather than only its identity component. The disconnected reflection sends $\rho$ to $-\rho$, so nonzero sectors come in pairs when inversion symmetry is imposed.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+For a massless particle in (2+1) dimensions, the connected little group is
+
+$$
+\boxed{\mathbb R,}
+$$
+
+and its states may carry a real Pauli-Lubanski eigenvalue
+
+$$
+\boxed{W|p,\rho\rangle=\rho|p,\rho\rangle.}
+$$
+
+$\rho=0$ gives the familiar trivial action; $\rho\neq0$ gives a nontrivial null-rotation phase. Extending to parity or time reversal pairs the nonzero sectors:
+
+$$
+\boxed{+\rho\longleftrightarrow-\rho.}
+$$
+
+There is no ordinary helicity because there is no transverse rotation plane.
+
+<ChapterSectionNav
+  currentSlug="massless-particles-in-2-plus-1"
+  sections={relativisticQuantumMechanicsProblems}
+  overviewRoute={relativisticQuantumMechanicsProblemsRoute}
+  overviewLabel="Problem set"
+  chapterTitle="Relativistic Quantum Mechanics problems"
+  completionRoute="/chapters/relativistic-quantum-mechanics"
+  completionEyebrow="Problem set complete"
+  completionLabel="Relativistic Quantum Mechanics"
+/>
+
+</ArticleLayout>

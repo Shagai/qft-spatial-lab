@@ -1,0 +1,340 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout } from '../../../components/MdxComponents'
+import {
+  scatteringTheoryProblems,
+  scatteringTheoryProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 2 · Problem 3 of 7"
+  title="Two-Body Scattering in the Laboratory Frame"
+  subtitle="The invariant phase-space formula already knows every reference frame. The real work in the laboratory frame is the recoil Jacobian hidden inside the energy delta function."
+  updated="2026-08-01"
+  readingTime={scatteringTheoryProblems[2].readingTime}
+  parent={{ label: 'Scattering Theory problems', to: scatteringTheoryProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#kinematics', label: 'Lab kinematics' },
+    { href: '#master-formula', label: 'Invariant starting point' },
+    { href: '#momentum-delta', label: 'Remove recoil momentum' },
+    { href: '#jacobian', label: 'Energy Jacobian' },
+    { href: '#source-convention', label: 'Convention translation' },
+    { href: '#interpretation', label: 'Checks and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">Direct laboratory-frame derivation</span>
+  <p>
+    Consider a general two-body reaction $1+2\to3+4$. Particle $2$ begins at rest in the laboratory. Starting from the invariant cross-section formula, derive $d\sigma/d\Omega_{\rm lab}$ for observing particle $3$ at a specified angle. Do not transform a center-of-mass result.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    Use the spatial delta function to set $\mathbf p_4=\mathbf p_1-\mathbf p_3$. The remaining energy delta function fixes the magnitude $q=|\mathbf p_3|$ and contributes the derivative of $E_3(q)+E_4(q)$.
+  </p>
+</details>
+
+<p>
+  This is the frame-specific version of <Link to={scatteringTheoryProblems[2].theoryRoute}>the phase-space master formula</Link>. We keep the metric $g_{\mu\nu}=\operatorname{diag}(+,-,-,-)$ and covariantly normalized external states.
+</p>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Choose observable lab variables</strong>
+      <p>Describe the detected momentum by its magnitude $q$ and angle $\theta$ relative to the beam.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Use four-momentum conservation once</strong>
+      <p>Integrate the recoil three-momentum and leave only the energy constraint.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Pay the recoil Jacobian</strong>
+      <p>Use $\delta(f(q))$ carefully; this is the step that distinguishes the lab result from the center-of-mass formula.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="kinematics">1. Set up laboratory kinematics</h2>
+
+Write
+
+$$
+p_1=(E_1,\mathbf p),
+\qquad
+p_2=(m_2,\mathbf0),
+$$
+
+with
+
+$$
+p=|\mathbf p|,
+\qquad
+E_1=\sqrt{p^2+m_1^2}.
+$$
+
+Let the observed particle be
+
+$$
+p_3=(E_3,\mathbf q),
+\qquad
+q=|\mathbf q|,
+\qquad
+\mathbf p\cdot\mathbf q=pq\cos\theta,
+$$
+
+where
+
+$$
+E_3(q)=\sqrt{q^2+m_3^2}.
+$$
+
+Momentum conservation makes the unobserved recoil momentum
+
+$$
+\mathbf p_4=\mathbf p-\mathbf q,
+$$
+
+so
+
+$$
+E_4(q,\theta)
+=
+\sqrt{p^2+q^2-2pq\cos\theta+m_4^2}.
+$$
+
+The allowed value of $q$ is not independent. It is fixed by
+
+$$
+\boxed{
+E_1+m_2=E_3(q)+E_4(q,\theta).
+}
+$$
+
+For ordinary kinematics there is one physical positive root. In more general situations, the final answer must sum over all physical roots.
+
+<h2 id="master-formula">2. Start from the invariant master formula</h2>
+
+With
+
+$$
+\langle\mathbf p',\sigma'|\mathbf p,\sigma\rangle
+=
+2E_{\mathbf p}(2\pi)^3
+\delta^3(\mathbf p'-\mathbf p)\delta_{\sigma'\sigma},
+$$
+
+and
+
+$$
+\langle f|i\mathcal T|i\rangle
+=
+i(2\pi)^4\delta^4(P_f-P_i)\mathcal M_{fi},
+$$
+
+the cross-section is
+
+$$
+d\sigma
+=
+\frac{\overline{|\mathcal M|^2}}
+{4\sqrt{(p_1\cdot p_2)^2-m_1^2m_2^2}}
+(2\pi)^4\delta^4(p_1+p_2-p_3-p_4)
+\prod_{r=3}^{4}
+\frac{d^3p_r}{(2\pi)^3\,2E_r}.
+$$
+
+The bar denotes the desired average over initial discrete labels and sum over final ones. If those labels are fixed instead, omit the average.
+
+In the target rest frame,
+
+$$
+p_1\cdot p_2=E_1m_2.
+$$
+
+Because $E_1^2-m_1^2=p^2$,
+
+$$
+\sqrt{(p_1\cdot p_2)^2-m_1^2m_2^2}
+=
+m_2p.
+$$
+
+The invariant flux denominator is therefore
+
+$$
+\boxed{4m_2p.}
+$$
+
+<Callout title="The flux is already relativistic">
+One may also write the denominator as $4E_1m_2v_{\rm rel}$. In the target rest frame $v_{\rm rel}=p/E_1$, giving the same $4m_2p$. No separate velocity factor should be added later.
+</Callout>
+
+<h2 id="momentum-delta">3. Eliminate the recoil momentum</h2>
+
+Use the three-dimensional delta function to perform the $d^3p_4$ integral. Then write
+
+$$
+d^3p_3=q^2\,dq\,d\Omega.
+$$
+
+The factors of $2\pi$ and the one-particle energies give
+
+$$
+\frac{d\sigma}{d\Omega}
+=
+\frac{\overline{|\mathcal M|^2}}
+{64\pi^2m_2p}
+\int_0^\infty dq\,
+\frac{q^2}{E_3E_4}
+\delta\!\left(E_1+m_2-E_3-E_4\right).
+$$
+
+Up to this point, momentum conservation has determined the recoil direction and magnitude, but energy conservation still has to select the physical $q$.
+
+<h2 id="jacobian">4. Evaluate the energy-delta Jacobian</h2>
+
+Define
+
+$$
+f(q)=E_1+m_2-E_3(q)-E_4(q,\theta).
+$$
+
+Its derivative is
+
+$$
+f'(q)
+=
+-\frac{q}{E_3}
+-\frac{q-p\cos\theta}{E_4}.
+$$
+
+The delta-function identity
+
+$$
+\delta(f(q))
+=
+\sum_i\frac{\delta(q-q_i)}{|f'(q_i)|}
+$$
+
+therefore gives
+
+$$
+\frac{q_i^2}{E_3E_4|f'(q_i)|}
+=
+\frac{q_i^2}
+{\left|q_iE_4+(q_i-p\cos\theta)E_3\right|}.
+$$
+
+The laboratory differential cross-section is
+
+$$
+\boxed{
+\frac{d\sigma}{d\Omega_{\rm lab}}
+=
+\frac{\overline{|\mathcal M|^2}}
+{64\pi^2m_2p}
+\sum_i
+\frac{q_i^2}
+{\left|q_iE_4+(q_i-p\cos\theta)E_3\right|}.
+}
+$$
+
+Energy conservation also lets us write $E_3+E_4=E_1+m_2$. Hence an equivalent compact form is
+
+$$
+\boxed{
+\frac{d\sigma}{d\Omega_{\rm lab}}
+=
+\frac{\overline{|\mathcal M|^2}}
+{64\pi^2m_2p}
+\sum_i
+\frac{q_i^2}
+{\left|q_i(E_1+m_2)-pE_3\cos\theta\right|}.
+}
+$$
+
+All energies in the denominator are evaluated at the corresponding physical root $q_i$.
+
+<h2 id="source-convention">5. Translate the older state normalization</h2>
+
+The source exercise denotes by $M_{\beta\alpha}^{\rm src}$ an amplitude between states normalized as $\delta^3(\mathbf p'-\mathbf p)$ and writes its connected S-matrix with a factor $-2\pi i\delta^4(P_f-P_i)$. For four external particles,
+
+$$
+\mathcal M
+=
+-4(2\pi)^3
+\sqrt{E_1E_2E_3E_4},
+M_{\beta\alpha}^{\rm src}.
+$$
+
+Here $E_2=m_2$. Substitution into the boxed covariant result gives the literal source-normalized form
+
+$$
+\frac{d\sigma}{d\Omega_{\rm lab}}
+=
+(2\pi)^4\frac{E_1}{p}
+|M_{\beta\alpha}^{\rm src}|^2
+\sum_i
+\frac{q_i^2}
+{\left|q_i/E_3+(q_i-p\cos\theta)/E_4\right|}.
+$$
+
+The two formulas describe the same observable. Their different energy and $2\pi$ factors live entirely in the normalization assigned to the external states and amplitude.
+
+<div className="answer-check">
+  <strong>Answer check</strong>
+  <p>
+    The final expression has dimension $E^{-2}$: the prefactor contributes $E^{-2}$, the recoil ratio is dimensionless, and $\mathcal M$ is dimensionless in four spacetime dimensions. It also retains the absolute Jacobian, so it remains valid if the physical branch reverses orientation as a function of $q$.
+  </p>
+</div>
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+The invariant master formula was not tied to the center-of-mass frame. What changes from frame to frame is the convenient parametrization of the final phase space. In the laboratory, a fixed outgoing direction does not fix the phase-space weight until recoil is included.
+
+Common traps are:
+
+1. Replacing the invariant flux with $4E_1m_2$ and forgetting the relative velocity.
+2. Dropping the derivative of the energy constraint when integrating over $q$.
+3. Using the center-of-mass result with lab values of $p$ and $q$.
+4. Forgetting to sum over multiple physical roots when the kinematics permits them.
+5. Mixing the source's delta-normalized amplitude with the notebook's covariant phase-space formula.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The derivation has three indispensable ingredients:
+
+1. the target-rest-frame flux $4m_2p$;
+2. the recoil relation $\mathbf p_4=\mathbf p-\mathbf q$;
+3. the Jacobian $|q/E_3+(q-p\cos\theta)/E_4|^{-1}$.
+
+Once these are present, the result follows directly from invariant phase space without borrowing any center-of-mass formula.
+
+<ChapterSectionNav
+  currentSlug="laboratory-frame-cross-section"
+  sections={scatteringTheoryProblems}
+  overviewRoute={scatteringTheoryProblemsRoute}
+  overviewLabel="Problem set overview"
+  chapterTitle="Scattering Theory problems"
+  completionRoute="/chapters/scattering-theory"
+  completionEyebrow="Problem set complete"
+  completionLabel="Scattering Theory overview"
+/>
+
+</ArticleLayout>

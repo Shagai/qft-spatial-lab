@@ -1,0 +1,308 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout, Sidenote } from '../../../components/MdxComponents'
+import {
+  relativisticQuantumMechanicsProblems,
+  relativisticQuantumMechanicsProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 1 · Problem 1 of 6"
+  title="A Transverse Boost of a Massive Spin-One State"
+  subtitle="Changing observer tilts the momentum, but for a massive particle it also rotates the canonical spin basis. The residual rotation is the part that a four-vector calculation alone would miss."
+  updated="2026-08-01"
+  readingTime={relativisticQuantumMechanicsProblems[0].readingTime}
+  parent={{ label: 'Relativistic Quantum Mechanics problems', to: relativisticQuantumMechanicsProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#momentum', label: 'Transform the momentum' },
+    { href: '#wigner', label: 'Isolate the Wigner rotation' },
+    { href: '#spin-one', label: 'Act on spin one' },
+    { href: '#checks', label: 'Checks and interpretation' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">A massive vector particle seen from the side</span>
+  <p>
+    Observer $O$ describes a massive spin-one particle with momentum $p$ along $+y$ and canonical spin component $\sigma$ along $z$. A second observer $O'$ moves with velocity $v$ along $+z$ relative to $O$. What momentum and spin state does $O'$ assign to the particle?
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    First boost the four-momentum. For the spin, compare the actual route $B_z(-\eta)L(p)$ with the chosen rotationless standard boost $L(p')$. Their difference leaves the rest momentum fixed, so it must be a rotation.
+  </p>
+</details>
+
+<p>
+  This is the concrete calculation behind <Link to="/chapters/relativistic-quantum-mechanics/one-particle-states#wigner-rotation">the Wigner-rotation discussion</Link>. We use covariantly normalized states, so no square-root energy factor accompanies the transformation.
+</p>
+
+<Callout title="Observer convention">
+Observer $O'$ moves along $+z$, so components reported by $O'$ are obtained with the passive boost $B_z(-\eta)$, where $\tanh\eta=v$. An active boost in the opposite convention reverses the signs of the displayed rotation angles, but not the mixing probabilities.
+</Callout>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Boost the momentum</strong>
+      <p>Write the initial momentum in terms of a particle rapidity and apply the observer's transverse boost.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Close the momentum path</strong>
+      <p>Undo the final momentum with its standard boost. What remains is a little-group rotation about $x$.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Rotate the spin-one basis</strong>
+      <p>Apply the $j=1$ rotation matrix and read the result as a superposition of $z$-spin components.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="momentum">1. Transform the momentum</h2>
+
+Write
+
+$$
+p^\mu=(E,0,p,0),
+\qquad
+E=\sqrt{m^2+p^2}.
+$$
+
+Introduce the particle rapidity $\xi$ and the observer rapidity $\eta$:
+
+$$
+\cosh\xi=\frac Em,
+\qquad
+\sinh\xi=\frac pm,
+\qquad
+\tanh\eta=v,
+\qquad
+\cosh\eta=\gamma_v.
+$$
+
+The momentum measured by $O'$ is
+
+$$
+\begin{aligned}
+p'^\mu
+&=B_z(-\eta)p^\mu\\
+&=\boxed{(\gamma_vE,\,0,\,p,\,-\gamma_vvE)}.
+\end{aligned}
+$$
+
+The $y$ component is unchanged because the observer boost is along $z$. The negative $z$ component is ordinary aberration: an observer moving toward $+z$ sees the particle arrive with a component toward $-z$.
+
+The mass shell is an immediate check:
+
+$$
+(p'^0)^2-|\mathbf p'|^2
+=
+\gamma_v^2E^2-p^2-\gamma_v^2v^2E^2
+=E^2-p^2=m^2.
+$$
+
+<h2 id="wigner">2. Isolate the Wigner rotation</h2>
+
+The initial canonical spin state is defined by a rotationless boost from rest,
+
+$$
+L(p)=B_y(\xi).
+$$
+
+After the observer boost, let $L(p')$ denote the rotationless boost that takes $(m,\mathbf0)$ directly to $p'$. Comparing the two paths gives
+
+$$
+W
+=
+L^{-1}(p')B_z(-\eta)B_y(\xi).
+$$
+
+Acting on the rest momentum,
+
+$$
+W(m,\mathbf0)
+=
+L^{-1}(p')p'
+=(m,\mathbf0),
+$$
+
+so $W$ belongs to the massive little group. Because the two boosts lie in the $yz$ plane, their residual rotation is about the perpendicular $x$-axis:
+
+$$
+\boxed{W=R_x(-\Omega)}.
+$$
+
+Multiplying the boosts gives
+
+$$
+\sin\Omega
+=
+\frac{\sinh\eta\sinh\xi}
+{\cosh\eta\cosh\xi+1}
+=
+\frac{\gamma_vvp}{\gamma_vE+m},
+$$
+
+$$
+\cos\Omega
+=
+\frac{\cosh\eta+\cosh\xi}
+{\cosh\eta\cosh\xi+1}
+=
+\frac{\gamma_vm+E}{\gamma_vE+m}.
+$$
+
+The most compact form is
+
+$$
+\boxed{
+\tan\Omega
+=
+\frac{\gamma_vvp}{\gamma_vm+E}
+}.
+$$
+
+Equivalently,
+
+$$
+\tan\frac\Omega2
+=
+\tanh\frac\eta2\tanh\frac\xi2.
+$$
+
+This is the finite form of the algebraic statement
+
+$$
+[K_y,K_z]=-iJ_x.
+$$
+
+Two non-collinear boosts cannot combine into only another boost.
+
+<h2 id="spin-one">3. Let the rotation act on spin one</h2>
+
+For covariantly normalized canonical states,
+
+$$
+\boxed{
+U\!\left(B_z(-\eta)\right)|p,\sigma\rangle
+=
+\sum_{\sigma'=-1}^{1}
+D^{(1)}_{\sigma'\sigma}\!\left(R_x(-\Omega)\right)
+|p',\sigma'\rangle.
+}
+$$
+
+In the ordered basis $(+1,0,-1)$,
+
+$$
+D^{(1)}\!\left(R_x(-\Omega)\right)
+=e^{+i\Omega J_x}
+=
+\begin{pmatrix}
+\dfrac{1+\cos\Omega}{2}
+&\dfrac{i\sin\Omega}{\sqrt2}
+&-\dfrac{1-\cos\Omega}{2}\\[7pt]
+\dfrac{i\sin\Omega}{\sqrt2}
+&\cos\Omega
+&\dfrac{i\sin\Omega}{\sqrt2}\\[7pt]
+-\dfrac{1-\cos\Omega}{2}
+&\dfrac{i\sin\Omega}{\sqrt2}
+&\dfrac{1+\cos\Omega}{2}
+\end{pmatrix}.
+$$
+
+For example, if $O$ prepared the state with $\sigma=0$, then $O'$ writes it as
+
+$$
+|p,0\rangle
+\longrightarrow
+\frac{i\sin\Omega}{\sqrt2}|p',+1\rangle
++\cos\Omega|p',0\rangle
++\frac{i\sin\Omega}{\sqrt2}|p',-1\rangle.
+$$
+
+The corresponding probabilities are
+
+$$
+P(0\to0)=\cos^2\Omega,
+\qquad
+P(0\to\pm1)=\frac12\sin^2\Omega.
+$$
+
+<Sidenote>
+Momentum-dependent phase conventions for the spin basis can move the factors of $i$ around. The rotation angle and every probability are convention independent.
+</Sidenote>
+
+<h2 id="checks">Checks and interpretation</h2>
+
+<div className="answer-check">
+  <strong>Three limiting checks</strong>
+  <p>
+    If $v=0$, if $p=0$, or if the two boosts are collinear, then $\Omega=0$. In every case where there is no non-collinear pair of boosts, the spin mixing disappears exactly as it should.
+  </p>
+</div>
+
+For small particle and observer speeds,
+
+$$
+\Omega\simeq\frac12uv,
+\qquad
+u=\frac pE,
+$$
+
+which is the infinitesimal Thomas-Wigner rotation. The factor of one half is a useful diagnostic; simply rotating by the change in the momentum direction would give the wrong answer.
+
+The particle remains a spin-one particle. What changes is the component assigned relative to the canonical axes used at the new momentum. Spin is not a little arrow that every observer boosts independently of the momentum.
+
+**Common trap:** transforming only $p^\mu$ and carrying the label $\sigma$ across unchanged. That would ignore the little-group element $L^{-1}(p')\Lambda L(p)$, which is precisely where relativistic spin lives.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The complete observer change is
+
+$$
+\boxed{
+p'^\mu=(\gamma_vE,0,p,-\gamma_vvE),
+\qquad
+|p,\sigma\rangle
+\mapsto
+D^{(1)}(R_x(-\Omega))|p',\sigma\rangle,
+}
+$$
+
+with
+
+$$
+\boxed{
+\tan\Omega=\frac{\gamma_vvp}{\gamma_vm+E}.
+}
+$$
+
+The momentum change is a Lorentz boost; the spin change is the Wigner rotation left over after the final standard boost is removed.
+
+<ChapterSectionNav
+  currentSlug="massive-spin-transverse-boost"
+  sections={relativisticQuantumMechanicsProblems}
+  overviewRoute={relativisticQuantumMechanicsProblemsRoute}
+  overviewLabel="Problem set"
+  chapterTitle="Relativistic Quantum Mechanics problems"
+  completionRoute="/chapters/relativistic-quantum-mechanics"
+  completionEyebrow="Problem set complete"
+  completionLabel="Relativistic Quantum Mechanics"
+/>
+
+</ArticleLayout>

@@ -1,0 +1,302 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import { BornRuleFigure, PhaseFigure } from '../../components/InteractiveFigures'
+
+<ArticleLayout
+  kicker="Chapter 1 · Section 1 of 7"
+  title="The Quantum Language"
+  subtitle="Before asking how relativity changes quantum mechanics, fix what cannot be lost: states are rays, amplitudes interfere, observables are operators, and continuous symmetries have generators."
+  updated="2026-08-01"
+  readingTime="14 min"
+  parent={{ label: 'Relativistic Quantum Mechanics', to: '/chapters/relativistic-quantum-mechanics' }}
+  toc={[
+    { href: '#question', label: 'The question' },
+    { href: '#state-space', label: 'State space' },
+    { href: '#rays', label: 'Rays and phase' },
+    { href: '#amplitudes', label: 'Amplitudes' },
+    { href: '#born-rule', label: 'Born rule' },
+    { href: '#operators', label: 'Operators' },
+    { href: '#generators', label: 'Symmetry generators' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="question">The question</h2>
+
+Relativistic quantum mechanics is often introduced by changing an equation. That starts too late. The first question is more basic:
+
+> What is the minimum quantum structure that every inertial observer must agree how to use?
+
+Observers may assign different energies, momenta, and spin components to the same preparation. They must nevertheless agree on probabilities. That means relativity has to act consistently on the entire quantum language, not only on the coordinates appearing in a differential equation.
+
+This section builds that language in a compact chain:
+
+$$
+\boxed{
+\text{state space}
+\longrightarrow
+\text{amplitudes}
+\longrightarrow
+\text{probabilities}
+\longrightarrow
+\text{operators}
+\longrightarrow
+\text{symmetry generators}.
+}
+$$
+
+<Callout title="Working units">
+We use natural units, $\hbar=c=1$, whenever they make the structure easier to see. Factors of $\hbar$ and $c$ can always be restored by dimensional analysis.
+</Callout>
+
+<h2 id="state-space">A state is a direction in a complex space</h2>
+
+A quantum state is represented by a nonzero vector $|\psi\rangle$ in a complex Hilbert space $\mathcal H$. The vector-space structure is what makes superposition possible:
+
+$$
+|\chi\rangle
+=
+\alpha|\psi\rangle+\beta|\phi\rangle,
+\qquad
+\alpha,\beta\in\mathbb C.
+$$
+
+The coefficients are not classical probabilities. They are <Term>amplitudes</Term>, and their complex phases affect interference.
+
+The inner product
+
+$$
+\langle\phi|\psi\rangle
+$$
+
+measures the overlap between two states. It is conjugate symmetric,
+
+$$
+\langle\phi|\psi\rangle
+=
+\langle\psi|\phi\rangle^*,
+$$
+
+and gives the norm
+
+$$
+\|\psi\|^2=\langle\psi|\psi\rangle\geq0.
+$$
+
+In wave mechanics, one representation of a state is a square-integrable function $\psi(\mathbf x)$. Its inner product is
+
+$$
+\langle\phi|\psi\rangle
+=
+\int d^3x\,\phi^*(\mathbf x)\psi(\mathbf x).
+$$
+
+The function is a coordinate description of the abstract state, just as a column of numbers is a coordinate description of a geometric vector. Later, momentum-space wavefunctions and Fock-space states will describe the same underlying quantum structure in different bases.
+
+<div className="concept-ladder">
+  <div className="concept-ladder-step">
+    <strong>Vector space</strong>
+    <span>Allowed states can be superposed.</span>
+  </div>
+  <div className="concept-ladder-step">
+    <strong>Complex numbers</strong>
+    <span>Amplitudes carry phases that can reinforce or cancel.</span>
+  </div>
+  <div className="concept-ladder-step">
+    <strong>Inner product</strong>
+    <span>Overlap becomes an experimentally meaningful amplitude.</span>
+  </div>
+  <div className="concept-ladder-step">
+    <strong>Completeness</strong>
+    <span>Limits of convergent state sequences remain inside the space.</span>
+  </div>
+</div>
+
+<h2 id="rays">Physical states are rays</h2>
+
+The vectors $|\psi\rangle$ and $\lambda|\psi\rangle$, with $\lambda\neq0$, describe the same physical state after normalization. A physical state is therefore a <Term>ray</Term>:
+
+$$
+|\psi\rangle\sim\lambda|\psi\rangle.
+$$
+
+For normalized vectors, the remaining freedom is a global phase,
+
+$$
+|\psi\rangle\sim e^{i\alpha}|\psi\rangle.
+$$
+
+That phase is unobservable because it cancels from every transition probability. A relative phase between two components does not cancel. Compare
+
+$$
+|\psi_+\rangle
+=
+\frac{|\uparrow\rangle+|\downarrow\rangle}{\sqrt2},
+\qquad
+|\psi_-\rangle
+=
+\frac{|\uparrow\rangle-|\downarrow\rangle}{\sqrt2}.
+$$
+
+Both give equal up/down probabilities along $z$, yet another measurement basis distinguishes them. The minus sign changes how the two amplitudes interfere.
+
+<PhaseFigure />
+
+This ray structure will matter when symmetries enter. A symmetry may compose correctly only up to a phase and still act perfectly well on physical states. That is the doorway to projective representations and half-integer spin.
+
+<h2 id="amplitudes">Amplitudes come before probabilities</h2>
+
+Suppose $|n\rangle$ is a normalized possible outcome. The amplitude for finding $|\psi\rangle$ as that outcome is
+
+$$
+\mathcal A(n\leftarrow\psi)=\langle n|\psi\rangle.
+$$
+
+Quantum alternatives combine at the amplitude level. If an outcome can be reached through two indistinguishable alternatives,
+
+$$
+\mathcal A=\mathcal A_1+\mathcal A_2,
+$$
+
+then
+
+$$
+|\mathcal A|^2
+=
+|\mathcal A_1|^2+|\mathcal A_2|^2
++2\operatorname{Re}(\mathcal A_1^*\mathcal A_2).
+$$
+
+The final term is interference. Classical probability theory has no corresponding phase-sensitive term because it adds probabilities only after the alternatives have become distinguishable.
+
+<Callout title="A useful ordering">
+First decide which alternatives are physically indistinguishable and add their amplitudes. Only then take an absolute square to obtain a probability.
+</Callout>
+
+<h2 id="born-rule">The Born rule</h2>
+
+For normalized $|\psi\rangle$ and $|n\rangle$, the probability of outcome $n$ is
+
+$$
+P(n|\psi)=|\langle n|\psi\rangle|^2.
+$$
+
+If the outcomes form a complete orthonormal basis,
+
+$$
+\sum_n |n\rangle\langle n|=1,
+$$
+
+then
+
+$$
+\sum_nP(n|\psi)
+=
+\langle\psi|\psi\rangle
+=1.
+$$
+
+<BornRuleFigure />
+
+For non-normalized representatives, divide by the norms:
+
+$$
+P(\phi|\psi)
+=
+\frac{|\langle\phi|\psi\rangle|^2}
+{\langle\phi|\phi\rangle\langle\psi|\psi\rangle}.
+$$
+
+The ray, rather than the chosen vector representative, is what determines the answer.
+
+<h2 id="operators">Observables and operators</h2>
+
+An observable is represented by a self-adjoint operator $A$,
+
+$$
+A^\dagger=A.
+$$
+
+Its eigenvalues are possible sharp outcomes:
+
+$$
+A|a_n\rangle=a_n|a_n\rangle,
+\qquad
+a_n\in\mathbb R.
+$$
+
+For a normalized state, the expectation value is
+
+$$
+\langle A\rangle_\psi
+=
+\langle\psi|A|\psi\rangle.
+$$
+
+This is an ensemble average, not a promise that a single measurement returns that number.
+
+Commutators compare the order of two operations:
+
+$$
+[A,B]=AB-BA.
+$$
+
+When $[A,B]=0$, the observables can, under the usual spectral conditions, be organized into simultaneous sharp states. When they do not commute, their order contains physical information. The same algebraic idea will soon tell us why two boosts in different directions leave behind a rotation.
+
+<Sidenote>
+Unbounded operators such as position and momentum require domain care in a rigorous treatment. The algebraic relations used here are the physics-level structure that survives that refinement.
+</Sidenote>
+
+<h2 id="generators">Continuous symmetries have generators</h2>
+
+A continuous symmetry is represented near the identity by
+
+$$
+U(\alpha)
+=
+1-i\alpha G+O(\alpha^2),
+$$
+
+or, for finite parameter $\alpha$,
+
+$$
+U(\alpha)=e^{-i\alpha G}.
+$$
+
+The self-adjoint operator $G$ is the generator. It translates a geometric symmetry into quantum evolution:
+
+<div className="definition-strip">
+  <span>time translations → Hamiltonian</span>
+  <span>space translations → momentum</span>
+  <span>rotations → angular momentum</span>
+  <span>boosts → boost generators</span>
+</div>
+
+The group describes finite transformations. The commutators of its generators form the Lie algebra and describe the local multiplication rule near the identity.
+
+There is a useful geometric picture behind that sentence. Make one tiny transformation, make a second, then undo them in reverse order. If the resulting loop does not quite close, its leading residue is controlled by
+
+$$
+[T_a,T_b]
+=
+i f_{ab}{}^{c}T_c.
+$$
+
+The numbers $f_{ab}{}^{c}$ say which infinitesimal transformation remains. A vanishing commutator closes the loop; a nonzero one leaves a new motion. In the Lorentz group, two boosts in different directions leave a small rotation behind.
+
+The crucial relativistic demand is now clear. A change of inertial frame must be represented on the Hilbert space in a way that preserves the ray structure and therefore all transition probabilities. The next section constructs that representation.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The ideas to carry forward are:
+
+1. A state is a ray in a complex Hilbert space, not a classical configuration.
+2. Inner products give amplitudes; absolute squares give probabilities.
+3. Global phase is redundant, while relative phase controls interference.
+4. Self-adjoint operators represent observables and generate continuous symmetries.
+5. Commutators record how infinitesimal transformations fail to commute.
+
+<ChapterSectionNav currentSlug="quantum-language" />
+
+</ArticleLayout>

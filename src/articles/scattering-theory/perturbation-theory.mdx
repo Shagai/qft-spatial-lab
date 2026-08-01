@@ -1,0 +1,475 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import {
+  scatteringTheoryRoute,
+  scatteringTheorySections,
+} from '../../data/scatteringTheory'
+
+<ArticleLayout
+  kicker="Chapter 2 · Section 4 of 7"
+  title="The Perturbative Bridge"
+  subtitle="The exact scattering problem can be reorganized as repeated interactions. Boundary prescriptions turn that repetition into the Born series; the interaction picture turns it into the Dyson series; locality turns the result into relativistic QFT."
+  updated="2026-08-01"
+  readingTime="18 min"
+  parent={{ label: 'Scattering Theory', to: scatteringTheoryRoute }}
+  toc={[
+    { href: '#question', label: 'The calculation problem' },
+    { href: '#split', label: 'Free plus interaction' },
+    { href: '#lippmann-schwinger', label: 'Lippmann-Schwinger' },
+    { href: '#boundary', label: 'The i0 prescription' },
+    { href: '#born-series', label: 'The Born series' },
+    { href: '#interaction-picture', label: 'Interaction picture' },
+    { href: '#dyson', label: 'The Dyson series' },
+    { href: '#time-ordering', label: 'Why time ordering appears' },
+    { href: '#local-interaction', label: 'Local interactions' },
+    { href: '#microcausality', label: 'Lorentz compatibility' },
+    { href: '#feynman-bridge', label: 'The Feynman bridge' },
+    { href: '#lines', label: 'External and internal lines' },
+    { href: '#limits', label: 'Limits of the expansion' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="question">How can an exact collision be calculated a few interactions at a time?</h2>
+
+The $S$-matrix is exact in principle:
+
+$$
+S_{fi}
+=
+\langle f,\mathrm{out}|i,\mathrm{in}\rangle.
+$$
+
+But the exact in and out states already contain the full interaction. Computing them directly is usually as difficult as solving the complete quantum theory.
+
+Perturbation theory changes the organization of the question. Instead of solving the whole collision at once, it asks what happens after one interaction, then two, then three:
+
+$$
+\boxed{
+\text{exact dynamics}
+\longrightarrow
+\text{ordered series of simpler interaction events}.
+}
+$$
+
+The expansion is useful when its successive terms are controlled. It is not a claim that the particles literally undergo a classical sequence of pointlike kicks.
+
+<h2 id="split">Choose a free problem that defines the asymptotic particles</h2>
+
+Write the Hamiltonian as
+
+$$
+H=H_0+V.
+$$
+
+$H_0$ is chosen so that its particle states and time evolution are known. Those states provide the incoming and outgoing basis used by detectors. $V$ contains the interactions that turn one free configuration into another.
+
+This split is an organizing choice, not an observer-independent division of reality. A different $H_0$ can be useful when part of the dynamics should be treated exactly. What matters is that the chosen free theory correctly describes the stable asymptotic states.
+
+If the interaction carries a small dimensionless coupling $g$, one often has schematically
+
+$$
+V=gV_1+g^2V_2+\cdots.
+$$
+
+Expanding in the number of interaction insertions then also orders the answer in powers of $g$, although loop counting and coupling counting need not coincide in every theory.
+
+<Callout title="Free does not mean present during the collision">
+The labels “free incoming particle” and “free outgoing particle” describe the remote ends of the experiment. During the interaction there need not be a meaningful fixed number of individually identifiable particles.
+</Callout>
+
+<h2 id="lippmann-schwinger">The Lippmann-Schwinger equation builds the boundary condition into the state</h2>
+
+Let $|\alpha\rangle$ be a free eigenstate,
+
+$$
+H_0|\alpha\rangle=E_\alpha|\alpha\rangle.
+$$
+
+The corresponding exact scattering states satisfy
+
+$$
+\boxed{
+|\alpha^{\pm}\rangle
+=
+|\alpha\rangle
++
+\frac{1}{E_\alpha-H_0\pm i0}
+V|\alpha^{\pm}\rangle.
+}
+$$
+
+With the in/out naming used throughout this chapter,
+
+$$
+|\alpha^+\rangle
+=
+|\alpha,\mathrm{in}\rangle,
+\qquad
+|\alpha^-\rangle
+=
+|\alpha,\mathrm{out}\rangle.
+$$
+
+The superscript records the sign of the resolvent. The $+i0$ state has the freely specified incoming beam and an outgoing scattered component; the $-i0$ state obeys the reversed boundary condition.
+
+The free state is the prepared channel. The second term contains every excursion into intermediate free configurations caused by the interaction. Because the exact state appears again on the right, the equation already includes arbitrarily many repetitions of $V$.
+
+The associated energy-resolved transition operator obeys
+
+$$
+\mathcal T(E)
+=
+V+VG_0^{(+)}(E)\mathcal T(E),
+$$
+
+where
+
+$$
+G_0^{(+)}(E)
+=
+\frac{1}{E-H_0+i0}.
+$$
+
+The calligraphic symbol is deliberate: $\mathcal T(E)$ is not literally the global operator $T$ in $S=1+iT$. With the stationary scattering normalization used in this construction,
+
+$$
+\langle\beta|S|\alpha\rangle
+=
+\langle\beta|\alpha\rangle
+-2\pi i\,\delta(E_\beta-E_\alpha)
+\langle\beta|\mathcal T(E_\alpha)|\alpha\rangle.
+$$
+
+Thus the on-shell matrix element of $\mathcal T(E)$ becomes the matrix element of the global transition operator only after the energy-conservation delta function and state-normalization factors are restored. In relativistic formulas we remove the full four-momentum delta function and call the remaining invariant quantity $\mathcal M$.
+
+<h2 id="boundary">The infinitesimal imaginary part chooses the physical wave</h2>
+
+The symbol $i0$ means that a positive $\epsilon$ is kept until the end:
+
+$$
+\frac{1}{E-H_0+i0}
+=
+\lim_{\epsilon\to0^+}
+\frac{1}{E-H_0+i\epsilon}.
+$$
+
+It tells the Green function how to pass poles on the real energy axis. In position space, the two signs distinguish outgoing from incoming scattered-wave boundary conditions.
+
+The distribution identity
+
+$$
+\boxed{
+\frac{1}{x\pm i0}
+=
+\operatorname{PV}\frac{1}{x}
+\mp i\pi\delta(x)
+}
+$$
+
+shows its two jobs. The principal-value part describes off-shell propagation through intermediate configurations. The delta part appears when an intermediate state can go on shell and supplies an imaginary contribution to the amplitude.
+
+This is the first glimpse of a theme developed by unitarity: imaginary parts are not arbitrary decorations. They record the opening of physical channels.
+
+<Sidenote>
+Some mathematical texts label wave operators by the sign of the remote-time limit instead of the sign of the resolvent, which can make their subscripts look reversed. Naming the states “in” and “out” and displaying the $i0$ prescription removes that ambiguity.
+</Sidenote>
+
+<h2 id="born-series">Iteration gives the Born series</h2>
+
+Substitute the equation for $\mathcal T$ back into itself:
+
+$$
+\begin{aligned}
+\mathcal T(E)
+={}&V
++VG_0^{(+)}(E)V\\
+&+VG_0^{(+)}(E)VG_0^{(+)}(E)V
++\cdots.
+\end{aligned}
+$$
+
+This is the <Term>Born series</Term>.
+
+| Term | Interpretation |
+| --- | --- |
+| $V$ | One interaction insertion: first Born order. |
+| $VG_0^{(+)}V$ | Interact, propagate through an intermediate free configuration, interact again. |
+| $VG_0^{(+)}VG_0^{(+)}V$ | Three interactions separated by two intermediate propagations. |
+
+Inserting a complete set of free states into the second term gives denominators of the form
+
+$$
+\frac{\langle f|V|n\rangle\langle n|V|i\rangle}
+{E_i-E_n+i0}.
+$$
+
+These denominators make intermediate-state thresholds and singularities visible. Their disadvantage is that a particular time slicing and its energies are explicit, so Lorentz covariance is difficult to see term by term.
+
+The first Born approximation keeps only
+
+$$
+\mathcal T(E)\approx V.
+$$
+
+It is reliable only when rescattering is genuinely small. Near a bound state, a narrow resonance, or a strong threshold effect, the repeated terms can be as important as the first one even if a naive coupling count looks favorable.
+
+<h2 id="interaction-picture">Move the easy evolution into the operators</h2>
+
+The interaction picture treats $H_0$ exactly and leaves only $V$ to generate the remaining evolution. Define
+
+$$
+V_I(t)
+=
+e^{iH_0t}Ve^{-iH_0t}.
+$$
+
+The interaction-picture evolution operator satisfies
+
+$$
+i\frac{\partial}{\partial t}U_I(t,t_0)
+=
+V_I(t)U_I(t,t_0),
+\qquad
+U_I(t_0,t_0)=1.
+$$
+
+Integrating once gives
+
+$$
+U_I(t,t_0)
+=
+1-i\int_{t_0}^{t}dt_1\,
+V_I(t_1)U_I(t_1,t_0).
+$$
+
+This has the same recursive logic as Lippmann-Schwinger, but it organizes the repetitions by their times rather than by explicit energy denominators.
+
+When conventional asymptotic states exist,
+
+$$
+S
+=
+\lim_{\substack{t\to+\infty\\t_0\to-\infty}}
+U_I(t,t_0),
+$$
+
+with the limiting prescription understood carefully. The interaction is not literally switched off in the laboratory. The wave packets separate so far that short-range interactions cease to connect them appreciably.
+
+<h2 id="dyson">The Dyson series is the time-domain Born expansion</h2>
+
+Iterating the integral equation gives ordered integrals:
+
+$$
+\begin{aligned}
+S={}&1
+-i\int_{-\infty}^{+\infty}dt_1\,V_I(t_1)\\
+&+(-i)^2\int_{-\infty}^{+\infty}dt_1
+\int_{-\infty}^{t_1}dt_2\,
+V_I(t_1)V_I(t_2)+\cdots.
+\end{aligned}
+$$
+
+Equivalently,
+
+$$
+\boxed{
+S
+=
+\sum_{n=0}^{\infty}
+\frac{(-i)^n}{n!}
+\int d t_1\cdots d t_n\,
+\mathrm T
+\left\{V_I(t_1)\cdots V_I(t_n)\right\}.
+}
+$$
+
+This is often compressed to
+
+$$
+S
+=
+\mathrm T
+\exp\!\left[-i\int_{-\infty}^{+\infty}dt\,V_I(t)\right].
+$$
+
+The exponential is shorthand for its time-ordered series. It is not an ordinary exponential unless $V_I(t)$ commutes with itself at all pairs of times.
+
+<h2 id="time-ordering">Time ordering keeps noncommuting events in the correct sequence</h2>
+
+For two insertions,
+
+$$
+\begin{aligned}
+\mathrm T\{V_I(t_1)V_I(t_2)\}
+={}&\theta(t_1-t_2)V_I(t_1)V_I(t_2)\\
+&+\theta(t_2-t_1)V_I(t_2)V_I(t_1).
+\end{aligned}
+$$
+
+The later operator is written to the left because it acts later in quantum evolution. The factor $1/n!$ in the Dyson series compensates for integrating all $n!$ temporal orderings over the same full time domain.
+
+Time ordering does more than tidy the notation. When free fields are contracted, it produces Feynman propagators with the time-ordered $i0$ prescription used in perturbative scattering.
+
+<Callout title="Time ordering is not a classical history">
+A term with three vertices is an amplitude integrated over every placement and ordering of those vertices. Quantum alternatives are added before the absolute square is taken. A diagram does not identify three experimentally observed intermediate events.
+</Callout>
+
+<h2 id="local-interaction">A local field theory turns time integrals into spacetime integrals</h2>
+
+In a local QFT, the interaction is built from fields at one event:
+
+$$
+V_I(t)
+=
+\int d^3\mathbf x\,
+\mathcal H_{\mathrm{int}}(t,\mathbf x).
+$$
+
+The Dyson series becomes
+
+$$
+\boxed{
+S
+=
+\mathrm T
+\exp\!\left[
+-i\int d^4x\,
+\mathcal H_{\mathrm{int}}(x)
+\right].
+}
+$$
+
+When the canonical interaction Hamiltonian is $\mathcal H_{\mathrm{int}}=-\mathcal L_{\mathrm{int}}$, the same formula is written
+
+$$
+S
+=
+\mathrm T
+\exp\!\left[
+i\int d^4x\,
+\mathcal L_{\mathrm{int}}(x)
+\right].
+$$
+
+Derivative interactions and constrained systems require care when relating the two densities, so the sign should be derived from the theory rather than memorized independently of its conventions.
+
+If $\mathcal H_{\mathrm{int}}$ transforms as a scalar density in the required sense, the integration measure $d^4x$ is Lorentz invariant. One subtlety remains: different observers can disagree about the time order of spacelike-separated vertices.
+
+<h2 id="microcausality">Microcausality makes time ordering Lorentz compatible</h2>
+
+For timelike-separated events, every proper orthochronous observer agrees which event is later. For spacelike-separated events, observers may reverse the order. The Dyson series can therefore be frame independent only if swapping spacelike-separated interaction densities changes nothing.
+
+With the project convention $\eta=\operatorname{diag}(+,-,-,-)$, the sufficient local condition is
+
+$$
+\boxed{
+[\mathcal H_{\mathrm{int}}(x),
+\mathcal H_{\mathrm{int}}(y)]
+=0
+\qquad
+\text{when}
+\qquad
+(x-y)^2<0.
+}
+$$
+
+Then two observers may write the factors in opposite temporal order, but they calculate the same operator product. This is the direct reason locality and Lorentz symmetry fit together inside the perturbative $S$-matrix.
+
+Fundamental fermion fields use graded commutation relations, while bosonic observables and admissible interaction densities commute at spacelike separation. Lightlike coincidence and contact terms are distributional questions and should not be inferred by simply replacing $<0$ with $\leq0$.
+
+<Sidenote>
+Microcausality and cluster decomposition are related but distinct. Microcausality forbids order-sensitive spacelike influence. Cluster decomposition additionally says that connected effects fade when whole experiments are separated far apart. Commutation at spacelike separation alone does not prove that decay with distance.
+</Sidenote>
+
+<h2 id="feynman-bridge">Wick contractions reorganize the Dyson series into diagrams</h2>
+
+Each local interaction density is a product of free fields. Substituting those products into the Dyson series creates many operator terms. Wick's theorem sorts them into normal-ordered fields and pairwise contractions.
+
+That reorganization produces the familiar dictionary:
+
+| Dyson-series structure | Diagrammatic structure |
+| --- | --- |
+| One factor of $\mathcal L_{\mathrm{int}}(x)$ | A vertex at $x$ |
+| A contraction of two fields | A propagator joining two vertices |
+| Uncontracted field attached to an asymptotic state | An external leg |
+| Integration over each $x$ | Momentum conservation at each vertex after Fourier transformation |
+| A closed chain of contractions | A loop momentum integral |
+
+A Feynman diagram is therefore a compact index for terms in an amplitude. It is not a photograph of a microscopic process. Different diagrams at the same order represent alternatives and must be added coherently before squaring.
+
+The diagrams make Lorentz covariance far more visible than the old energy-denominator expansion. Four-momenta flow through covariant propagators, and every vertex contributes a four-dimensional conservation law.
+
+<Callout title="Where LSZ enters">
+Wick contractions organize time-ordered correlation functions. The LSZ reduction theorem is the formal bridge from those correlators to normalized scattering amplitudes: it isolates the external one-particle poles, includes their residues, and amputates the external propagators. We will derive that bridge later; here it explains why an uncontracted field can be represented as an external leg.
+</Callout>
+
+<h2 id="lines">External and internal lines have different physical status</h2>
+
+An external line corresponds to a particle in the asymptotic state. It obeys its mass-shell condition,
+
+$$
+p^2=m^2,
+\qquad
+p^0>0,
+$$
+
+and carries a physical spin or helicity label prepared or detected far from the collision.
+
+An internal line represents a propagator inside the perturbative amplitude. Its four-momentum is generally integrated over and need not satisfy the mass-shell equation. Calling it a “virtual particle” can be convenient, but it should not be mistaken for a short-lived particle that could have been directly detected between the vertices.
+
+The distinction is structural:
+
+$$
+\boxed{
+\text{external line} = \text{asymptotic state},
+\qquad
+\text{internal line} = \text{term in a correlation amplitude}.
+}
+$$
+
+An internal propagator can develop an on-shell singularity. When the corresponding state is kinematically accessible, that singularity connects perturbation theory to real intermediate channels, unitarity cuts, and resonances. It does not erase the distinction between a summed internal variable and an observed external particle.
+
+<h2 id="limits">A perturbative series is a controlled approximation, not usually a convergent sum</h2>
+
+In many quantum field theories, the series in the coupling is <Term>asymptotic</Term>. Its first several terms may become rapidly more accurate, while sufficiently high orders eventually grow. The practical question is therefore not “Does the infinite series converge?” but “Are the omitted terms smaller than the precision we need?”
+
+Several effects can defeat a naive truncation:
+
+- A coupling may be large at the energy scale of interest.
+- Large logarithms can compensate for a small coupling and require resummation.
+- Thresholds, bound states, and narrow resonances can enhance repeated propagation.
+- Nonperturbative effects can be invisible at every finite order in the coupling.
+- Infrared physics may prevent ordinary bare-particle in and out states from existing.
+
+Long-range gauge interactions require inclusive observables or appropriately dressed asymptotic states. Confinement prevents quarks and gluons from appearing as isolated detector states. These are limitations of a naive particle $S$-matrix, not failures of quantum field theory.
+
+Perturbative unitarity also requires consistency. At a chosen order, all diagrams and counterterms of that order must be included, and probabilities must be expanded to matching accuracy. Keeping an appealing subset can violate cancellations required by symmetry or probability conservation.
+
+<Callout title="What perturbation theory promises">
+Perturbation theory does not promise a literal intermediate story or an exact infinite sum. It promises a systematic hierarchy of amplitudes whose uncertainty can be assessed when the expansion parameters and kinematics are under control.
+</Callout>
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The conceptual chain is:
+
+1. The split $H=H_0+V$ chooses a solvable asymptotic basis and isolates the interaction to be expanded.
+2. Lippmann-Schwinger equations build incoming or outgoing boundary conditions into exact scattering states.
+3. The $\pm i0$ prescription selects those boundary conditions and separates principal-value propagation from on-shell imaginary parts.
+4. Iterating the resolvent gives the Born series: repeated interactions joined by intermediate free propagation.
+5. The interaction picture turns the same recursion into time integrals, and time ordering produces the Dyson series.
+6. A local interaction density converts the series into spacetime integrals suitable for relativistic QFT.
+7. Microcausality makes the ordering of spacelike-separated insertions independent of the observer.
+8. Wick contractions and Feynman diagrams organize Dyson terms, with on-shell external states distinct from generally off-shell internal propagators.
+9. The resulting series is normally asymptotic and must be truncated, resummed, or replaced according to the physical regime.
+
+<ChapterSectionNav
+  currentSlug="perturbation-theory"
+  sections={scatteringTheorySections}
+  overviewRoute={scatteringTheoryRoute}
+  chapterTitle="Scattering Theory"
+/>
+
+</ArticleLayout>

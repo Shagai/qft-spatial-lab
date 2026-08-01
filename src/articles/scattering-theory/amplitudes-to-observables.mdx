@@ -1,0 +1,461 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import { ScatteringFlowFigure } from '../../components/InteractiveFigures'
+import {
+  scatteringTheoryRoute,
+  scatteringTheorySections,
+} from '../../data/scatteringTheory'
+
+<ArticleLayout
+  kicker="Chapter 2 · Section 3 of 7"
+  title="From Amplitudes to Observables"
+  subtitle="An invariant amplitude is the dynamical core of a collision. Phase space, incoming flux, state counting, and experimental exposure turn that amplitude into widths, cross-sections, and event counts."
+  updated="2026-08-01"
+  readingTime="18 min"
+  parent={{ label: 'Scattering Theory', to: scatteringTheoryRoute }}
+  toc={[
+    { href: '#question', label: 'The translation problem' },
+    { href: '#conservation-delta', label: 'The conservation delta' },
+    { href: '#delta-squared', label: 'Why delta squared appears' },
+    { href: '#phase-space', label: 'Invariant phase space' },
+    { href: '#decays', label: 'Decay widths' },
+    { href: '#collisions', label: 'Cross-sections and flux' },
+    { href: '#spin-counting', label: 'Spin and identical particles' },
+    { href: '#two-body', label: 'Two-body kinematics' },
+    { href: '#thresholds', label: 'Thresholds and angular data' },
+    { href: '#dalitz', label: 'Three-body decays' },
+    { href: '#event-counts', label: 'From cross-section to counts' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="question">How does an amplitude become something a detector counts?</h2>
+
+The scattering matrix answers a quantum question:
+
+$$
+S_{fi}
+=
+\langle f,\mathrm{out}|i,\mathrm{in}\rangle.
+$$
+
+An experiment reports a different kind of object. A decay experiment measures a lifetime or a branching fraction. A collider reports an event rate or a cross-section. Neither is obtained by writing $|S_{fi}|^2$ and stopping.
+
+Three pieces have to be combined:
+
+$$
+\boxed{
+\text{dynamics}
+\times
+\text{available final states}
+\div
+\text{initial exposure}
+}
+$$
+
+The invariant amplitude $\mathcal M_{fi}$ contains the dynamics. Lorentz-invariant phase space counts the final states. Time supplies the exposure for a decay, while incoming flux supplies it for a collision.
+
+<ScatteringFlowFigure />
+
+The virtue of this organization is that the same amplitude can be used in any frame. All frame-dependent bookkeeping is carried by explicitly kinematical factors.
+
+<h2 id="conservation-delta">First remove the universal conservation law</h2>
+
+Use covariantly normalized one-particle momentum states,
+
+$$
+\langle q,r|p,s\rangle
+=
+2E_{\mathbf p}(2\pi)^3
+\delta_{rs}\delta^3(\mathbf q-\mathbf p).
+$$
+
+For a genuine transition, the nontrivial part of the $S$-matrix has the form
+
+$$
+\boxed{
+\langle f|S|i\rangle_{\mathrm{connected}}
+=
+i(2\pi)^4\delta^{(4)}(P_f-P_i)\mathcal M_{fi}.
+}
+$$
+
+The four-dimensional delta function is not part of the interaction dynamics. It says that every allowed event conserves the total four-momentum. The invariant amplitude is what remains after that universal statement has been factored out.
+
+Different sign conventions may place $-i$ instead of $+i$ in this definition. Rates depend on $|\mathcal M|^2$, so the convention is harmless as long as it is used consistently.
+
+<Callout title="Connected means that something happened">
+The full $S$-matrix also contains the identity contribution and terms in which some particles pass through as unchanged spectators. A connected amplitude isolates the part in which the listed external particles participate in one linked process. Disconnected experiments reappear later through products of connected pieces.
+</Callout>
+
+<h2 id="delta-squared">Why a squared delta function is a warning, not a disaster</h2>
+
+Squaring the plane-wave matrix element seems to produce
+
+$$
+\left[\delta^{(4)}(P_f-P_i)\right]^2.
+$$
+
+That expression is telling us that an ideal momentum eigenstate fills all space and exists for all time. It is not a normalizable laboratory preparation. The apparent infinity comes from asking an infinitely extended beam to interact for an infinite duration.
+
+Real particles arrive in <Term>wave packets</Term>. They overlap only in a finite region and during a finite time. One can make this precise with packets from the beginning. A quicker regulator puts the system in a large spatial volume $V$ and observes it for a time $T$. Schematically,
+
+$$
+\delta^3(\mathbf 0)\longleftrightarrow \frac{V}{(2\pi)^3},
+\qquad
+\delta(0)\longleftrightarrow \frac{T}{2\pi}.
+$$
+
+One conservation delta remains in the final answer. The other copy becomes the volume-time exposure. Dividing by $T$ produces a rate; dividing by the incident density and relative flux produces a cross-section. The limits $V,T\to\infty$ are taken only after those physical quantities have been formed.
+
+<Sidenote>
+The packet derivation is conceptually cleaner because it never squares a distribution. The box-and-time argument is useful bookkeeping, but $V$ and $T$ are regulators rather than new physical parameters of the collision.
+</Sidenote>
+
+<h2 id="phase-space">Invariant phase space counts the allowed outcomes</h2>
+
+For one positive-energy on-shell particle,
+
+$$
+d\Pi(p)
+=
+\frac{d^3\mathbf p}{(2\pi)^3\,2E_{\mathbf p}}
+$$
+
+is Lorentz invariant. For an $n$-particle final state with total incoming momentum $P$, define
+
+$$
+\boxed{
+d\Phi_n(P;p_1,\ldots,p_n)
+=
+(2\pi)^4
+\delta^{(4)}\!\left(P-\sum_{a=1}^{n}p_a\right)
+\prod_{a=1}^{n}
+\frac{d^3\mathbf p_a}{(2\pi)^3\,2E_a}.
+}
+$$
+
+Each factor lets one final particle range over its mass shell. The delta function then keeps only combinations whose total energy and momentum match the initial state.
+
+This separates two questions:
+
+| Question | Encoded by |
+| --- | --- |
+| Which final momenta are kinematically available? | $d\Phi_n$ |
+| How strongly does the interaction favor each configuration? | $|\mathcal M_{fi}|^2$ |
+
+A large phase-space region does not guarantee a large rate: the amplitude may suppress it. A large amplitude cannot create a forbidden final state: phase space vanishes outside the kinematically allowed region.
+
+<h2 id="decays">A decay width is probability per proper time</h2>
+
+Let one particle of mass $M$ decay into $n$ particles. In its rest frame,
+
+$$
+\boxed{
+d\Gamma
+=
+\frac{1}{2M}
+\overline{|\mathcal M_{i\to f}|^2}
+d\Phi_n.
+}
+$$
+
+Integrating over all allowed final configurations gives the partial width for that channel. Summing over mutually exclusive channels gives the total width,
+
+$$
+\Gamma_{\mathrm{tot}}
+=
+\sum_X\Gamma(i\to X).
+$$
+
+In natural units,
+
+$$
+\tau=\frac{1}{\Gamma_{\mathrm{tot}}},
+\qquad
+\operatorname{Br}(i\to X)
+=
+\frac{\Gamma(i\to X)}{\Gamma_{\mathrm{tot}}}.
+$$
+
+$\Gamma$ is normally the rest-frame width. If the parent has energy $E$ in the laboratory, time dilation gives
+
+$$
+\Gamma_{\mathrm{lab}}
+=
+\frac{M}{E}\,\Gamma_{\mathrm{rest}}.
+$$
+
+The intrinsic width is unchanged; the decay clock advances more slowly relative to laboratory time.
+
+<h2 id="collisions">A cross-section is a transition rate divided by incoming flux</h2>
+
+For two incoming particles, define the invariant flux factor
+
+$$
+F
+=
+4\sqrt{(p_1\cdot p_2)^2-m_1^2m_2^2}.
+$$
+
+Then
+
+$$
+\boxed{
+d\sigma(1+2\to f)
+=
+\frac{1}{F}
+\overline{|\mathcal M_{1 2\to f}|^2}
+d\Phi_n.
+}
+$$
+
+In the center-of-momentum frame,
+
+$$
+F=4\sqrt{s}\,|\mathbf p_i|,
+\qquad
+s=(p_1+p_2)^2.
+$$
+
+If particle 1 is at rest, this becomes $F=4m_1E_2|\mathbf v_2|$. These are the expected density-times-relative-motion factors written in a form every inertial observer can use.
+
+Sometimes the same flux is expressed through the Møller quantity
+
+$$
+v_{\mathrm M}
+=
+\frac{\sqrt{(p_1\cdot p_2)^2-m_1^2m_2^2}}{E_1E_2},
+\qquad
+F=4E_1E_2v_{\mathrm M}.
+$$
+
+<Callout title="The Møller quantity is not a signal speed">
+In some frames $v_{\mathrm M}$ can be larger than one. Nothing travels faster than light: this quantity packages the invariant beam flux and is not the velocity of one physical object as measured in the rest frame of another.
+</Callout>
+
+<h2 id="spin-counting">Say explicitly what the bar over the amplitude means</h2>
+
+For unpolarized beams and unobserved final polarizations,
+
+$$
+\overline{|\mathcal M|^2}
+=
+\frac{1}{N_{\mathrm{initial}}}
+\sum_{\substack{\text{initial spins or colors}\\
+\text{final spins or colors}}}
+|\mathcal M|^2.
+$$
+
+The initial labels are averaged because the preparation is a statistical mixture. The unmeasured final labels are summed because any one of them counts as the event. For polarized particles, do not average over the polarization that was deliberately prepared.
+
+Identical final particles require another piece of bookkeeping. If $n_a$ indistinguishable particles of species $a$ are integrated over the full labeled phase space, include
+
+$$
+\frac{1}{S_f},
+\qquad
+S_f=\prod_a n_a!.
+$$
+
+Equivalently, integrate each physical configuration only once. Doing both would undercount the events.
+
+<h2 id="two-body">Two-body kinematics collapses to one momentum magnitude</h2>
+
+For
+
+$$
+1+2\longrightarrow3+4,
+$$
+
+work in the center-of-momentum frame. The initial and final momenta have the form
+
+$$
+p_1=(E_1,\mathbf p_i),
+\qquad
+p_2=(E_2,-\mathbf p_i),
+$$
+
+$$
+p_3=(E_3,\mathbf p_f),
+\qquad
+p_4=(E_4,-\mathbf p_f).
+$$
+
+Introduce the Källén function
+
+$$
+\lambda(x,y,z)
+=
+x^2+y^2+z^2-2xy-2xz-2yz.
+$$
+
+Energy-momentum conservation fixes
+
+$$
+|\mathbf p_i|
+=
+\frac{\sqrt{\lambda(s,m_1^2,m_2^2)}}{2\sqrt{s}},
+\qquad
+|\mathbf p_f|
+=
+\frac{\sqrt{\lambda(s,m_3^2,m_4^2)}}{2\sqrt{s}}.
+$$
+
+It also fixes the final energies, for example
+
+$$
+E_3
+=
+\frac{s+m_3^2-m_4^2}{2\sqrt{s}}.
+$$
+
+Only the direction of $\mathbf p_f$ remains free. The two-body phase-space measure reduces to
+
+$$
+d\Phi_2
+=
+\frac{1}{16\pi^2}
+\frac{|\mathbf p_f|}{\sqrt{s}}\,d\Omega,
+$$
+
+and the differential cross-section becomes
+
+$$
+\boxed{
+\frac{d\sigma}{d\Omega}
+=
+\frac{1}{64\pi^2s}
+\frac{|\mathbf p_f|}{|\mathbf p_i|}
+\overline{|\mathcal M|^2}.
+}
+$$
+
+If particles 3 and 4 are identical and the full sphere is integrated, the appropriate $1/2!$ factor still has to be included.
+
+For a two-body decay $A\to1+2$ at rest,
+
+$$
+\frac{d\Gamma}{d\Omega}
+=
+\frac{|\mathbf p|}{32\pi^2M_A^2}
+\overline{|\mathcal M|^2}.
+$$
+
+If the squared amplitude is angle independent, integration gives
+
+$$
+\Gamma
+=
+\frac{|\mathbf p|}{8\pi M_A^2}
+\overline{|\mathcal M|^2},
+$$
+
+again before any identical-particle factor.
+
+<h2 id="thresholds">Kinematics draws the boundary; dynamics draws the pattern</h2>
+
+The final momentum is real only when
+
+$$
+\lambda(s,m_3^2,m_4^2)\geq0.
+$$
+
+For positive-energy final particles this gives the production threshold
+
+$$
+\sqrt{s}\geq m_3+m_4.
+$$
+
+Near threshold, $|\mathbf p_f|$ shrinks and phase space suppresses the rate even before any dynamical suppression is considered. Angular momentum can add further powers of momentum: higher partial waves have more difficulty emerging when little kinetic energy is available.
+
+Above threshold, the angular distribution probes the amplitude. In the center-of-momentum frame,
+
+$$
+t
+=
+m_1^2+m_3^2-2E_1E_3
++2|\mathbf p_i||\mathbf p_f|\cos\theta.
+$$
+
+Thus $d\sigma/d\Omega$ may equally be viewed as information about how $\mathcal M(s,t)$ varies across the allowed range of $t$. A flat phase-space factor does not imply a flat angular distribution; exchanged particles, spin, and interference live in the amplitude.
+
+<h2 id="dalitz">Three-body decays expose dynamics across a region</h2>
+
+A three-body final state has more freedom after total four-momentum is conserved. For a decay $A\to1+2+3$, useful invariant coordinates are
+
+$$
+s_{12}=(p_1+p_2)^2,
+\qquad
+s_{23}=(p_2+p_3)^2.
+$$
+
+The third pair invariant is not independent because
+
+$$
+s_{12}+s_{23}+s_{13}
+=
+M_A^2+m_1^2+m_2^2+m_3^2.
+$$
+
+Plotting events in the allowed $(s_{12},s_{23})$ region gives a <Term>Dalitz plot</Term>. If the amplitude is approximately constant, the invariant event density provides a simple phase-space baseline. A narrow band indicates that one particle pair repeatedly forms an intermediate resonance. Crossed bands and nonuniform patches reveal interference and spin-dependent structure.
+
+The plot therefore separates two kinds of information visually: its outer boundary is kinematics, while structure inside the boundary is dynamics.
+
+<h2 id="event-counts">The final step is experimental exposure</h2>
+
+For colliding beams, the machine supplies a luminosity $\mathcal L$. The expected event rate in a channel is
+
+$$
+\frac{dN}{dt}
+=
+\mathcal L\,\sigma.
+$$
+
+After integrating over a run,
+
+$$
+N_{\mathrm{expected}}
+=
+\mathcal L_{\mathrm{int}}
+\,\sigma
+\,\operatorname{Br}
+\,\varepsilon,
+$$
+
+where $\operatorname{Br}$ accounts for any selected decay chain and $\varepsilon$ summarizes acceptance and detection efficiency. A differential prediction is treated in the same way bin by bin.
+
+The complete bridge is now visible:
+
+$$
+\boxed{
+\mathcal M
+\longrightarrow
+|\mathcal M|^2d\Phi
+\longrightarrow
+\Gamma\ \text{or}\ \sigma
+\longrightarrow
+\text{events in a detector}.
+}
+$$
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The essential ideas are:
+
+1. The conservation delta function is universal kinematics; $\mathcal M$ is the interaction-dependent amplitude.
+2. Squared delta functions arise from ideal plane waves and become finite exposure factors when wave packets or regulators are used correctly.
+3. Lorentz-invariant phase space counts on-shell final configurations while enforcing total four-momentum conservation.
+4. A decay width divides transition probability by elapsed proper time; a cross-section divides the collision rate by incoming flux.
+5. Initial unresolved labels are averaged, final unresolved labels are summed, and identical configurations are counted only once.
+6. The Källén function fixes two-body momenta and makes thresholds transparent.
+7. Event distributions compare the kinematical phase-space baseline with the dynamical pattern in $|\mathcal M|^2$.
+
+<ChapterSectionNav
+  currentSlug="amplitudes-to-observables"
+  sections={scatteringTheorySections}
+  overviewRoute={scatteringTheoryRoute}
+  chapterTitle="Scattering Theory"
+/>
+
+</ArticleLayout>

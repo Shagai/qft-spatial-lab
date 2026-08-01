@@ -1,0 +1,323 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout, Sidenote } from '../../../components/MdxComponents'
+import {
+  relativisticQuantumMechanicsProblems,
+  relativisticQuantumMechanicsProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 1 · Problem 5 of 6"
+  title="Massive Spin in 2+1 Dimensions"
+  subtitle="With only one plane of spatial rotation, a massive particle has one spin phase rather than a multiplet of spin components. The topology of that rotation group then opens the door to any real spin."
+  updated="2026-08-01"
+  readingTime={relativisticQuantumMechanicsProblems[4].readingTime}
+  parent={{ label: 'Relativistic Quantum Mechanics problems', to: relativisticQuantumMechanicsProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#little-group', label: 'The massive little group' },
+    { href: '#states', label: 'One state per momentum' },
+    { href: '#topology', label: 'Why spin may be fractional' },
+    { href: '#inversions', label: 'Parity and time reversal' },
+    { href: '#interpretation', label: 'Interpretation and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">A massive particle in one fewer spatial dimension</span>
+  <p>
+    Suppose spacetime has two spatial directions and one time direction, with connected Lorentz symmetry $SO^+(2,1)$. How should the spin states of one massive particle be described? How do they transform under Lorentz transformations, and what changes when parity or time reversal is included?
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    Put the particle at rest and ask which Lorentz transformations leave $k^\mu=(m,0,0)$ fixed. There is only one spatial rotation plane, so the little group is Abelian.
+  </p>
+</details>
+
+<p>
+  The method is exactly the one developed in <Link to="/chapters/relativistic-quantum-mechanics/one-particle-states#little-group">the little-group construction</Link>. Only the spacetime dimension—and therefore the group that survives at fixed momentum—has changed.
+</p>
+
+<Callout title="A genuine parity in two spatial dimensions">
+The map $(x,y)\mapsto(-x,-y)$ is just a rotation by $\pi$, so it belongs to the connected rotation group. A disconnected parity transformation must reflect one coordinate, for example $(t,x,y)\mapsto(t,-x,y)$.
+</Callout>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Go to the rest momentum</strong>
+      <p>Identify the transformations that preserve $(m,0,0)$.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Represent the one-angle group</strong>
+      <p>Use its one-dimensional unitary characters and induce them over the mass shell.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Add disconnected symmetries</strong>
+      <p>Track the pseudoscalar spin under a reflection and under antiunitary time reversal.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="little-group">1. Find the massive little group</h2>
+
+Use coordinates
+
+$$
+x^\mu=(t,x,y),
+\qquad
+\eta_{\mu\nu}=\operatorname{diag}(+,-,-).
+$$
+
+For a massive positive-energy particle choose
+
+$$
+k^\mu=(m,0,0).
+$$
+
+A boost changes the zero spatial momentum, so no nontrivial boost preserves $k$. A rotation in the $xy$ plane does preserve it. The little group is therefore
+
+$$
+\boxed{SO(2).}
+$$
+
+There is only one rotation generator,
+
+$$
+J=M^{12}.
+$$
+
+Because $SO(2)$ is Abelian, every irreducible unitary representation is one-dimensional. Choose a rest state satisfying
+
+$$
+J|k,s\rangle=s|k,s\rangle.
+$$
+
+A rotation through angle $\theta$ acts by the phase
+
+$$
+\boxed{
+U(R(\theta))|k,s\rangle
+=e^{-is\theta}|k,s\rangle.
+}
+$$
+
+The number $s$ is the spin. Unlike in three spatial dimensions, it is not one component inside a larger multiplet.
+
+<h2 id="states">2. Induce the rest state over the mass shell</h2>
+
+For each momentum $p$ choose a standard Lorentz transformation satisfying
+
+$$
+L(p)k=p,
+$$
+
+and define
+
+$$
+|p,s\rangle=U(L(p))|k,s\rangle.
+$$
+
+Given any proper orthochronous Lorentz transformation $\Lambda$, compare the actual path with the standard path:
+
+$$
+W(\Lambda,p)
+=
+L^{-1}(\Lambda p)\Lambda L(p).
+$$
+
+This transformation leaves $k$ fixed, so it is a planar rotation,
+
+$$
+W(\Lambda,p)=R(\theta(\Lambda,p)).
+$$
+
+With covariant normalization,
+
+$$
+\boxed{
+U(\Lambda)|p,s\rangle
+=
+e^{-is\theta(\Lambda,p)}
+|\Lambda p,s\rangle.
+}
+$$
+
+There is one state for each momentum in a fixed spin sector. The Lorentz transformation changes the momentum and rephases the state; there is no sum over $2s+1$ components.
+
+The (2+1)-dimensional Pauli-Lubanski object is a pseudoscalar rather than a four-vector:
+
+$$
+W
+=
+\frac12\epsilon_{\mu\nu\rho}
+P^\mu M^{\nu\rho}.
+$$
+
+At rest,
+
+$$
+W=mJ,
+$$
+
+so
+
+$$
+\boxed{W|p,s\rangle=ms|p,s\rangle.}
+$$
+
+This makes $s=W/m$ invariant even though the phase $\theta(\Lambda,p)$ depends on the chosen standard boosts.
+
+<h2 id="topology">3. Why the spin need not be integral</h2>
+
+If one insists on a single-valued representation of the ordinary circle group $SO(2)$, then
+
+$$
+R(\theta+2\pi)=R(\theta)
+$$
+
+requires
+
+$$
+e^{-2\pi i s}=1,
+$$
+
+and hence $s\in\mathbb Z$.
+
+Quantum states, however, are rays. Projective representations of $SO^+(2,1)$ are ordinary representations of an appropriate covering group. The universal cover unwraps the rotation circle:
+
+$$
+\theta\in\mathbb R
+$$
+
+with no requirement that a $2\pi$ path act as the identity on the state vector. It therefore permits
+
+$$
+\boxed{s\in\mathbb R.}
+$$
+
+The double cover is the familiar intermediate choice that allows integer and half-integer spin. The universal cover permits fractional spin, which in interacting (2+1)-dimensional quantum systems is tied to braid statistics and anyons.
+
+<Sidenote>
+The statement is kinematical: symmetry permits real $s$. Whether a particular local or emergent theory contains a particle with that spin is a dynamical question.
+</Sidenote>
+
+<h2 id="inversions">4. Add parity and time reversal</h2>
+
+Choose parity to reflect one coordinate:
+
+$$
+\mathsf P_x:(t,x,y)\mapsto(t,-x,y).
+$$
+
+This reverses the orientation of the spatial plane, so
+
+$$
+\mathsf P_xJ\mathsf P_x^{-1}=-J.
+$$
+
+Consequently,
+
+$$
+\mathsf P_xW\mathsf P_x^{-1}=-W,
+$$
+
+and parity maps
+
+$$
+\boxed{s\longmapsto-s.}
+$$
+
+Schematically,
+
+$$
+\mathsf P_x|p,s\rangle
+=
+\eta_P|\mathsf P_xp,-s\rangle.
+$$
+
+Time reversal is antiunitary and reverses spatial momentum and angular momentum. It also sends
+
+$$
+W\longmapsto-W,
+$$
+
+so
+
+$$
+\boxed{
+\mathsf T|p,s\rangle
+=
+\eta_T|\mathsf Tp,-s\rangle,
+}
+$$
+
+with complex coefficients conjugated by the antiunitary action.
+
+Thus a nonzero-$s$ irreducible sector of the connected group cannot be closed under either inversion by itself. If parity or time reversal is an exact symmetry, the spectrum must also contain a degenerate partner with spin $-s$.
+
+For $s=0$, a single sector can map to itself, up to an intrinsic parity phase and the usual possibilities for the square of time reversal.
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+<div className="answer-check">
+  <strong>Group-theory check</strong>
+  <p>
+    The rest little group has one continuous generator and its irreducible unitary representations have dimension one. The answer must therefore contain one phase label—not the three states that a spin-one particle would have in (3+1) dimensions.
+  </p>
+</div>
+
+The word “spin” is doing the same job as before: it says how a state responds to transformations that preserve a reference momentum. What changes is the little group. In (3+1) dimensions it is $SO(3)$ for a massive particle; here it is $SO(2)$.
+
+**Common trap:** writing $\sigma=-s,-s+1,\ldots,s$. That list belongs to an $SU(2)$ representation and has no place in an irreducible $SO(2)$ sector.
+
+Another trap is defining parity by flipping both spatial coordinates. That operation is a connected rotation by $\pi$ and therefore does not test the orientation-reversing symmetry that pairs $s$ with $-s$.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+For a massive particle in (2+1) dimensions,
+
+$$
+\boxed{
+U(\Lambda)|p,s\rangle
+=
+e^{-is\theta(\Lambda,p)}|\Lambda p,s\rangle,
+\qquad
+s\in\mathbb R
+}
+$$
+
+when projective representations, or the universal cover, are allowed. A fixed $s$ gives one state per momentum. Parity and time reversal reverse the spin:
+
+$$
+\boxed{s\leftrightarrow-s.}
+$$
+
+An inversion-symmetric theory therefore pairs every nonzero-spin species with its opposite-spin partner.
+
+<ChapterSectionNav
+  currentSlug="massive-particles-in-2-plus-1"
+  sections={relativisticQuantumMechanicsProblems}
+  overviewRoute={relativisticQuantumMechanicsProblemsRoute}
+  overviewLabel="Problem set"
+  chapterTitle="Relativistic Quantum Mechanics problems"
+  completionRoute="/chapters/relativistic-quantum-mechanics"
+  completionEyebrow="Problem set complete"
+  completionLabel="Relativistic Quantum Mechanics"
+/>
+
+</ArticleLayout>

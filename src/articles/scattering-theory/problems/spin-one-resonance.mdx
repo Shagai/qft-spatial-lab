@@ -1,0 +1,285 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout } from '../../../components/MdxComponents'
+import {
+  scatteringTheoryProblems,
+  scatteringTheoryProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 2 · Problem 2 of 7"
+  title="Branching Fractions from a Spin-One Resonance"
+  subtitle="The height of a resonant peak remembers both how the intermediate state was produced and how it decayed. An elastic channel therefore measures a branching fraction twice."
+  updated="2026-08-01"
+  readingTime={scatteringTheoryProblems[1].readingTime}
+  parent={{ label: 'Scattering Theory problems', to: scatteringTheoryProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#formula', label: 'Resonant cross-section' },
+    { href: '#kinematics', label: 'Center-of-mass momentum' },
+    { href: '#branching', label: 'Branching fraction' },
+    { href: '#total', label: 'Total peak rate' },
+    { href: '#interpretation', label: 'Interpretation and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">A resonance seen in electron-positron collisions</span>
+  <p>
+    Imagine a spin-one resonance $R$ centered at a total center-of-mass energy of $150\,\mathrm{GeV}$. At the peak, after averaging over the two incoming spins and summing over the final spins, its elastic $e^+e^-\to R\to e^+e^-$ cross-section is
+  </p>
+
+  $$
+  \sigma_{ee}^{\rm peak}=10^{-34}\,\mathrm{cm}^2.
+  $$
+
+  <p>
+    Neglect nonresonant background scattering. Determine the branching fraction $B_e=\Gamma_e/\Gamma$ for $R\to e^+e^-$ and the total $e^+e^-$ cross-section at the peak.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    At the peak, the elastic channel contains $B_e^2$: one factor to produce $R$ from $e^+e^-$ and one factor for $R$ to return to $e^+e^-$. The inclusive cross-section contains only the production factor $B_e$.
+  </p>
+</details>
+
+<p>
+  The pole and partial-width picture is developed in <Link to={scatteringTheoryProblems[1].theoryRoute}>Resonances: partial widths</Link>. Here we use its isolated, narrow-resonance approximation.
+</p>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Specialize the Breit-Wigner formula</strong>
+      <p>Insert the resonance and beam spins, then evaluate the denominator at the peak.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Convert the geometric scale</strong>
+      <p>Compute $3\pi/k^2$ in square centimeters rather than mixing natural and laboratory units.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Separate elastic from inclusive</strong>
+      <p>Extract $B_e$ from the elastic peak and remove one decay factor to obtain the total peak cross-section.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="formula">1. Start from the resonant cross-section</h2>
+
+For an isolated resonance of spin $J$, the cross-section from a two-body channel $n$ to a channel $n'$ is
+
+$$
+\sigma_{n\to n'}(E)
+=
+\frac{\pi(2J+1)}
+{k^2(2s_1+1)(2s_2+1)}
+\frac{\Gamma_n\Gamma_{n'}}
+{(E-E_R)^2+\Gamma^2/4}.
+$$
+
+This formula is independent of whether we write the connected scattering operator as $S=1+i\mathcal T$ or use an alternative sign for the invariant amplitude: the observable contains the absolute square of the pole residue.
+
+For the present channel,
+
+$$
+J=1,
+\qquad
+s_1=s_2=\frac12,
+\qquad
+n=n'=e^+e^-.
+$$
+
+At $E=E_R$, the Breit-Wigner denominator becomes $\Gamma^2/4$. Therefore
+
+$$
+\sigma_{ee}^{\rm peak}
+=
+\frac{\pi\cdot3}{k^2\cdot2\cdot2}
+\frac{\Gamma_e^2}{\Gamma^2/4}
+=
+\boxed{\frac{3\pi}{k^2}B_e^2}.
+$$
+
+<Callout title="Why the branching fraction is squared">
+The initial $e^+e^-$ state must first couple into the resonance, contributing $\Gamma_e/\Gamma$. An elastic event then asks the resonance to choose $e^+e^-$ again as its final channel, contributing the same fraction a second time.
+</Callout>
+
+<h2 id="kinematics">2. Find the center-of-mass momentum</h2>
+
+At total energy $E_R$, each beam particle carries
+
+$$
+E_e=\frac{E_R}{2}=75\,\mathrm{GeV}.
+$$
+
+The exact momentum is
+
+$$
+k
+=
+\sqrt{\frac{E_R^2}{4}-m_e^2}.
+$$
+
+Since $m_e$ is negligible on this scale,
+
+$$
+k\simeq75\,\mathrm{GeV}.
+$$
+
+The geometric resonant factor is then
+
+$$
+\frac{3\pi}{k^2}
+=
+\frac{3\pi}{(75\,\mathrm{GeV})^2}
+=
+1.6755\times10^{-3}\,\mathrm{GeV}^{-2}.
+$$
+
+Use
+
+$$
+1\,\mathrm{GeV}^{-2}
+=
+3.89379\times10^{-28}\,\mathrm{cm}^2.
+$$
+
+Thus
+
+$$
+\boxed{
+\frac{3\pi}{k^2}
+=
+6.5241\times10^{-31}\,\mathrm{cm}^2.
+}
+$$
+
+<h2 id="branching">3. Extract the electronic branching fraction</h2>
+
+Insert the measured elastic peak cross-section:
+
+$$
+10^{-34}\,\mathrm{cm}^2
+=
+\left(6.5241\times10^{-31}\,\mathrm{cm}^2\right)B_e^2.
+$$
+
+Therefore
+
+$$
+B_e
+=
+\sqrt{
+\frac{10^{-34}}
+{6.5241\times10^{-31}}
+}
+=
+0.01238.
+$$
+
+The branching fraction is
+
+$$
+\boxed{
+B(R\to e^+e^-)
+\simeq1.24\%.
+}
+$$
+
+The square root is physically important. A very small elastic peak need not mean an equally tiny probability to produce the resonance; elastic detection has already imposed the same small channel twice.
+
+<h2 id="total">4. Sum over every decay channel</h2>
+
+For the inclusive cross-section, sum the final partial widths:
+
+$$
+\sum_{n'}\Gamma_{n'}=\Gamma.
+$$
+
+At the peak this gives
+
+$$
+\sigma_{\rm total}^{\rm peak}
+=
+\frac{3\pi}{k^2}\frac{\Gamma_e}{\Gamma}
+=
+\frac{3\pi}{k^2}B_e.
+$$
+
+Equivalently, divide the elastic result by the probability that the produced resonance decays back to electrons:
+
+$$
+\sigma_{\rm total}^{\rm peak}
+=
+\frac{\sigma_{ee}^{\rm peak}}{B_e}.
+$$
+
+Numerically,
+
+$$
+\boxed{
+\sigma_{\rm total}^{\rm peak}
+=
+8.08\times10^{-33}\,\mathrm{cm}^2.
+}
+$$
+
+<div className="answer-check">
+  <strong>Answer check</strong>
+  <p>
+    The total peak cross-section must exceed the elastic one because it includes every possible decay of the produced resonance. Indeed, $8.08\times10^{-33}\,\mathrm{cm}^2$ is about $80.8$ times the elastic value, exactly $1/B_e$.
+  </p>
+</div>
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+The result illustrates what the peak height can and cannot reveal. With the resonance energy known, the elastic peak fixes $B_e$. It does not separately determine $\Gamma_e$ and $\Gamma$; resolving the line shape or measuring another width-sensitive quantity is needed for that.
+
+Common traps are:
+
+1. Using $B_e$ instead of $B_e^2$ in the elastic channel.
+2. Forgetting the average over the four incoming spin states.
+3. Treating $\mathrm{GeV}^{-2}$ as though it were already $\mathrm{cm}^2$.
+4. Calling every localized enhancement a pure Breit-Wigner peak. Background interference can also turn a resonance into an asymmetric feature or even a dip.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+For an isolated spin-one resonance formed from unpolarized $e^+e^-$ beams,
+
+$$
+\sigma_{ee}^{\rm peak}
+=
+\frac{3\pi}{k^2}B_e^2,
+\qquad
+\sigma_{\rm total}^{\rm peak}
+=
+\frac{3\pi}{k^2}B_e.
+$$
+
+The difference between the two formulas is one final-state branching factor.
+
+<ChapterSectionNav
+  currentSlug="spin-one-resonance"
+  sections={scatteringTheoryProblems}
+  overviewRoute={scatteringTheoryProblemsRoute}
+  overviewLabel="Problem set overview"
+  chapterTitle="Scattering Theory problems"
+  completionRoute="/chapters/scattering-theory"
+  completionEyebrow="Problem set complete"
+  completionLabel="Scattering Theory overview"
+/>
+
+</ArticleLayout>

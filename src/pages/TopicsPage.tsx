@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { topicCategories, topics } from '../data/topics'
 
 const statusLabels = {
@@ -55,6 +56,11 @@ export default function TopicsPage() {
                         </ul>
                       </div>
                     </div>
+                    {topic.route && (
+                      <Link className="text-link topic-note-link" to={topic.route}>
+                        Read this section →
+                      </Link>
+                    )}
                   </article>
                 ))}
             </div>

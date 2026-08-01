@@ -1,0 +1,381 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout } from '../../../components/MdxComponents'
+import {
+  scatteringTheoryProblems,
+  scatteringTheoryProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 2 · Problem 4 of 7"
+  title="From Energy Denominators to the Dyson Series"
+  subtitle="Old-fashioned perturbation theory and the interaction-picture expansion are not rival approximations. A Fourier transform reveals that each energy denominator is an interval between ordered interaction times."
+  updated="2026-08-01"
+  readingTime={scatteringTheoryProblems[3].readingTime}
+  parent={{ label: 'Scattering Theory problems', to: scatteringTheoryProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#born-term', label: 'The Born term' },
+    { href: '#fourier', label: 'Fourier representation' },
+    { href: '#ordered-times', label: 'Ordered times' },
+    { href: '#dyson', label: 'Dyson series' },
+    { href: '#second-order', label: 'Second-order check' },
+    { href: '#interpretation', label: 'Interpretation and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">Reorganizing perturbation theory</span>
+  <p>
+    Starting from the old-fashioned Born expansion, whose intermediate states carry denominators $(E_\alpha-E_\gamma+i0)^{-1}$, derive the ordered interaction-time expansion of the $S$-operator directly.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    Write each denominator as an integral over a positive time interval. Use the energy-conserving delta function to introduce one unrestricted reference time, then replace the positive intervals by a descending sequence $t_1\ge t_2\ge\cdots\ge t_n$.
+  </p>
+</details>
+
+<p>
+  This solution supplies the algebra behind <Link to={scatteringTheoryProblems[3].theoryRoute}>the perturbative bridge to the Dyson series</Link>.
+</p>
+
+<Callout title="One expansion in two languages">
+Energy denominators emphasize the free intermediate states through which the system propagates. Ordered interaction times emphasize when successive insertions occur. The derivation below is a change of representation, not a new dynamical assumption.
+</Callout>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Write a general Born contribution</strong>
+      <p>Keep all intermediate labels and their energy denominators explicit.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Turn denominators into intervals</strong>
+      <p>Represent every resolvent by a positive-time Fourier integral and the energy delta by one unrestricted time.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Recognize interaction-picture matrix elements</strong>
+      <p>Change variables to ordered vertex times and use completeness to reconstruct the operator product.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="born-term">1. Isolate the general Born contribution</h2>
+
+Let $H=H_0+V$, with
+
+$$
+H_0|\Phi_\alpha\rangle
+=
+E_\alpha|\Phi_\alpha\rangle.
+$$
+
+At order $n$, the incoming Lippmann-Schwinger kernel contains $n$ insertions of $V$ and $n-1$ free resolvents:
+
+$$
+\begin{aligned}
+\tau_{\beta\alpha}^{(n)}
+&=
+\int d\gamma_1\cdots d\gamma_{n-1}
+\\[2pt]
+&\quad\times
+\frac{
+V_{\beta\gamma_{n-1}}
+V_{\gamma_{n-1}\gamma_{n-2}}
+\cdots
+V_{\gamma_1\alpha}
+}{
+\prod_{r=1}^{n-1}
+(E_\alpha-E_{\gamma_r}+i0)
+}.
+\end{aligned}
+$$
+
+The associated connected S-matrix contribution in this energy-normalized Hamiltonian basis is
+
+$$
+S_{\beta\alpha}^{(n)}
+=
+-2\pi i\,
+\delta(E_\beta-E_\alpha)
+\tau_{\beta\alpha}^{(n)}.
+$$
+
+This relation is compatible with the notebook's $S=1+i\mathcal T$: it says that the Hamiltonian kernel is packaged into
+
+$$
+\langle\beta|\mathcal T|\alpha\rangle
+=
+-2\pi\delta(E_\beta-E_\alpha)
+\tau_{\beta\alpha}^+.
+$$
+
+<h2 id="fourier">2. Replace every energy factor by a time integral</h2>
+
+The outgoing-wave prescription has the Fourier representation
+
+$$
+\boxed{
+\frac{1}{E_\alpha-E_\gamma+i0}
+=
+-i\int_0^\infty d\tau\,
+e^{i(E_\alpha-E_\gamma)\tau}.
+}
+$$
+
+The small positive imaginary part supplies the convergence factor $e^{-0^+\tau}$. It is not optional.
+
+The energy-conserving delta function is
+
+$$
+2\pi\delta(E_\beta-E_\alpha)
+=
+\int_{-\infty}^{\infty}dt_1\,
+e^{i(E_\beta-E_\alpha)t_1}.
+$$
+
+There is one factor $-i$ from the S-matrix relation and one from each of the $n-1$ resolvents. The coefficient of the order-$n$ term is therefore
+
+$$
+(-i)^n.
+$$
+
+At this stage, $t_1$ ranges over the whole real line, while every $\tau_r$ is nonnegative.
+
+<h2 id="ordered-times">3. Convert intervals into ordered interaction times</h2>
+
+Use the positive intervals to define earlier vertex times. With the intermediate states ordered from earliest to latest, set
+
+$$
+t_2=t_1-\tau_{n-1},
+$$
+
+$$
+t_3=t_2-\tau_{n-2},
+$$
+
+and continue until $t_n$. The Jacobian of this triangular change of variables is one. Since every $\tau_r\ge0$,
+
+$$
+\boxed{t_1\ge t_2\ge\cdots\ge t_n.}
+$$
+
+Now introduce the interaction-picture operator
+
+$$
+V_I(t)
+=
+e^{iH_0t}Ve^{-iH_0t}.
+$$
+
+Between free energy eigenstates,
+
+$$
+\langle\Phi_a|V_I(t)|\Phi_b\rangle
+=
+e^{i(E_a-E_b)t}V_{ab}.
+$$
+
+The exponentials generated by the Fourier integrals therefore combine as
+
+$$
+\begin{aligned}
+&e^{i(E_\beta-E_{\gamma_{n-1}})t_1}
+e^{i(E_{\gamma_{n-1}}-E_{\gamma_{n-2}})t_2}
+\cdots
+e^{i(E_{\gamma_1}-E_\alpha)t_n}
+\\
+&\qquad\times
+V_{\beta\gamma_{n-1}}
+V_{\gamma_{n-1}\gamma_{n-2}}
+\cdots
+V_{\gamma_1\alpha}.
+\end{aligned}
+$$
+
+Insert completeness at each intermediate label. The whole expression becomes
+
+$$
+\langle\Phi_\beta|
+V_I(t_1)V_I(t_2)\cdots V_I(t_n)
+|\Phi_\alpha\rangle.
+$$
+
+Thus
+
+$$
+\boxed{
+\begin{aligned}
+S_{\beta\alpha}^{(n)}
+&=
+(-i)^n
+\int_{-\infty}^{\infty}dt_1
+\int_{-\infty}^{t_1}dt_2
+\cdots
+\int_{-\infty}^{t_{n-1}}dt_n
+\\
+&\quad\times
+\langle\Phi_\beta|
+V_I(t_1)V_I(t_2)\cdots V_I(t_n)
+|\Phi_\alpha\rangle.
+\end{aligned}
+}
+$$
+
+<h2 id="dyson">4. Sum all orders</h2>
+
+Since the relation holds between arbitrary free states, it is an operator identity:
+
+$$
+\boxed{
+S
+=
+1+
+\sum_{n=1}^{\infty}(-i)^n
+\int_{-\infty}^{\infty}dt_1
+\int_{-\infty}^{t_1}dt_2
+\cdots
+\int_{-\infty}^{t_{n-1}}dt_n
+V_I(t_1)\cdots V_I(t_n).
+}
+$$
+
+The nested limits already impose chronological ordering, with the latest time on the left. If instead every time is integrated independently over the whole real line, all $n!$ orderings occur equally. Therefore
+
+$$
+\boxed{
+S
+=
+\sum_{n=0}^{\infty}
+\frac{(-i)^n}{n!}
+\int_{-\infty}^{\infty}dt_1\cdots dt_n\,
+\mathrm T\{V_I(t_1)\cdots V_I(t_n)\}.
+}
+$$
+
+This is written compactly as
+
+$$
+\boxed{
+S
+=
+\mathrm T\exp\!\left[-i\int_{-\infty}^{\infty}dt\,V_I(t)\right].
+}
+$$
+
+<h2 id="second-order">5. Check the map at second order</h2>
+
+The second Born term is
+
+$$
+S_{\beta\alpha}^{(2)}
+=
+-2\pi i\delta(E_\beta-E_\alpha)
+\int d\gamma\,
+\frac{V_{\beta\gamma}V_{\gamma\alpha}}
+{E_\alpha-E_\gamma+i0}.
+$$
+
+After the two Fourier representations,
+
+$$
+S_{\beta\alpha}^{(2)}
+=
+(-i)^2
+\int_{-\infty}^{\infty}dt_1
+\int_0^\infty d\tau
+\int d\gamma\,
+e^{i(E_\beta-E_\alpha)t_1}
+e^{i(E_\alpha-E_\gamma)\tau}
+V_{\beta\gamma}V_{\gamma\alpha}.
+$$
+
+Set $t_2=t_1-\tau$. Then $t_2\le t_1$, and the exponent becomes
+
+$$
+(E_\beta-E_\gamma)t_1
++(E_\gamma-E_\alpha)t_2.
+$$
+
+Consequently
+
+$$
+\boxed{
+S_{\beta\alpha}^{(2)}
+=
+(-i)^2
+\int_{-\infty}^{\infty}dt_1
+\int_{-\infty}^{t_1}dt_2\,
+\langle\Phi_\beta|V_I(t_1)V_I(t_2)|\Phi_\alpha\rangle.
+}
+$$
+
+This explicit case contains the entire logic of the general proof.
+
+<div className="answer-check">
+  <strong>Answer check</strong>
+  <p>
+    At first order the result is $-i\int dt\,V_I(t)$. At second order it is $(-i)^2$ integrated over exactly one of the two time-ordering triangles. These are the first two nontrivial Dyson terms with the correct signs and no extra combinatorial factor.
+  </p>
+</div>
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+An old-fashioned denominator records how a free intermediate state fails to conserve the external energy. Its Fourier transform says that the same intermediate state propagates for a positive interval between two interaction events. Time ordering is therefore already encoded in the $+i0$ prescription.
+
+Common traps are:
+
+1. Reversing the sign in the Fourier representation of $(x+i0)^{-1}$.
+2. Forgetting that $i0$ supplies convergence at large positive interval.
+3. Adding $1/n!$ while retaining nested ordered integrals. That would divide each ordering twice.
+4. Assuming the intermediate labels are observed particles. They are summed free-basis states inside a perturbative representation.
+5. Thinking the Dyson series proves convergence. It reorganizes the expansion; it does not change its generally asymptotic character.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The dictionary is
+
+$$
+\text{energy denominator}
+\longleftrightarrow
+\text{positive propagation interval},
+$$
+
+$$
+\text{energy delta function}
+\longleftrightarrow
+\text{one unrestricted reference time},
+$$
+
+$$
+\text{Born chain}
+\longleftrightarrow
+\text{chronologically ordered interaction-picture product}.
+$$
+
+<ChapterSectionNav
+  currentSlug="born-to-dyson"
+  sections={scatteringTheoryProblems}
+  overviewRoute={scatteringTheoryProblemsRoute}
+  overviewLabel="Problem set overview"
+  chapterTitle="Scattering Theory problems"
+  completionRoute="/chapters/scattering-theory"
+  completionEyebrow="Problem set complete"
+  completionLabel="Scattering Theory overview"
+/>
+
+</ArticleLayout>

@@ -1,4 +1,5 @@
-import { NavLink, Outlet } from 'react-router-dom'
+import { Suspense, useEffect, useRef } from 'react'
+import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const navItems = [
   { label: 'Home', to: '/' },
@@ -7,6 +8,14 @@ const navItems = [
 ]
 
 export default function Layout() {
+  const { pathname } = useLocation()
+  const mainRef = useRef<HTMLElement>(null)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+    mainRef.current?.focus({ preventScroll: true })
+  }, [pathname])
+
   return (
     <div className="app-shell">
       <header className="site-header">
@@ -29,8 +38,16 @@ export default function Layout() {
           ))}
         </nav>
       </header>
-      <main>
-        <Outlet />
+      <main className="route-main" ref={mainRef} tabIndex={-1} aria-label="Page content">
+        <Suspense
+          fallback={
+            <div className="route-loading" role="status" aria-live="polite">
+              Opening the note…
+            </div>
+          }
+        >
+          <Outlet />
+        </Suspense>
       </main>
       <footer className="site-footer">
         <span>Static MDX knowledge base.</span>

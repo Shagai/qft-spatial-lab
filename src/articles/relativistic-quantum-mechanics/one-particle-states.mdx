@@ -1,0 +1,527 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Term } from '../../components/MdxComponents'
+import { ParticleLittleGroupFigure } from '../../components/InteractiveFigures'
+
+<ArticleLayout
+  kicker="Chapter 1 · Section 4 of 7"
+  title="One-Particle States"
+  subtitle="A relativistic particle is not one vector but a symmetry-linked family of momentum states. Mass chooses the momentum orbit; the little group supplies spin or helicity."
+  updated="2026-08-01"
+  readingTime="20 min"
+  parent={{ label: 'Relativistic Quantum Mechanics', to: '/chapters/relativistic-quantum-mechanics' }}
+  toc={[
+    { href: '#question', label: 'The classification question' },
+    { href: '#basis', label: 'Momentum basis' },
+    { href: '#orbits', label: 'Momentum orbits' },
+    { href: '#spectrum', label: 'Which orbits are physical?' },
+    { href: '#standard-momentum', label: 'Standard momentum' },
+    { href: '#little-group', label: 'The little group' },
+    { href: '#massive', label: 'Massive particles' },
+    { href: '#wigner-rotation', label: 'Wigner rotation' },
+    { href: '#massless', label: 'Massless particles' },
+    { href: '#photon', label: 'Photon polarizations' },
+    { href: '#states-vs-fields', label: 'States versus fields' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="question">The classification question</h2>
+
+Assume quantum mechanics and special relativity are both correct. Ask:
+
+> What kinds of quantum objects can every inertial observer recognize as the same particle?
+
+The answer is more structural than dynamical. A one-particle sector that is closed under changes of inertial frame can be decomposed into irreducible unitary representations of the connected Poincaré group—or, more precisely, its quantum cover. “Irreducible” means that the family cannot be split into smaller symmetry-invariant families.
+
+Once we also require the energy-momentum spectrum to lie in the future light cone, these families are labeled by
+
+$$
+\boxed{\text{massive particle}: (m,j)}
+$$
+
+or
+
+$$
+\boxed{\text{ordinary massless particle}: (0,h)}.
+$$
+
+Here $j$ is spin and $h$ is helicity. The second box is the finite-helicity branch used by known particle theories; the symmetry-allowed continuous-spin alternative appears below. The goal is to understand why the familiar second label changes when a rest frame disappears.
+
+These labels classify a particle's spacetime transformation law, not its complete identity. Distinct species can share the same $(m,j)$ or $(0,h)$ labels. Charges, flavor, and interaction rules supply information that Poincaré symmetry does not see; when needed, an additional multiplicity label $\alpha$ distinguishes states $|p,\sigma,\alpha\rangle$ with identical kinematical quantum numbers.
+
+<h2 id="basis">A particle is a family of momentum states</h2>
+
+An electron is not one state. It may carry any allowed momentum and one of several spin labels. Use basis states
+
+$$
+|p,\sigma\rangle,
+$$
+
+where
+
+$$
+P^\mu|p,\sigma\rangle
+=
+p^\mu|p,\sigma\rangle.
+$$
+
+$p^\mu$ labels the four-momentum. The discrete label $\sigma$ distinguishes states with the same momentum.
+
+A normalizable wave packet is a superposition,
+
+$$
+|\Psi\rangle
+=
+\sum_\sigma
+\int d\Pi(p)\,
+\psi_\sigma(p)|p,\sigma\rangle,
+$$
+
+with invariant on-shell measure
+
+$$
+d\Pi(p)
+=
+\frac{d^3p}{(2\pi)^3\,2E_{\mathbf p}}.
+$$
+
+This measure fits the covariant normalization
+
+$$
+\langle p',\sigma'|p,\sigma\rangle
+=
+2E_{\mathbf p}(2\pi)^3
+\delta_{\sigma'\sigma}\delta^3(\mathbf p'-\mathbf p),
+$$
+
+so the identity on the one-particle sector is
+
+$$
+\mathbf 1_{\mathcal H_1}
+=
+\sum_\sigma\int d\Pi(p)\,
+|p,\sigma\rangle\langle p,\sigma|.
+$$
+
+The factor $2E_{\mathbf p}$ in the state normalization cancels the one in the measure. That pairing is what lets Lorentz transformations move these basis states without an extra frame-dependent normalization factor.
+
+Momentum is the natural first label because translations act diagonally:
+
+$$
+U(a)|p,\sigma\rangle
+=
+e^{-ip\cdot a}|p,\sigma\rangle.
+$$
+
+The momentum is the coefficient in the translation phase—the conserved charge of spacetime translation symmetry.
+
+<Callout title="One particle does not mean elementary">
+A stable hydrogen atom can carry a one-particle Poincaré representation with definite mass and spin. The classification describes how an isolated object transforms, not whether it has internal constituents.
+</Callout>
+
+<h2 id="orbits">Mass is the geometry of a momentum orbit</h2>
+
+A Lorentz transformation sends
+
+$$
+p\longrightarrow\Lambda p
+$$
+
+while preserving
+
+$$
+p^2=E^2-|\mathbf p|^2.
+$$
+
+All future-directed momenta with the same value of $p^2$ lie on one Lorentz orbit.
+
+For $m>0$,
+
+$$
+p^2=m^2,
+\qquad
+E_{\mathbf p}=\sqrt{|\mathbf p|^2+m^2}.
+$$
+
+For a massless particle,
+
+$$
+p^2=0,
+\qquad
+E_{\mathbf p}=|\mathbf p|.
+$$
+
+Mass therefore tells us which momentum surface the state lives on:
+
+$$
+\boxed{\text{mass} = \text{Lorentz-invariant label of the momentum orbit}.}
+$$
+
+It is not yet an explanation of why a particular theory assigns the electron its measured mass. It is the kinematical meaning of the mass label once that value is given.
+
+<ParticleLittleGroupFigure />
+
+<h2 id="spectrum">Which momentum orbits enter the physical spectrum?</h2>
+
+Lorentz symmetry by itself offers more orbits than observed particle physics uses. The extra physical input is the <Term>spectrum condition</Term>: in every inertial frame, energy-momentum lies in the closed future light cone,
+
+$$
+p^0\geq 0,
+\qquad
+p^2\geq 0.
+$$
+
+With our $(+,-,-,-)$ metric, this selects the following possibilities:
+
+| Momentum orbit | Physical reading |
+| --- | --- |
+| $p^2=m^2>0$, $p^0>0$ | The future mass hyperboloid: a massive particle sector. |
+| $p^2=0$, $p^0>0$ | The future light cone, excluding its tip: a massless particle sector. |
+| $p^\mu=0$ | A fixed orbit. Under the usual assumption of one Lorentz-invariant ground state, this is the vacuum. |
+| $p^0<0$ on a timelike or null orbit | A past-directed branch, excluded when the Hamiltonian is bounded below. |
+| $p^2<0$ | A spacelike orbit. A boost can make its energy positive, zero, or negative, so the complete orbit cannot obey the spectrum condition. |
+
+The exclusion of the past and spacelike branches is therefore not hidden inside the algebra. It comes from asking for a stable relativistic theory with a frame-independent lower bound on energy. Symmetry classifies the available orbits; spectral stability tells us which ones can describe particles above the vacuum.
+
+<h2 id="standard-momentum">Choose one reference momentum</h2>
+
+Analyzing every $p$ separately would repeat the same problem infinitely many times. Choose one convenient momentum $k$ on the orbit and, for each $p$, choose a standard Lorentz transformation $L(p)$ such that
+
+$$
+L(p)k=p.
+$$
+
+Then define
+
+$$
+|p,\sigma\rangle
+=
+U(L(p))|k,\sigma\rangle.
+$$
+
+Conceptually:
+
+1. Prepare a standard state at $k$.
+2. Carry it to the desired momentum $p$.
+3. Use the chosen $L(p)$ to say what the spin label means at that momentum.
+
+The choice of standard boosts is a convention, like choosing a frame for the internal axes over the momentum surface. Different choices describe the same physics but can assign different momentum-dependent spin bases.
+
+<h2 id="little-group">Remove the momentum change and inspect what remains</h2>
+
+Apply an arbitrary Lorentz transformation after the standard boost:
+
+$$
+k
+\xrightarrow{L(p)}
+p
+\xrightarrow{\Lambda}
+\Lambda p.
+$$
+
+We also chose a standard direct route $L(\Lambda p)$ from $k$ to $\Lambda p$. Compare the two routes:
+
+$$
+\boxed{
+W(\Lambda,p)
+=
+L^{-1}(\Lambda p)\Lambda L(p).
+}
+$$
+
+Act on the reference momentum:
+
+$$
+W(\Lambda,p)k
+=
+L^{-1}(\Lambda p)\Lambda p
+=k.
+$$
+
+$W(\Lambda,p)$ changes no momentum. It can act only on the remaining internal labels. The transformations preserving $k$ form its <Term>little group</Term>.
+
+With covariantly normalized states, the transformation law can be written cleanly as
+
+$$
+U(\Lambda)|p,\sigma\rangle
+=
+\sum_{\sigma'}
+D_{\sigma'\sigma}\!\left(W(\Lambda,p)\right)
+|\Lambda p,\sigma'\rangle.
+$$
+
+Other normalization conventions add a square-root energy factor. That factor is bookkeeping; the little-group matrix contains the physics of spin or helicity.
+
+The central procedure is
+
+$$
+\boxed{
+\text{change the momentum}
++
+\text{act on what remains when the reference momentum is restored}.
+}
+$$
+
+<h2 id="massive">Massive particles: rest frame and spin</h2>
+
+For $m>0$, choose
+
+$$
+k^\mu=(m,0,0,0).
+$$
+
+A boost would move this state away from rest. Spatial rotations leave $k$ unchanged. The massive little group is therefore $SO(3)$, or its quantum double cover $SU(2)$.
+
+The irreducible representations of $SU(2)$ are labeled by
+
+$$
+j=0,\frac12,1,\frac32,\ldots
+$$
+
+and contain
+
+$$
+2j+1
+$$
+
+components,
+
+$$
+\sigma=-j,-j+1,\ldots,+j.
+$$
+
+This is the operational definition of spin:
+
+$$
+\boxed{\text{spin tells us how a particle's rest states transform under rotations}.}
+$$
+
+It is not a tiny material sphere rotating in space. It is a representation label.
+
+For a massive spin-one particle, $j=1$ and the rest states have
+
+$$
+\sigma=-1,0,+1.
+$$
+
+In a covariant vector description, they can be represented by three polarization vectors $\epsilon^\mu(p,\lambda)$ obeying
+
+$$
+p_\mu\epsilon^\mu(p,\lambda)=0,
+$$
+
+with completeness
+
+$$
+\sum_{\lambda=-1}^{+1}
+\epsilon^\mu(p,\lambda)
+\epsilon^{\nu *}(p,\lambda)
+=
+-\eta^{\mu\nu}
++\frac{p^\mu p^\nu}{m^2}.
+$$
+
+The longitudinal $\lambda=0$ state is physical for a massive vector particle. Its existence will sharply distinguish it from a photon.
+
+<h2 id="wigner-rotation">Why boosts rotate spin</h2>
+
+Start with a particle, boost it, apply a second non-collinear boost, and then use the standard inverse boost to return its final momentum to the reference momentum. The momentum closes its loop; the spin axes generally do not.
+
+The residual rotation is $W(\Lambda,p)$, the <Term>Wigner rotation</Term>. It is the finite version of the algebraic fact
+
+$$
+[K_i,K_j]=-i\epsilon_{ijk}J_k.
+$$
+
+Two boosts in different directions do not combine into only another boost; their composition has a rotational part. Comparing the result with the chosen standard boost isolates the Wigner rotation. A continuous sequence of these small rotations produces Thomas precession.
+
+This is why “spin up” at different momenta requires a convention. The invariant label is $j$; a particular component $\sigma$ depends on the selected spin basis and can mix under Lorentz transformations.
+
+<h2 id="massless">Massless particles: no rest frame and helicity</h2>
+
+For a massless particle there is no rest momentum. Choose instead a standard lightlike vector,
+
+$$
+k^\mu=(\kappa,0,0,\kappa).
+$$
+
+The transformations preserving this vector form $ISO(2)$, or the corresponding cover when quantum phases are included:
+
+$$
+ISO(2)=SO(2)\ltimes\mathbb R^2.
+$$
+
+The $SO(2)$ part rotates around the direction of motion. With the conventions $K_i=M^{i0}$ and $k$ along $+z$, the two remaining generators may be chosen as
+
+$$
+N_1=K_1+J_2,
+\qquad
+N_2=K_2-J_1.
+$$
+
+They obey
+
+$$
+[J_3,N_1]=iN_2,
+\qquad
+[J_3,N_2]=-iN_1,
+\qquad
+[N_1,N_2]=0.
+$$
+
+This is the algebra of rotations and translations in a plane. Here the “translations” are null rotations that leave $k$ fixed, not ordinary spacetime translations.
+
+This algebra has two qualitatively different unitary branches:
+
+1. **Finite helicity:** $N_1$ and $N_2$ act trivially. Only the rotation generated by $J_3$ remains, so the internal representation is one-dimensional.
+2. **Continuous spin:** the pair $(N_1,N_2)$ acts nontrivially. Rotations sweep its nonzero translation-like label around a circle, producing an infinite family of helicity components. Poincaré symmetry permits this branch, but no continuous-spin particle has been observed, and the Standard Model uses the first branch.
+
+In the finite-helicity branch, what remains is a one-dimensional rotation representation:
+
+$$
+U(R_{\mathbf p}(\theta))|p,h\rangle
+=
+e^{-ih\theta}|p,h\rangle.
+$$
+
+The label
+
+$$
+h=\frac{\mathbf J\cdot\mathbf p}{|\mathbf p|}
+$$
+
+is helicity: angular momentum along the direction of motion.
+
+The global rotation topology restricts its possible values. In the $SL(2,\mathbb C)$ cover of the connected Lorentz group, a $4\pi$ spatial rotation is the identity, while a $2\pi$ rotation may act as the nontrivial central sign. Therefore
+
+$$
+e^{-i4\pi h}=1
+\qquad\Longrightarrow\qquad
+\boxed{2h\in\mathbb Z}.
+$$
+
+Thus helicity may be integral or half-integral. Topology quantizes the label; it does not decide which allowed helicities a particular theory contains.
+
+The logic is
+
+$$
+\boxed{
+\text{no rest frame}
+\longrightarrow
+\text{residual twist around the light ray}
+\longrightarrow
+\text{helicity}.
+}
+$$
+
+A proper orthochronous Lorentz transformation may rotate the momentum direction, but it does not flip helicity: rotations carry $\mathbf J$ with $\mathbf p$, and no boost can overtake a massless particle. Parity can flip helicity because it reverses $\mathbf p$ but not the axial vector $\mathbf J$.
+
+<h2 id="photon">Why the photon has two physical polarizations</h2>
+
+A massive spin-one representation contains three states. A photon instead contains the two helicity sectors
+
+$$
+|p,+1\rangle,
+\qquad
+|p,-1\rangle.
+$$
+
+Each helicity is a one-dimensional irreducible representation of the little group. Inducing it over the full momentum orbit gives a separate irreducible representation of the connected Poincaré group, or more precisely its quantum cover. Parity, when it is a symmetry, pairs the two.
+
+There is no requirement for a helicity-zero photon. A massless $h=0$ state would be a different particle—a scalar—not a longitudinal photon.
+
+The null-rotation part of the little group appears in a four-vector polarization description as
+
+$$
+\epsilon^\mu(p)
+\longrightarrow
+\epsilon^\mu(p)+\alpha p^\mu.
+$$
+
+This is a gauge change. It alters the redundant polarization representative without changing the physical photon state or electromagnetic field strength.
+
+The familiar polarization states are coherent superpositions of the two helicities. At fixed momentum,
+
+$$
+|p,\psi\rangle
+=
+c_+|p,+1\rangle+c_-|p,-1\rangle.
+$$
+
+A single helicity gives circular polarization. Equal magnitudes $|c_+|=|c_-|$ give linear polarization, with the relative phase fixing its transverse direction. Unequal magnitudes give elliptical polarization. Linear polarization is therefore not a hidden helicity-zero mode; it is interference between the $+1$ and $-1$ sectors.
+
+<h2 id="states-vs-fields">Particle states are not field components</h2>
+
+This distinction resolves several common puzzles:
+
+<div className="two-panel-grid">
+  <div>
+    <strong>Dirac field</strong>
+    <p>The field has four complex components, while a positive-energy electron of fixed momentum has two spin states.</p>
+  </div>
+  <div>
+    <strong>Vector potential</strong>
+    <p>$A^\mu$ has four components, while a photon of fixed momentum has two physical helicity states.</p>
+  </div>
+</div>
+
+Field components make Lorentz covariance local and explicit. Constraints, equations of motion, and gauge redundancy determine which combinations create independent one-particle states.
+
+The Pauli-Lubanski vector summarizes the classification covariantly:
+
+$$
+W^\mu
+=
+\frac12\epsilon^{\mu\nu\rho\sigma}
+P_\nu M_{\rho\sigma}.
+$$
+
+For a massive particle,
+
+$$
+P^2=m^2,
+\qquad
+W^2=-m^2j(j+1).
+$$
+
+For an ordinary massless helicity state,
+
+$$
+P^2=0,
+\qquad
+W^\mu=hP^\mu.
+$$
+
+This is Wigner's classification in physical language: the orbit determines mass, and the little-group representation determines spin or helicity.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The heart of the construction is:
+
+1. Diagonalize translations and label states by four-momentum.
+2. Impose the future-cone spectrum condition to select stable positive-energy orbits.
+3. Choose one reference momentum on each selected Lorentz orbit.
+4. Remove the momentum change from a Lorentz transformation.
+5. Represent the residual little-group transformation on the internal states.
+6. A massive rest momentum leaves $SU(2)$ and therefore spin $j$.
+7. A massless reference ray leaves $ISO(2)$: trivial null rotations give finite helicity, while nontrivial null rotations give continuous spin.
+8. The $4\pi$ rotation topology requires $2h\in\mathbb Z$.
+
+The logical order of QFT is now visible:
+
+$$
+\boxed{
+\text{spacetime symmetry}
+\longrightarrow
+\text{allowed one-particle states}
+\longrightarrow
+\text{creation operators}
+\longrightarrow
+\text{fields}.
+}
+$$
+
+<ChapterSectionNav currentSlug="one-particle-states" />
+
+</ArticleLayout>

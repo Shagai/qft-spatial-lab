@@ -1,0 +1,368 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import { ResonanceProfileFigure } from '../../components/InteractiveFigures'
+import { scatteringTheoryProblemsRoute } from '../../data/problemSets'
+import {
+  scatteringTheoryRoute,
+  scatteringTheorySections,
+} from '../../data/scatteringTheory'
+
+<ArticleLayout
+  kicker="Chapter 2 · Section 7 of 7"
+  title="Resonances, Poles, and Unstable Particles"
+  subtitle="An unstable particle does not survive to become an asymptotic state. Its invariant identity is instead encoded by a pole, whose position and residue control lifetime, phase motion, branching fractions, and the observed line shape."
+  updated="2026-08-01"
+  readingTime="15 min"
+  parent={{ label: 'Scattering Theory', to: '/chapters/scattering-theory' }}
+  toc={[
+    { href: '#question', label: 'What is an unstable particle?' },
+    { href: '#analytic-structure', label: 'Poles and sheets' },
+    { href: '#time-evolution', label: 'Width and lifetime' },
+    { href: '#breit-wigner', label: 'Narrow resonance' },
+    { href: '#partial-widths', label: 'Partial widths' },
+    { href: '#phase-motion', label: 'Phase motion' },
+    { href: '#interference', label: 'Peaks, dips, and interference' },
+    { href: '#limits', label: 'Limits of Breit-Wigner' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="question">If it decays, where is the particle state?</h2>
+
+A stable particle can be prepared in the distant past, cross the laboratory, and be detected in the distant future. It therefore labels an asymptotic state such as
+
+$$
+|p,\sigma,\mathrm{in}\rangle
+\quad\text{or}\quad
+|p,\sigma,\mathrm{out}\rangle.
+$$
+
+An unstable particle cannot do this. Given enough time, it decays into stable products. It should not be inserted into the exact $S$-matrix as an external state.
+
+Yet a collision may briefly organize itself as if such a particle existed. Over a narrow energy interval, many reactions can show the same rapidly varying amplitude. This shared structure is a <Term>resonance</Term>.
+
+The most reliable definition is not “a bump in a histogram.” It is
+
+$$
+\boxed{
+\text{resonance}
+=
+\text{a pole of the analytically continued scattering amplitude}.
+}
+$$
+
+The pole tells us what is common across channels. A peak, dip, or asymmetric line shape tells us how that pole interferes with a particular experimental background.
+
+<Callout title="Unstable does not mean ill-defined">
+An unstable particle is absent from the asymptotic Hilbert-space basis, but it can still be sharply characterized by its complex pole position and residues. For a narrow pole, speaking of its mass, lifetime, and decay modes is an excellent approximation.
+</Callout>
+
+<h2 id="analytic-structure">A resonance pole lives beyond a threshold cut</h2>
+
+An exact Hamiltonian is self-adjoint and has real energies. A decaying particle is therefore not an ordinary normalizable eigenvector with a complex eigenvalue.
+
+Complex energy enters after continuing a scattering amplitude away from the real physical axis. Multi-particle thresholds create branch cuts because a continuum of on-shell states becomes available. Continuing through the appropriate cut reaches another Riemann sheet. A resonance appears there at
+
+$$
+\boxed{
+E_{\mathrm{pole}}
+=
+E_R-\frac{i\Gamma}{2}.
+}
+$$
+
+Equivalently, in the invariant variable $s=E^2$,
+
+$$
+s_{\mathrm{pole}}
+=
+\left(M_{\mathrm{pole}}-\frac{i\Gamma_{\mathrm{pole}}}{2}\right)^2
+\simeq
+M_{\mathrm{pole}}^2-iM_{\mathrm{pole}}\Gamma_{\mathrm{pole}}
+$$
+
+for a narrow state.
+
+The negative imaginary part is required by the outgoing boundary condition. It places the pole below the real energy axis on the resonance sheet and produces decay toward the future rather than growth.
+
+<Sidenote>
+Bound states have a different analytic location: they appear as physical-sheet poles below threshold. Virtual states and threshold cusps have still other structures. A nearby enhancement is not enough by itself to identify which one is present.
+</Sidenote>
+
+<h2 id="time-evolution">The imaginary pole position is a clock</h2>
+
+A pole contribution has time dependence
+
+$$
+e^{-iE_{\mathrm{pole}}t}
+=
+e^{-iE_Rt}e^{-\Gamma t/2}.
+$$
+
+The amplitude decays with rate $\Gamma/2$, so its probability decays as
+
+$$
+P(t)=P(0)e^{-\Gamma t}.
+$$
+
+In natural units,
+
+$$
+\boxed{\tau=\frac1\Gamma.}
+$$
+
+Restoring units gives $\tau=\hbar/\Gamma$. A narrow energy distribution corresponds to a long-lived state; a broad energy distribution corresponds to rapid decay.
+
+“Long-lived” is relative. A resonance may decay much too quickly to cross a macroscopic detector and still be narrow if
+
+$$
+\Gamma\ll E_R.
+$$
+
+It then completes many cycles of its internal quantum phase before appreciably decaying.
+
+<h2 id="breit-wigner">The narrow-resonance approximation</h2>
+
+Near an isolated simple pole, an amplitude from initial channel $i$ to final channel $f$ has the form
+
+$$
+\boxed{
+\mathcal M_{i\to f}(E)
+\simeq
+\mathcal M_{\mathrm{bg}}(E)
++
+\frac{g_f g_i}
+{E-E_R+i\Gamma/2}.
+}
+$$
+
+$\mathcal M_{\mathrm{bg}}$ is the non-resonant background. Over an energy interval of order $\Gamma$, the narrow-resonance approximation treats the couplings, phase space, and background as slowly varying.
+
+Ignoring the background for a moment gives the Lorentzian factor
+
+$$
+\left|
+\frac{1}{E-E_R+i\Gamma/2}
+\right|^2
+=
+\frac{1}{(E-E_R)^2+\Gamma^2/4}.
+$$
+
+It reaches half its maximum at
+
+$$
+E=E_R\pm\frac\Gamma2,
+$$
+
+so its full width at half maximum is $\Gamma$.
+
+For a spin-$J$ resonance formed by two unpolarized particles, let $N_{\mathrm{pol},1}$ and $N_{\mathrm{pol},2}$ be the numbers of physical initial polarizations. The idealized two-body cross-section is
+
+$$
+\boxed{
+\sigma_{i\to f}(E)
+\simeq
+\frac{\pi}{k^2}
+\frac{2J+1}{N_{\mathrm{pol},1}N_{\mathrm{pol},2}}
+\frac{\Gamma_i\Gamma_f}
+{(E-E_R)^2+\Gamma^2/4}.
+}
+$$
+
+For a massive spin-$s$ particle with every spin state populated, $N_{\mathrm{pol}}=2s+1$; a massless particle is counted by its physical helicities instead. The displayed expression assumes an isolated narrow resonance, unpolarized distinguishable incoming particles, and nearly constant $k$ across the peak. Identical particles and channel conventions can modify the prefactor without changing the pole structure.
+
+<ResonanceProfileFigure />
+
+<h2 id="partial-widths">The pole residue factorizes by channel</h2>
+
+Near a simple pole, the residue separates into an entrance coupling and an exit coupling:
+
+$$
+\operatorname*{Res}_{E=E_{\mathrm{pole}}}
+\mathcal M_{i\to f}
+\propto
+g_f g_i.
+$$
+
+This factorization is why the same resonance can be recognized in many reactions. Each channel sees the same denominator and pole position but a different residue.
+
+For an isolated narrow state, the coupling to a final channel and its phase space define a <Term>partial width</Term> $\Gamma_f$. In that regime probability conservation gives
+
+$$
+\boxed{
+\Gamma
+=
+\sum_f\Gamma_f,
+\qquad
+B_f
+=
+\frac{\Gamma_f}{\Gamma},
+\qquad
+\sum_fB_f=1.
+}
+$$
+
+$B_f$ is the branching fraction into channel $f$. Every kinematically allowed final state must be included in the sum, including multi-particle channels.
+
+For a broad, threshold-adjacent, or overlapping pole, assigning separate real-axis partial widths and branching fractions becomes convention dependent. The pole position and channel residues remain the more robust quantities; the simple sum above belongs to the narrow-resonance description.
+
+At the peak, the exclusive cross-section scales as
+
+$$
+\sigma_{i\to f}(E_R)
+\propto
+\frac{1}{k_R^2}B_iB_f.
+$$
+
+The resonance must couple to the incoming particles to be produced and to the selected outgoing particles to be observed. A large branching fraction into $f$ does not help if the entrance coupling is tiny.
+
+If the experimental energy resolution is broader than the intrinsic width, the peak height and width cannot be read separately. Integrating across a narrow resonance gives
+
+$$
+\int dE\,\sigma_{i\to f}(E)
+\propto
+\Gamma_i B_f.
+$$
+
+Summing over all final states removes $B_f$ and leaves an area proportional to the entrance partial width $\Gamma_i$.
+
+<h2 id="phase-motion">A resonance is also a rapid rotation of the amplitude</h2>
+
+In a single elastic partial wave, unitarity requires $|S_\ell|=1$ on the physical energy axis. An isolated resonance can be written
+
+$$
+S_\ell(E)
+\simeq
+e^{2i\delta_{\mathrm{bg}}(E)}
+\frac{E-E_R-i\Gamma/2}
+{E-E_R+i\Gamma/2}.
+$$
+
+The numerator is the complex conjugate of the denominator for real $E$, so the ratio has unit magnitude. Its effect is phase motion, not loss of probability.
+
+Across an isolated resonance, the continuous phase shift advances by approximately $\pi$. Near $E=E_R$, the resonant contribution passes through
+
+$$
+\delta_{\mathrm{res}}\simeq\frac\pi2.
+$$
+
+Since an elastic partial-wave cross-section is
+
+$$
+\sigma_\ell
+=
+\frac{4\pi}{k^2}(2\ell+1)\sin^2\delta_\ell,
+$$
+
+a small background phase produces a peak near that energy. On the Argand diagram, the partial-wave amplitude makes a rapid excursion around the unitarity circle.
+
+This phase rotation is often more diagnostic than the height of a cross-section. Normalization, detector acceptance, and branching fractions can change a peak's size, while the pole-driven phase motion connects all channels.
+
+<h2 id="interference">The same pole can make a peak or a dip</h2>
+
+An experiment measures the coherent sum
+
+$$
+\mathcal M
+=
+\mathcal M_{\mathrm{bg}}
++
+\mathcal M_{\mathrm{res}},
+$$
+
+so
+
+$$
+|\mathcal M|^2
+=
+|\mathcal M_{\mathrm{bg}}|^2
++
+|\mathcal M_{\mathrm{res}}|^2
++
+2\operatorname{Re}
+\left(
+\mathcal M_{\mathrm{bg}}^*
+\mathcal M_{\mathrm{res}}
+\right).
+$$
+
+The interference term can be positive on one side of the pole and negative on the other. It may create a skewed profile rather than a symmetric Lorentzian.
+
+In the elastic phase-shift language,
+
+$$
+\sigma_\ell
+\propto
+\sin^2
+\left(
+\delta_{\mathrm{bg}}
++
+\delta_{\mathrm{res}}
+\right).
+$$
+
+If $\delta_{\mathrm{bg}}$ is small, $\delta_{\mathrm{res}}=\pi/2$ gives a peak. If $\delta_{\mathrm{bg}}$ is already near $\pi/2$, the resonant advance can carry the total phase toward $\pi$, where the elastic cross-section has a dip.
+
+<Callout title="A bump is not the definition">
+A threshold cusp or background fluctuation can imitate a peak, while destructive interference can hide a genuine resonance in a dip. The stable question is whether analytic continuation reveals a pole with consistent residues across channels.
+</Callout>
+
+<h2 id="limits">When Breit-Wigner stops being a faithful picture</h2>
+
+The constant-width Breit-Wigner form is a local approximation, not the definition of a resonance. It works best when
+
+1. $\Gamma\ll E_R$;
+2. the pole is isolated from other poles;
+3. no important threshold lies within a few widths;
+4. the non-resonant background varies slowly;
+5. experimental resolution does not dominate the shape.
+
+Near a two-body threshold, phase space makes a partial width energy dependent. For an outgoing orbital angular momentum $\ell$,
+
+$$
+\Gamma_f(E)
+\propto
+k_f(E)^{2\ell+1}
+$$
+
+up to slowly varying factors. The opening channel also creates a branch point, so replacing $\Gamma$ by one constant can distort both sides of the peak.
+
+For broad or overlapping structures, different line-shape conventions may assign different “masses” and “widths.” The complex pole position remains the least convention-dependent characterization:
+
+$$
+\boxed{
+s_{\mathrm{pole}}
+\quad\text{and its channel residues}
+\quad\text{are more fundamental than a fitted peak position.}
+}
+$$
+
+In coupled-channel scattering, the clean phase advance belongs to an eigenchannel of the $S$-matrix. An individual measured channel can trace a more complicated path because the eigenvectors and backgrounds also vary with energy.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The essential chain is:
+
+1. Stable particles define asymptotic states; unstable particles do not.
+2. A resonance is identified by a pole of an analytically continued amplitude, generally on an unphysical sheet reached through a threshold cut.
+3. $E_{\mathrm{pole}}=E_R-i\Gamma/2$ gives probability decay $e^{-\Gamma t}$ and lifetime $1/\Gamma$.
+4. Near an isolated narrow pole, the amplitude has a Breit-Wigner denominator.
+5. Pole residues factorize into entrance and exit couplings, leading to partial widths and branching fractions.
+6. The same pole drives rapid phase motion in every channel to which it couples.
+7. Interference with a background can turn the expected peak into an asymmetric profile or a dip.
+8. Thresholds, broad widths, overlapping poles, and detector resolution require more than a constant-width line shape.
+
+An unstable particle is therefore not a short-lived external state. It is a reproducible analytic structure through which many stable-particle scattering processes are connected.
+
+<ChapterSectionNav
+  currentSlug="resonances"
+  sections={scatteringTheorySections}
+  overviewRoute={scatteringTheoryRoute}
+  chapterTitle="Scattering Theory"
+  completionRoute={scatteringTheoryProblemsRoute}
+  completionEyebrow="Chapter complete · Practice next"
+  completionLabel="Solved problem set"
+/>
+
+</ArticleLayout>

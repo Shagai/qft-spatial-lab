@@ -2,6 +2,100 @@ import { useMemo, useState } from 'react'
 
 type RelativisticEquation = 'Schrodinger' | 'Klein-Gordon' | 'Dirac'
 
+type PoincareGeneratorFamily = 'Translations' | 'Rotations' | 'Boosts'
+
+type LorentzFieldType = 'Scalar' | 'Vector' | 'Spinor'
+
+type ParticleOrbit = 'Massive' | 'Massless'
+
+const lorentzFieldTypes: Record<
+  LorentzFieldType,
+  {
+    componentAction: string
+    fieldLaw: string
+    meaning: string
+  }
+> = {
+  Scalar: {
+    componentAction: 'D(Lambda) = 1',
+    fieldLaw: "phi'(x) = phi(Lambda^-1 x)",
+    meaning: 'Only the spacetime argument moves; a scalar value has no components to mix.',
+  },
+  Vector: {
+    componentAction: 'D(Lambda) = Lambda',
+    fieldLaw: "A'^mu(x) = Lambda^mu_nu A^nu(Lambda^-1 x)",
+    meaning: 'The event moves and the four vector components mix with one another.',
+  },
+  Spinor: {
+    componentAction: 'D(Lambda) = S(Lambda)',
+    fieldLaw: "psi'(x) = S(Lambda) psi(Lambda^-1 x)",
+    meaning: 'Spinor components transform through the double cover SL(2,C), not as a four-vector.',
+  },
+}
+
+const particleOrbits: Record<
+  ParticleOrbit,
+  {
+    invariant: string
+    referenceMomentum: string
+    littleGroup: string
+    label: string
+    states: string
+    intuition: string
+  }
+> = {
+  Massive: {
+    invariant: 'P^2 = m^2, P^0 > 0',
+    referenceMomentum: 'k = (m, 0, 0, 0)',
+    littleGroup: 'SU(2)',
+    label: 'spin j',
+    states: '2j + 1 spin components',
+    intuition: 'A rest frame exists. The transformations that keep the particle at rest are rotations.',
+  },
+  Massless: {
+    invariant: 'P^2 = 0, P^0 > 0',
+    referenceMomentum: 'k = (kappa, 0, 0, kappa)',
+    littleGroup: 'ISO(2)',
+    label: 'helicity h in the finite-helicity branch',
+    states: 'one state per helicity sector',
+    intuition:
+      'No rest frame exists. In the observed finite-helicity branch, null rotations act trivially and the physical action is a twist around the light ray; nontrivial null rotations lead to continuous spin.',
+  },
+}
+
+const poincareGeneratorFamilies: Record<
+  PoincareGeneratorFamily,
+  {
+    count: number
+    parameters: string
+    generators: string
+    action: string
+    algebra: string
+  }
+> = {
+  Translations: {
+    count: 4,
+    parameters: 'a^mu',
+    generators: 'P^mu = (H, P)',
+    action: 'Shift the origin in time or space without changing intervals.',
+    algebra: '[P^mu, P^nu] = 0',
+  },
+  Rotations: {
+    count: 3,
+    parameters: 'omega_ij',
+    generators: 'J_i = epsilon_ijk M^jk / 2',
+    action: 'Rotate spatial axes and the spatial momentum vector.',
+    algebra: '[J_i, J_j] = i epsilon_ijk J_k',
+  },
+  Boosts: {
+    count: 3,
+    parameters: 'omega_0i',
+    generators: 'K_i = M^i0',
+    action: 'Change inertial frame, mixing time with space and energy with momentum.',
+    algebra: '[K_i, K_j] = -i epsilon_ijk J_k',
+  },
+}
+
 const equationNotes: Record<
   RelativisticEquation,
   {
@@ -54,6 +148,29 @@ const bridgeSteps = [
   },
 ]
 
+const scatteringFlowSteps = [
+  {
+    title: 'Prepare',
+    detail: 'Build localized incoming packets from stable one-particle states.',
+  },
+  {
+    title: 'Separate',
+    detail: 'Move far enough into the past that the packets evolve approximately freely.',
+  },
+  {
+    title: 'Interact',
+    detail: 'Let the full quantum dynamics explore every allowed intermediate alternative.',
+  },
+  {
+    title: 'Detect',
+    detail: 'Identify separated outgoing particles and their momenta, spins, and species.',
+  },
+  {
+    title: 'Infer',
+    detail: 'Turn amplitudes into rates, cross-sections, phase shifts, and resonance parameters.',
+  },
+]
+
 export function HomeQftMapFigure() {
   return (
     <figure className="qft-map-figure">
@@ -92,6 +209,336 @@ export function RelativisticBridgeFigure() {
             <p>{step.detail}</p>
           </div>
         ))}
+      </div>
+    </figure>
+  )
+}
+
+export function ScatteringFlowFigure() {
+  return (
+    <figure className="interactive-figure bridge-figure">
+      <figcaption>
+        <strong>What a scattering experiment asks the theory to connect</strong>
+        <span>The observable story lives at the ends; the interaction is summarized by an amplitude.</span>
+      </figcaption>
+      <div className="bridge-path" aria-label="Scattering experiment flow">
+        {scatteringFlowSteps.map((step, index) => (
+          <div className="bridge-step" key={step.title}>
+            <span>{String(index + 1).padStart(2, '0')}</span>
+            <strong>{step.title}</strong>
+            <p>{step.detail}</p>
+          </div>
+        ))}
+      </div>
+    </figure>
+  )
+}
+
+export function PartialWaveUnitarityFigure() {
+  const [phaseShift, setPhaseShift] = useState(48)
+  const [inelasticity, setInelasticity] = useState(0.82)
+  const phaseRadians = (2 * phaseShift * Math.PI) / 180
+  const sReal = inelasticity * Math.cos(phaseRadians)
+  const sImaginary = inelasticity * Math.sin(phaseRadians)
+  const amplitudeReal = sImaginary / 2
+  const amplitudeImaginary = (1 - sReal) / 2
+  const probabilityLeavingChannel = 1 - inelasticity ** 2
+  const plotScale = 78
+  const pointX = 110 + plotScale * sReal
+  const pointY = 110 - plotScale * sImaginary
+
+  return (
+    <figure className="interactive-figure partial-wave-figure">
+      <figcaption>
+        <strong>One partial wave inside the unitarity disk</strong>
+        <span>
+          The phase turns the channel around the circle. Inelasticity pulls it toward the center.
+        </span>
+      </figcaption>
+      <div className="scattering-figure-grid">
+        <div className="partial-wave-plot">
+          <svg viewBox="0 0 220 220" role="img" aria-label="Complex S matrix plane for one partial wave">
+            <line x1="20" y1="110" x2="200" y2="110" className="plot-axis" />
+            <line x1="110" y1="20" x2="110" y2="200" className="plot-axis" />
+            <circle cx="110" cy="110" r={plotScale} className="unitarity-boundary" />
+            <line x1="110" y1="110" x2={pointX} y2={pointY} className="unitarity-radius" />
+            <circle cx={pointX} cy={pointY} r="6" className="plot-point" />
+            <text x="194" y="103">Re</text>
+            <text x="116" y="27">Im</text>
+            <text x={Math.min(pointX + 9, 184)} y={Math.max(pointY - 8, 18)}>Sℓ</text>
+          </svg>
+        </div>
+        <div className="scattering-controls">
+          <label>
+            <span>Phase shift δℓ</span>
+            <input
+              type="range"
+              min="0"
+              max="180"
+              step="1"
+              value={phaseShift}
+              onChange={(event) => setPhaseShift(Number(event.target.value))}
+            />
+            <output>{phaseShift}° · the S-matrix angle is {2 * phaseShift}°</output>
+          </label>
+          <label>
+            <span>Inelasticity parameter ηℓ</span>
+            <input
+              type="range"
+              min="0"
+              max="1"
+              step="0.01"
+              value={inelasticity}
+              onChange={(event) => setInelasticity(Number(event.target.value))}
+            />
+            <output>{inelasticity.toFixed(2)}</output>
+          </label>
+        </div>
+      </div>
+      <div className="scattering-readout" aria-live="polite">
+        <p>
+          <span>Channel value</span>
+          <strong>Sℓ = {sReal.toFixed(2)} {sImaginary >= 0 ? '+' : '−'} {Math.abs(sImaginary).toFixed(2)}i</strong>
+        </p>
+        <p>
+          <span>Partial-wave amplitude</span>
+          <strong>aℓ = {amplitudeReal.toFixed(2)} + {amplitudeImaginary.toFixed(2)}i</strong>
+        </p>
+        <p>
+          <span>Probability sent elsewhere</span>
+          <strong>{(probabilityLeavingChannel * 100).toFixed(1)}%</strong>
+        </p>
+      </div>
+      <p className="figure-caption-note">
+        At ηℓ = 1 the point sits on the boundary and the channel is purely elastic. A smaller ηℓ
+        does not violate unitarity: it records probability carried into channels omitted from this
+        two-body view.
+      </p>
+    </figure>
+  )
+}
+
+export function ResonanceProfileFigure() {
+  const [offset, setOffset] = useState(0)
+  const intensity = 1 / (1 + offset ** 2)
+  const phase = (Math.atan2(1, -offset) * 180) / Math.PI
+  const plotPath = useMemo(
+    () =>
+      Array.from({ length: 81 }, (_, index) => {
+        const x = -4 + index / 10
+        const plotX = 26 + ((x + 4) / 8) * 348
+        const plotY = 174 - (1 / (1 + x ** 2)) * 136
+        return `${index === 0 ? 'M' : 'L'} ${plotX.toFixed(1)} ${plotY.toFixed(1)}`
+      }).join(' '),
+    [],
+  )
+  const pointX = 26 + ((offset + 4) / 8) * 348
+  const pointY = 174 - intensity * 136
+
+  return (
+    <figure className="interactive-figure resonance-figure">
+      <figcaption>
+        <strong>A narrow resonance has both a line shape and a phase motion</strong>
+        <span>Scan through the pole in units of one half-width.</span>
+      </figcaption>
+      <div className="resonance-plot">
+        <svg viewBox="0 0 400 210" role="img" aria-label="Normalized resonance intensity against energy offset">
+          <line x1="26" y1="174" x2="380" y2="174" className="plot-axis" />
+          <line x1="200" y1="24" x2="200" y2="180" className="plot-guide" />
+          <path d={plotPath} className="resonance-curve" />
+          <line x1={pointX} y1="174" x2={pointX} y2={pointY} className="plot-guide current" />
+          <circle cx={pointX} cy={pointY} r="6" className="plot-point" />
+          <text x="184" y="199">Eᵣ</text>
+          <text x="282" y="199">energy →</text>
+          <text x="34" y="33">|amplitude|²</text>
+        </svg>
+      </div>
+      <div className="control-grid two-column resonance-controls">
+        <label>
+          <span>Energy offset</span>
+          <input
+            type="range"
+            min="-4"
+            max="4"
+            step="0.1"
+            value={offset}
+            onChange={(event) => setOffset(Number(event.target.value))}
+          />
+          <output>2(E − Eᵣ) / Γ = {offset.toFixed(1)}</output>
+        </label>
+        <div className="equation-card" aria-live="polite">
+          <span>Normalized intensity: {intensity.toFixed(3)}</span>
+          <strong>Resonant phase-shift contribution: {phase.toFixed(1)}°</strong>
+        </div>
+      </div>
+      <p className="figure-caption-note">
+        The symmetric peak is the ideal isolated case. A real background amplitude adds before
+        squaring, so the same pole can appear as a skewed peak—or even as a dip—while the phase
+        motion remains an important clue.
+      </p>
+    </figure>
+  )
+}
+
+export function PoincareGeneratorsFigure() {
+  const [selected, setSelected] = useState<PoincareGeneratorFamily>('Translations')
+  const family = poincareGeneratorFamilies[selected]
+
+  return (
+    <figure className="interactive-figure poincare-figure">
+      <figcaption>
+        <strong>The ten continuous Poincaré generators</strong>
+        <span>Select a family to connect its parameters, generators, action, and commutator.</span>
+      </figcaption>
+      <div className="segmented-control" role="group" aria-label="Choose a Poincaré generator family">
+        {(Object.keys(poincareGeneratorFamilies) as PoincareGeneratorFamily[]).map((name) => (
+          <button
+            key={name}
+            type="button"
+            aria-pressed={selected === name}
+            className={selected === name ? 'is-selected' : ''}
+            onClick={() => setSelected(name)}
+          >
+            {name} · {poincareGeneratorFamilies[name].count}
+          </button>
+        ))}
+      </div>
+      <div className="generator-count-grid" aria-label="Four translations, three rotations, and three boosts">
+        {(Object.keys(poincareGeneratorFamilies) as PoincareGeneratorFamily[]).map((name) => (
+          <div className={selected === name ? 'generator-family is-selected' : 'generator-family'} key={name}>
+            <strong>{name}</strong>
+            <div className="generator-tokens" aria-hidden="true">
+              {Array.from({ length: poincareGeneratorFamilies[name].count }, (_, index) => (
+                <i key={index} />
+              ))}
+            </div>
+            <span>{poincareGeneratorFamilies[name].count} generators</span>
+          </div>
+        ))}
+      </div>
+      <div className="figure-notes three-column" aria-live="polite">
+        <p>
+          <strong>Parameters and generators.</strong> <code>{family.parameters}</code> pairs with{' '}
+          <code>{family.generators}</code>.
+        </p>
+        <p>
+          <strong>Geometric action.</strong> {family.action}
+        </p>
+        <p>
+          <strong>Characteristic relation.</strong> <code>{family.algebra}</code>
+        </p>
+      </div>
+    </figure>
+  )
+}
+
+export function LorentzLayersFigure() {
+  const [selected, setSelected] = useState<LorentzFieldType>('Vector')
+  const field = lorentzFieldTypes[selected]
+
+  return (
+    <figure className="interactive-figure lorentz-layers-figure">
+      <figcaption>
+        <strong>One Lorentz transformation, three spaces</strong>
+        <span>Keep the jobs of Lambda, U, and D separate, then connect them.</span>
+      </figcaption>
+      <div className="transformation-layers" aria-label="Three actions of a Lorentz transformation">
+        <div className="transformation-layer">
+          <span>Spacetime</span>
+          <strong>Lambda</strong>
+          <small>moves x and p</small>
+        </div>
+        <i aria-hidden="true">→</i>
+        <div className="transformation-layer">
+          <span>Hilbert space</span>
+          <strong>U(Lambda)</strong>
+          <small>moves physical states</small>
+        </div>
+        <i aria-hidden="true">→</i>
+        <div className="transformation-layer is-accented">
+          <span>Field components</span>
+          <strong>D(Lambda)</strong>
+          <small>mixes component labels</small>
+        </div>
+      </div>
+      <div className="segmented-control" role="group" aria-label="Choose a field type">
+        {(Object.keys(lorentzFieldTypes) as LorentzFieldType[]).map((name) => (
+          <button
+            key={name}
+            type="button"
+            aria-pressed={selected === name}
+            className={selected === name ? 'is-selected' : ''}
+            onClick={() => setSelected(name)}
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+      <div className="figure-notes three-column" aria-live="polite">
+        <p>
+          <strong>Component action.</strong> <code>{field.componentAction}</code>
+        </p>
+        <p>
+          <strong>Field law.</strong> <code>{field.fieldLaw}</code>
+        </p>
+        <p>
+          <strong>Meaning.</strong> {field.meaning}
+        </p>
+      </div>
+    </figure>
+  )
+}
+
+export function ParticleLittleGroupFigure() {
+  const [selected, setSelected] = useState<ParticleOrbit>('Massive')
+  const orbit = particleOrbits[selected]
+
+  return (
+    <figure className="interactive-figure little-group-figure">
+      <figcaption>
+        <strong>Mass chooses the orbit; the little group chooses the internal label</strong>
+        <span>Compare the reference momentum that can—and cannot—be brought to rest.</span>
+      </figcaption>
+      <div className="segmented-control" role="group" aria-label="Choose a momentum orbit">
+        {(Object.keys(particleOrbits) as ParticleOrbit[]).map((name) => (
+          <button
+            key={name}
+            type="button"
+            aria-pressed={selected === name}
+            className={selected === name ? 'is-selected' : ''}
+            onClick={() => setSelected(name)}
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+      <div className="figure-result" aria-live="polite">
+        <div className="little-group-grid">
+          <div>
+            <span>Momentum orbit</span>
+            <strong>{orbit.invariant}</strong>
+          </div>
+          <div>
+            <span>Reference momentum</span>
+            <strong>{orbit.referenceMomentum}</strong>
+          </div>
+          <div>
+            <span>Little group</span>
+            <strong>{orbit.littleGroup}</strong>
+          </div>
+          <div>
+            <span>Particle label</span>
+            <strong>{orbit.label}</strong>
+          </div>
+        </div>
+        <div className="figure-notes two-column">
+          <p>
+            <strong>State count.</strong> {orbit.states}.
+          </p>
+          <p>
+            <strong>Mental picture.</strong> {orbit.intuition}
+          </p>
+        </div>
       </div>
     </figure>
   )
@@ -213,6 +660,7 @@ export function RelativisticEquationFigure() {
           <button
             key={name}
             type="button"
+            aria-pressed={selected === name}
             className={selected === name ? 'is-selected' : ''}
             onClick={() => setSelected(name)}
           >
@@ -220,24 +668,26 @@ export function RelativisticEquationFigure() {
           </button>
         ))}
       </div>
-      <div className="equation-path" aria-label={`${selected} conceptual path`}>
-        {note.path.map((step, index) => (
-          <div className="path-node" key={step}>
-            <span>{step}</span>
-            {index < note.path.length - 1 ? <i aria-hidden="true" /> : null}
-          </div>
-        ))}
-      </div>
-      <div className="figure-notes three-column">
-        <p>
-          <strong>Equation.</strong> <code>{note.equation}</code>
-        </p>
-        <p>
-          <strong>Object.</strong> {note.object}
-        </p>
-        <p>
-          <strong>Lesson.</strong> {note.lesson}
-        </p>
+      <div className="figure-result" aria-live="polite">
+        <div className="equation-path" aria-label={`${selected} conceptual path`}>
+          {note.path.map((step, index) => (
+            <div className="path-node" key={step}>
+              <span>{step}</span>
+              {index < note.path.length - 1 ? <i aria-hidden="true" /> : null}
+            </div>
+          ))}
+        </div>
+        <div className="figure-notes three-column">
+          <p>
+            <strong>Equation.</strong> <code>{note.equation}</code>
+          </p>
+          <p>
+            <strong>Object.</strong> {note.object}
+          </p>
+          <p>
+            <strong>Lesson.</strong> {note.lesson}
+          </p>
+        </div>
       </div>
     </figure>
   )

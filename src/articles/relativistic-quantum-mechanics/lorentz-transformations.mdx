@@ -1,0 +1,364 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import { LorentzLayersFigure, SpacetimeIntervalFigure } from '../../components/InteractiveFigures'
+
+<ArticleLayout
+  kicker="Chapter 1 · Section 2 of 7"
+  title="Lorentz Transformations in Quantum Theory"
+  subtitle="A Lorentz transformation is one symmetry with three different jobs: it moves spacetime events, acts unitarily on physical states, and mixes the components used to describe fields."
+  updated="2026-08-01"
+  readingTime="18 min"
+  parent={{ label: 'Relativistic Quantum Mechanics', to: '/chapters/relativistic-quantum-mechanics' }}
+  toc={[
+    { href: '#meaning', label: 'What quantum means' },
+    { href: '#geometry', label: 'Spacetime geometry' },
+    { href: '#state-action', label: 'Action on states' },
+    { href: '#three-spaces', label: 'Λ, U, and D' },
+    { href: '#fields', label: 'Fields' },
+    { href: '#spinors', label: 'Spinors' },
+    { href: '#projective', label: 'Projective symmetry' },
+    { href: '#discrete', label: 'Parity and time reversal' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="meaning">What “quantum Lorentz transformation” means</h2>
+
+The phrase does not mean that Lorentz transformations themselves become uncertain or quantized. The geometry is the same geometry as in special relativity. The new ingredient is that the symmetry must be represented on a quantum state space.
+
+There are therefore three related objects:
+
+$$
+\boxed{
+\Lambda
+\quad\leftrightarrow\quad
+U(\Lambda)
+\quad\leftrightarrow\quad
+D(\Lambda).
+}
+$$
+
+- $\Lambda$ acts on spacetime coordinates and four-momenta.
+- $U(\Lambda)$ acts on physical states in the Hilbert space.
+- $D(\Lambda)$ acts on the component labels of a chosen field.
+
+Much of the apparent difficulty comes from using one symbol called “the Lorentz transformation” while silently moving among these three spaces.
+
+<h2 id="geometry">The spacetime geometry</h2>
+
+Use the metric
+
+$$
+\eta=\operatorname{diag}(+,-,-,-).
+$$
+
+For $x^\mu=(t,\mathbf x)$ in units $c=1$, the interval is
+
+$$
+x^2=\eta_{\mu\nu}x^\mu x^\nu=t^2-|\mathbf x|^2.
+$$
+
+A Lorentz transformation is a linear map
+
+$$
+x'^\mu=\Lambda^\mu{}_{\nu}x^\nu
+$$
+
+that preserves this interval. In matrix form,
+
+$$
+\boxed{\Lambda^T\eta\Lambda=\eta}.
+$$
+
+For a boost of speed $v$ along $x$,
+
+$$
+\begin{aligned}
+t'&=\gamma(t-vx),\\
+x'&=\gamma(x-vt),\\
+y'&=y,\\
+z'&=z,
+\end{aligned}
+\qquad
+\gamma=\frac{1}{\sqrt{1-v^2}}.
+$$
+
+It mixes time with one spatial direction while preserving $t^2-x^2$. A rotation mixes spatial directions while leaving time unchanged.
+
+<SpacetimeIntervalFigure />
+
+The same matrix acts on four-momentum:
+
+$$
+p^\mu=(E,\mathbf p)
+\longrightarrow
+(\Lambda p)^\mu.
+$$
+
+Consequently,
+
+$$
+p^2=E^2-|\mathbf p|^2
+$$
+
+is invariant. That invariant will become the particle's mass label.
+
+<h2 id="state-action">The action on quantum states</h2>
+
+A physical state is a ray, so a spacetime symmetry must preserve transition probabilities:
+
+$$
+|\langle\phi|\psi\rangle|^2.
+$$
+
+Wigner's theorem says such a symmetry is represented by a unitary or antiunitary map. Transformations continuously connected to the identity cannot jump from one kind to the other, so proper orthochronous Lorentz transformations are represented unitarily:
+
+$$
+|\psi\rangle
+\longrightarrow
+U(\Lambda)|\psi\rangle,
+\qquad
+U^\dagger(\Lambda)U(\Lambda)=1.
+$$
+
+An antiunitary map preserves the same transition probabilities but is antilinear:
+
+$$
+A\bigl(c_1|\psi\rangle+c_2|\phi\rangle\bigr)
+=
+c_1^*A|\psi\rangle+c_2^*A|\phi\rangle.
+$$
+
+Thus unitary and antiunitary maps agree on the absolute size of an overlap, while an antiunitary map also complex-conjugates its phase. Section 5 explains why this second possibility is exactly what time reversal needs.
+
+For a spinless momentum eigenstate, the simplest transformation law is
+
+$$
+U(\Lambda)|p\rangle=|\Lambda p\rangle.
+$$
+
+For a particle with spin or helicity labels, the momentum still becomes $\Lambda p$, but the remaining labels can rotate among themselves. Section 4 derives that extra Wigner rotation rather than hiding it inside notation.
+
+<Callout title="Same experiment, different coordinates">
+Unitarity does not say two observers assign the same components to a state. It says their descriptions are related in a way that preserves every probability and inner product.
+</Callout>
+
+<h2 id="three-spaces">Keep $\Lambda$, $U$, and $D$ separate</h2>
+
+<LorentzLayersFigure />
+
+The distinctions are easiest to see as a table:
+
+| Object | Space it acts on | What it preserves |
+| --- | --- | --- |
+| $\Lambda$ | Minkowski spacetime | $x^T\eta x$ |
+| $U(\Lambda)$ | Physical Hilbert space | Quantum inner products |
+| $D(\Lambda)$ | A field's component space | The covariant tensor or spinor structure |
+
+The first two are tied to geometry and probabilities. The third depends on what kind of field we use to describe the physics. A scalar, vector, and spinor all share the same spacetime and Hilbert-space symmetry but use different component matrices.
+
+<h2 id="fields">Why the inverse point appears in a field transformation</h2>
+
+A field has two kinds of information:
+
+$$
+\Phi_a(x).
+$$
+
+- $x$ says where the field is evaluated.
+- $a$ says what kind of object is attached to that event: one number, a vector, a spinor, and so on.
+
+With one consistent convention,
+
+$$
+\boxed{
+U^{-1}(\Lambda)\Phi_a(x)U(\Lambda)
+=
+D(\Lambda)_a{}^b\,
+\Phi_b(\Lambda^{-1}x).
+}
+$$
+
+Why $\Lambda^{-1}x$? Suppose the original event $y$ is carried to $x$:
+
+$$
+x=\Lambda y.
+$$
+
+Then the event that supplied the transformed field value was
+
+$$
+y=\Lambda^{-1}x.
+$$
+
+The transformation law is therefore a “where did this point come from?” rule:
+
+$$
+\text{new field at }x
+=
+\text{transform the components of the old field at }\Lambda^{-1}x.
+$$
+
+For a scalar,
+
+$$
+U^{-1}\phi(x)U=\phi(\Lambda^{-1}x).
+$$
+
+There are no component labels to mix. For a four-vector,
+
+$$
+U^{-1}A^\mu(x)U
+=
+\Lambda^\mu{}_{\nu}A^\nu(\Lambda^{-1}x).
+$$
+
+The argument moves and the four components mix.
+
+This law also makes expectation values transform geometrically. If $|\psi'\rangle=U(\Lambda)|\psi\rangle$, then
+
+$$
+\langle\psi'|\Phi_a(x)|\psi'\rangle
+=
+D(\Lambda)_a{}^b
+\langle\psi|\Phi_b(\Lambda^{-1}x)|\psi\rangle.
+$$
+
+<h2 id="spinors">Spinors are not four-vectors</h2>
+
+A Dirac field transforms as
+
+$$
+U^{-1}(\Lambda)\psi(x)U(\Lambda)
+=
+S(\Lambda)\psi(\Lambda^{-1}x).
+$$
+
+The matrix $S(\Lambda)$ is chosen so that the Dirac equation keeps its form. It obeys
+
+$$
+S^{-1}(\Lambda)\gamma^\mu S(\Lambda)
+=
+\Lambda^\mu{}_{\nu}\gamma^\nu.
+$$
+
+The four components of a Dirac spinor are therefore not the four components of a spacetime vector. They live in a different representation of the Lorentz algebra.
+
+For a spatial rotation,
+
+$$
+S(R)=\exp\left(-\frac{i}{2}\boldsymbol\theta\cdot\boldsymbol\Sigma\right).
+$$
+
+The factor $1/2$ is the signature of spin-$\tfrac12$. A $2\pi$ rotation gives
+
+$$
+S(2\pi)=-1,
+$$
+
+while $4\pi$ returns the spinor vector to itself.
+
+Why must $U(\Lambda)$ be unitary while $S(\Lambda)$ generally is not? They do different jobs. $U$ acts on physical quantum states and must preserve probabilities. $S$ acts on a finite list of field components. The connected Lorentz group is noncompact and has no nontrivial finite-dimensional unitary representations. Instead, the Dirac adjoint is arranged so that bilinears transform covariantly, for example
+
+$$
+S^\dagger\gamma^0S=\gamma^0.
+$$
+
+<Sidenote>
+The self-adjoint boost generators on the physical Hilbert space should not be confused with the finite-dimensional boost matrices acting on spinor or vector components.
+</Sidenote>
+
+<h2 id="projective">Why projective representations appear</h2>
+
+Quantum states are rays, so multiplying a state vector by a common phase changes no physics. A symmetry representation is therefore allowed to compose up to a phase:
+
+$$
+U(g_2)U(g_1)
+=
+e^{i\alpha(g_2,g_1)}U(g_2g_1).
+$$
+
+This is a <Term>projective representation</Term>. Instead of carrying the phase through every calculation, we often pass to a covering group on which the representation becomes ordinary.
+
+For rotations,
+
+$$
+SU(2)\longrightarrow SO(3)
+$$
+
+is a double cover. The two elements $V$ and $-V$ of $SU(2)$ describe the same spatial rotation. Half-integer-spin states form ordinary representations of $SU(2)$ and projective representations of $SO(3)$.
+
+For the connected Lorentz group, the corresponding double cover is
+
+$$
+SL(2,\mathbb C)\longrightarrow SO^+(1,3).
+$$
+
+This is why spinors belong naturally to $SL(2,\mathbb C)$ even though spacetime vectors transform under $SO^+(1,3)$.
+
+The minus sign after a $2\pi$ spinor rotation is not an inconsistency. The isolated state returns to the same ray. Relative signs can still matter when a rotated path interferes with an unrotated one, so the double-cover structure has measurable consequences.
+
+<h2 id="discrete">Parity and time reversal sit outside the connected group</h2>
+
+Parity reverses spatial position and momentum:
+
+$$
+\mathsf P:\qquad
+\mathbf x\to-\mathbf x,
+\qquad
+\mathbf p\to-\mathbf p.
+$$
+
+Angular momentum is an axial vector, so
+
+$$
+\mathbf J\to\mathbf J.
+$$
+
+Therefore helicity changes sign:
+
+$$
+h=\frac{\mathbf J\cdot\mathbf p}{|\mathbf p|}
+\xrightarrow{\mathsf P}
+-h.
+$$
+
+Time reversal reverses momenta and angular momenta,
+
+$$
+\mathsf T:\qquad
+\mathbf p\to-\mathbf p,
+\qquad
+\mathbf J\to-\mathbf J,
+$$
+
+so helicity is unchanged. In quantum theory $\mathsf T$ is antiunitary:
+
+$$
+\mathsf T i\mathsf T^{-1}=-i.
+$$
+
+That complex conjugation is what lets the commutation relations keep their form when the direction of time evolution is reversed.
+
+Parity and time reversal are not generated by infinitesimal boosts or rotations. They belong to disconnected components and must be added separately to the continuous symmetry analysis.
+
+They are also not automatically symmetries of every interaction. The statements above describe how $\mathsf P$ and $\mathsf T$ must act **if** a theory admits them. Section 5 develops their action on generators and one-particle states, together with the projective phases hidden by ray notation.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+Keep these distinctions sharp:
+
+1. $\Lambda$ acts on events and four-momenta.
+2. $U(\Lambda)$ acts unitarily on physical states.
+3. $D(\Lambda)$ acts on field components and need not be unitary.
+4. The inverse argument $\Lambda^{-1}x$ identifies the original event carried to $x$.
+5. Spinors are representations of the Lorentz double cover $SL(2,\mathbb C)$.
+6. Projective phases are allowed because physical states are rays.
+7. Parity is unitary in the usual treatment; time reversal is antiunitary.
+
+The next section replaces finite transformations by their infinitesimal generators and derives the Poincaré algebra.
+
+<ChapterSectionNav currentSlug="lorentz-transformations" />
+
+</ArticleLayout>

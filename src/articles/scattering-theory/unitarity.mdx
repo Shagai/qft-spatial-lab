@@ -1,0 +1,326 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import {
+  scatteringTheoryRoute,
+  scatteringTheorySections,
+} from '../../data/scatteringTheory'
+
+<ArticleLayout
+  kicker="Chapter 2 · Section 5 of 7"
+  title="Unitarity and the Optical Theorem"
+  subtitle="Probability conservation does more than normalize the final answer. It ties the forward amplitude to every physical channel into which the initial state can scatter."
+  updated="2026-08-01"
+  readingTime="17 min"
+  parent={{ label: 'Scattering Theory', to: '/chapters/scattering-theory' }}
+  toc={[
+    { href: '#question', label: 'The probability question' },
+    { href: '#operator-identity', label: 'The unitarity identity' },
+    { href: '#physical-channels', label: 'Sum over physical channels' },
+    { href: '#optical-theorem', label: 'The optical theorem' },
+    { href: '#why-imaginary', label: 'Why amplitudes become complex' },
+    { href: '#cuts', label: 'Thresholds and cuts' },
+    { href: '#subblocks', label: 'Full matrix versus subblocks' },
+    { href: '#scope', label: 'What unitarity does not determine' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="question">Where can probability go?</h2>
+
+Suppose an incoming state $|i,\mathrm{in}\rangle$ enters a collision. The interaction may return the same particles, redirect them, change their species, or create additional particles. Quantum mechanics assigns an amplitude to every alternative.
+
+Those amplitudes cannot be chosen independently. Their probabilities must add to one:
+
+$$
+\sum_X
+\left|
+\langle X,\mathrm{out}|i,\mathrm{in}\rangle
+\right|^2
+=1,
+$$
+
+where $X$ runs over a complete set of allowed outgoing states, including all momenta, spins, species, and particle numbers.
+
+This looks like a statement about squared amplitudes. Its more surprising consequence is a relation involving the amplitude itself:
+
+$$
+\boxed{
+\text{the imaginary part of forward scattering}
+\longleftrightarrow
+\text{the total probability flowing into every channel}.
+}
+$$
+
+That relation is the <Term>optical theorem</Term>. It is the most direct experimental face of $S$-matrix unitarity.
+
+<h2 id="operator-identity">Separate doing nothing from scattering</h2>
+
+Use the convention
+
+$$
+\boxed{S=1+iT}.
+$$
+
+The identity operator represents particles passing through without a transition. $T$ contains the interaction-dependent part. Conservation of total probability means
+
+$$
+S^\dagger S=1.
+$$
+
+Insert $S=1+iT$:
+
+$$
+(1-iT^\dagger)(1+iT)=1.
+$$
+
+After expanding and cancelling the identity,
+
+$$
+iT-iT^\dagger+T^\dagger T=0,
+$$
+
+or
+
+$$
+\boxed{-i(T-T^\dagger)=T^\dagger T.}
+$$
+
+The left side is the anti-Hermitian, or absorptive, part of the transition operator. The right side is quadratic in transition amplitudes. Unitarity is therefore a nonlinear constraint: an amplitude's imaginary part is fixed by products of amplitudes into physical states.
+
+<Callout title="An exact statement">
+This identity is not a perturbative approximation. Any exact scattering operator must satisfy it. Perturbation theory inherits the relation order by order, connecting the imaginary part at one order to lower-order processes that can go on shell.
+</Callout>
+
+<h2 id="physical-channels">Insert a complete set of outgoing states</h2>
+
+Take a matrix element between the same initial state on both sides and insert completeness on the right:
+
+$$
+2\,\operatorname{Im}\langle i|T|i\rangle
+=
+\sum_X
+\langle i|T^\dagger|X\rangle
+\langle X|T|i\rangle.
+$$
+
+Thus,
+
+$$
+\boxed{
+2\,\operatorname{Im}T_{ii}
+=
+\sum_X |T_{Xi}|^2.
+}
+$$
+
+The notation is schematic because momentum eigenstates carry delta functions. With covariantly normalized one-particle states,
+
+$$
+\langle p',\sigma'|p,\sigma\rangle
+=
+2E_{\mathbf p}(2\pi)^3
+\delta_{\sigma'\sigma}\delta^3(\mathbf p'-\mathbf p),
+$$
+
+write the connected matrix element as
+
+$$
+\langle X|iT|i\rangle
+=
+i(2\pi)^4\delta^4(P_X-P_i)\,
+\mathcal M_{i\to X}.
+$$
+
+Removing the common momentum-conserving delta function gives
+
+$$
+\boxed{
+2\,\operatorname{Im}\mathcal M_{i\to i}
+=
+\sum_X\int d\Phi_X(P_i)\,
+\left|\mathcal M_{i\to X}\right|^2.
+}
+$$
+
+$d\Phi_X(P_i)$ is the complete Lorentz-invariant phase-space measure defined on the observables page, including the overall momentum-conservation delta function. The sum includes discrete quantum numbers and the appropriate identical-particle factors.
+
+Every state on the right is <Term>on shell</Term>. It is not an arbitrary virtual configuration inside a calculation; it is a possible asymptotic state carrying real probability away from the initial channel.
+
+<h2 id="optical-theorem">The forward amplitude measures an inclusive cross-section</h2>
+
+For a two-particle initial state, define the invariant incoming flux
+
+$$
+F
+=
+4\sqrt{(p_1\cdot p_2)^2-m_1^2m_2^2}.
+$$
+
+The total cross-section is
+
+$$
+\sigma_{\mathrm{tot}}
+=
+\frac{1}{F}
+\sum_X\int d\Phi_X(P_i)\,
+\left|\mathcal M_{i\to X}\right|^2.
+$$
+
+Comparing this expression with the unitarity relation gives
+
+$$
+\boxed{
+2\,\operatorname{Im}
+\mathcal M_{i\to i}(s,t=0)
+=
+F\,\sigma_{\mathrm{tot}}.
+}
+$$
+
+The amplitude is evaluated in the <Term>forward direction</Term>: the final momenta and spin labels match the initial ones, so the momentum transfer is $t=0$. For spinful particles, the same spin sum or average convention must be used on both sides.
+
+In the center-of-momentum frame,
+
+$$
+F=4k\sqrt{s},
+$$
+
+where $k$ is the magnitude of either incoming three-momentum. For distinguishable spinless particles in elastic kinematics, define
+
+$$
+f(\theta)
+=
+\frac{\mathcal M(s,t)}{8\pi\sqrt{s}},
+\qquad
+\frac{d\sigma}{d\Omega}=|f(\theta)|^2.
+$$
+
+Then the same theorem becomes its familiar form:
+
+$$
+\boxed{
+\sigma_{\mathrm{tot}}
+=
+\frac{4\pi}{k}\operatorname{Im}f(0).
+}
+$$
+
+The left side is inclusive: it counts every allowed final state. The right side asks only for one exact amplitude, but at one special kinematic point. Forward scattering “remembers” every channel because the amplitude to remain in the original state must know how much probability has left it.
+
+<Sidenote>
+The factors in an optical-theorem formula depend on how states and amplitudes are normalized. The invariant content is the unitarity identity and the equality between forward absorptive strength and total probability flow.
+</Sidenote>
+
+<h2 id="why-imaginary">Why a real interaction produces complex amplitudes</h2>
+
+A Hermitian Hamiltonian has real couplings, but its scattering amplitudes need not be real. Once a physical intermediate state can propagate over arbitrarily long times, the boundary condition separating incoming from outgoing waves contributes an imaginary part.
+
+Unitarity tells us exactly what that imaginary part means. It is not a sign that probability was destroyed. It records probability that left one channel and entered others.
+
+For a general off-diagonal transition, the same operator identity gives
+
+$$
+-i\left(T_{fi}-T^*_{if}\right)
+=
+\sum_X T^*_{Xf}T_{Xi}.
+$$
+
+If additional symmetries relate the reversed amplitude to the original one, this can be written as a discontinuity or imaginary-part relation for $i\to f$. The diagonal case needs no such extra step and directly produces the optical theorem.
+
+<Callout title="Amplitude-level conservation">
+Classical probability conservation would constrain only a final list of probabilities. Quantum unitarity is stronger: it constrains phases and imaginary parts before the amplitude is squared.
+</Callout>
+
+<h2 id="cuts">Thresholds leave analytic traces</h2>
+
+Suppose the center-of-momentum energy is initially too low to create a state $X$. Energy conservation then prevents that channel from contributing to the unitarity sum. When
+
+$$
+\sqrt{s}
+\geq
+\sum_{a\in X}m_a,
+$$
+
+its phase space opens and the channel begins contributing.
+
+This is why amplitudes develop non-analytic behavior at production thresholds. In the complex $s$-plane, a continuum of allowed multi-particle energies produces a branch cut. The discontinuity across the cut is controlled by the same on-shell products that appear in unitarity:
+
+$$
+\operatorname{Disc}\mathcal M
+\sim
+i\sum_X\int d\Phi_X\,
+\mathcal M^*_{f\to X}\mathcal M_{i\to X}.
+$$
+
+The proportionality factors depend on conventions and on which channel discontinuity is taken. The physical picture does not: a cut begins where an intermediate state can become real.
+
+This supplies the conceptual basis of cutting rules in perturbative QFT. A cut through a diagram replaces selected internal propagators by on-shell phase space because it computes the probability carried by those intermediate particles.
+
+<h2 id="subblocks">The full matrix is unitary; a subblock may not be</h2>
+
+Imagine that, at a fixed energy and set of conserved quantum numbers, two channels are available. Unitarity of one column gives
+
+$$
+|S_{11}|^2+|S_{21}|^2=1.
+$$
+
+If an observer records only channel $1$, then $|S_{11}|$ may be smaller than one. Nothing has violated unitarity. The missing norm is precisely the probability found in channel $2$.
+
+The same lesson applies when we keep all two-body channels but omit states with three or more particles. Below the first production threshold, the two-body channel matrix can be unitary by itself. Above that threshold, its columns generally have norm below one:
+
+$$
+S_{2\to2}^\dagger S_{2\to2}\leq1.
+$$
+
+It is a contraction because probability can flow into the omitted many-particle sector. The full $S$-matrix over every asymptotic channel still satisfies
+
+$$
+S^\dagger S=SS^\dagger=1.
+$$
+
+This distinction will become geometric on the next page. Purely elastic partial waves lie on a unitarity circle; opening inelastic channels moves them into its interior.
+
+<h2 id="scope">What unitarity determines—and what it leaves open</h2>
+
+Unitarity is powerful, but it does not calculate an interaction by itself. It tells us:
+
+1. how imaginary parts are tied to physical intermediate states;
+2. how total probability is distributed across a complete set of channels;
+3. how large a fixed angular-momentum amplitude may become;
+4. how pole residues and decay channels are related near a resonance.
+
+It does not tell us which particles exist, the values of their couplings, or the detailed angular pattern of a reaction. Those require the dynamics of a particular QFT.
+
+The productive division of labor is
+
+$$
+\boxed{
+\text{dynamics proposes amplitudes;}
+\qquad
+\text{unitarity decides whether their probability flow is possible.}
+}
+$$
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The essential chain is:
+
+1. Write $S=1+iT$ so unchanged propagation and genuine transitions are separated.
+2. $S^\dagger S=1$ gives $-i(T-T^\dagger)=T^\dagger T$.
+3. Inserting a complete set turns the right side into a sum over on-shell physical channels.
+4. For a diagonal matrix element, the result equates the forward imaginary part to a positive inclusive sum.
+5. Dividing that sum by the incoming flux produces the total cross-section and the optical theorem.
+6. New thresholds add new terms to the sum and create branch cuts in the amplitude.
+7. A restricted channel block can lose norm even though the full scattering operator remains unitary.
+
+The central result is not merely that probabilities add to one. It is that the exact forward amplitude contains a ledger of every way the initial state can change.
+
+<ChapterSectionNav
+  currentSlug="unitarity"
+  sections={scatteringTheorySections}
+  overviewRoute={scatteringTheoryRoute}
+  chapterTitle="Scattering Theory"
+/>
+
+</ArticleLayout>

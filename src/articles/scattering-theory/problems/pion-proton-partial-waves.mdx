@@ -1,0 +1,378 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout } from '../../../components/MdxComponents'
+import {
+  scatteringTheoryProblems,
+  scatteringTheoryProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 2 · Problem 6 of 7"
+  title="Pion-Proton Scattering in Partial Waves"
+  subtitle="Angular momentum separates the collision into independent channels, spin separates flip from non-flip motion, and isospin explains why π⁺p is simpler than π⁻p."
+  updated="2026-08-01"
+  readingTime={scatteringTheoryProblems[5].readingTime}
+  parent={{ label: 'Scattering Theory problems', to: scatteringTheoryProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#channels', label: 'J, parity, and isospin' },
+    { href: '#eigenamplitudes', label: 'Eigenchannel amplitudes' },
+    { href: '#spin-amplitudes', label: 'Spin amplitudes' },
+    { href: '#charge-states', label: 'Physical charge states' },
+    { href: '#cross-sections', label: 'Differential cross-sections' },
+    { href: '#interpretation', label: 'Interpretation and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">Elastic pion-nucleon scattering</span>
+  <p>
+    Express the unpolarized differential cross-sections for elastic $\pi^+p$ and $\pi^-p$ scattering in terms of phase shifts belonging to states of definite total angular momentum, parity, and total isospin. Work below particle-production thresholds and neglect electromagnetic and isospin-breaking effects.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    A spin-zero pion and a spin-one-half proton give $J=l\pm\tfrac12$. First build the non-spin-flip and spin-flip amplitudes for each total isospin $I$. Only afterward project the physical charged states onto $I=\tfrac12$ and $I=\tfrac32$.
+  </p>
+</details>
+
+<p>
+  This exercise turns the general <Link to={scatteringTheoryProblems[5].theoryRoute}>partial-wave and coupled-channel discussion</Link> into a concrete hadronic example.
+</p>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Label the symmetry eigenchannels</strong>
+      <p>Couple $l$ to the proton spin and determine the parity and allowed total isospins.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Build two spin structures</strong>
+      <p>Combine the $J=l\pm\tfrac12$ phase shifts into non-flip and flip angular amplitudes.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Project onto charged particles</strong>
+      <p>Use Clebsch-Gordan coefficients to combine isospin amplitudes coherently before squaring.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="channels">1. Identify the symmetry eigenchannels</h2>
+
+The pion has spin zero and intrinsic parity $-1$. The proton has spin $\tfrac12$ and intrinsic parity $+1$. Coupling orbital angular momentum $l$ to the proton spin gives
+
+$$
+J=l+\frac12,
+$$
+
+or, for $l\ge1$,
+
+$$
+J=l-\frac12.
+$$
+
+It is conventional to denote these alternatives by $l+$ and $l-$.
+
+The two-particle parity is
+
+$$
+P
+=
+P_\pi P_p(-1)^l
+=
+(-1)^{l+1}.
+$$
+
+For fixed $l$, the two values of $J$ have the same parity. Conversely, at fixed $J$, the two possible orbital angular momenta have opposite parity, so parity conservation prevents them from mixing.
+
+The pion carries isospin $1$ and the nucleon isospin $\tfrac12$. Therefore
+
+$$
+1\otimes\frac12
+=
+\frac32\oplus\frac12.
+$$
+
+The strong-interaction eigenchannels may be labelled
+
+$$
+(I,l,J,P)
+=
+\left(I,l,l\pm\frac12,(-1)^{l+1}\right),
+$$
+
+with $I=\tfrac12$ or $\tfrac32$.
+
+<Callout title="Why the phase shifts may be taken real">
+Below the first genuinely inelastic threshold, each fixed $(I,l,J,P)$ channel is elastic. Unitarity then puts its S-matrix eigenvalue on the unit circle. Once extra-particle channels open, an inelasticity parameter must accompany the phase shift.
+</Callout>
+
+<h2 id="eigenamplitudes">2. Define each partial-wave amplitude</h2>
+
+For an elastic eigenchannel, write
+
+$$
+S_{l\pm}^{I}
+=
+e^{2i\delta_{l\pm}^{I}},
+$$
+
+where $\delta_{l\pm}^{I}$ is real. With center-of-mass momentum $k$, define
+
+$$
+a_{l\pm}^{I}
+=
+\frac{S_{l\pm}^{I}-1}{2ik}.
+$$
+
+Using $e^{2i\delta}-1=2ie^{i\delta}\sin\delta$,
+
+$$
+\boxed{
+a_{l\pm}^{I}
+=
+\frac{e^{i\delta_{l\pm}^{I}}\sin\delta_{l\pm}^{I}}{k}.
+}
+$$
+
+This convention is aligned with the notebook's
+
+$$
+S_l=1+2ik\,a_l=e^{2i\delta_l}.
+$$
+
+If the source amplitude is used instead, its overall sign differs because its connected S-matrix is written with $-2\pi i$ rather than the notebook's $+i\mathcal T$. The phase-shift formula above avoids that ambiguity by defining the physical S-matrix eigenvalue first.
+
+<h2 id="spin-amplitudes">3. Assemble non-spin-flip and spin-flip motion</h2>
+
+Rotational invariance allows the scattering operator in proton spin space to contain two structures:
+
+$$
+\mathcal F^I(\theta)
+=
+F^I(\theta)
++i(\boldsymbol\sigma\cdot\widehat{\mathbf n})G^I(\theta),
+$$
+
+where
+
+$$
+\widehat{\mathbf n}
+=
+\frac{\mathbf k'\times\mathbf k}
+{|\mathbf k'\times\mathbf k|}
+$$
+
+is normal to the scattering plane. $F^I$ preserves a spin projection defined relative to that plane, while $G^I$ supplies the spin-dependent rotation.
+
+Coupling the orbital harmonics to spin $\tfrac12$ gives
+
+$$
+\boxed{
+F^I(\theta)
+=
+\sum_{l=0}^{\infty}
+\left[(l+1)a_{l+}^{I}+l\,a_{l-}^{I}\right]
+P_l(\cos\theta).
+}
+$$
+
+The coefficient $l+1$ counts the contribution of $J=l+\tfrac12$, whereas $l$ accompanies $J=l-\tfrac12$. The spin-flip amplitude is
+
+$$
+\boxed{
+G^I(\theta)
+=
+\sum_{l=1}^{\infty}
+\left[a_{l+}^{I}-a_{l-}^{I}\right]
+P_l^1(\cos\theta).
+}
+$$
+
+We use the Condon-Shortley convention
+
+$$
+P_l^1(x)
+=
+-\sqrt{1-x^2}\,P_l'(x).
+$$
+
+Changing the orientation of $\widehat{\mathbf n}$ or the sign convention for $P_l^1$ reverses $G^I$, but it cannot change an unpolarized cross-section.
+
+Indeed, average over the initial proton spin and sum over the final spin:
+
+$$
+\frac12\operatorname{tr}
+\left(\mathcal F^I\mathcal F^{I\dagger}\right)
+=
+|F^I|^2+|G^I|^2.
+$$
+
+The interference term vanishes because $\operatorname{tr}\boldsymbol\sigma=0$.
+
+<h2 id="charge-states">4. Express the charged states in the isospin basis</h2>
+
+The state $|\pi^+p\rangle$ has total third component
+
+$$
+I_3=1+\frac12=\frac32.
+$$
+
+Only an $I=\tfrac32$ multiplet contains that value, so
+
+$$
+\boxed{
+|\pi^+p\rangle
+=
+\left|\frac32,\frac32\right\rangle.
+}
+$$
+
+The $\pi^-p$ state has $I_3=-\tfrac12$ and can belong to either total isospin. With one standard phase convention,
+
+$$
+\boxed{
+|\pi^-p\rangle
+=
+\sqrt{\frac13}
+\left|\frac32,-\frac12\right\rangle
++
+\sqrt{\frac23}
+\left|\frac12,-\frac12\right\rangle.
+}
+$$
+
+Strong scattering is diagonal in $I$. Therefore an elastic matrix element contains the squares of the Clebsch-Gordan coefficients:
+
+$$
+F_{\pi^-p}
+=
+\frac13F^{3/2}+\frac23F^{1/2},
+$$
+
+$$
+G_{\pi^-p}
+=
+\frac13G^{3/2}+\frac23G^{1/2}.
+$$
+
+Equivalently,
+
+$$
+\boxed{
+F_{\pi^-p}
+=
+\frac{F^{3/2}+2F^{1/2}}{3},
+\qquad
+G_{\pi^-p}
+=
+\frac{G^{3/2}+2G^{1/2}}{3}.
+}
+$$
+
+These are coherent amplitudes. The two total-isospin possibilities are not separately observed in an elastic charged-particle measurement.
+
+<h2 id="cross-sections">5. Write the physical differential cross-sections</h2>
+
+For $\pi^+p$, the pure-isospin result is
+
+$$
+\boxed{
+\frac{d\sigma(\pi^+p\to\pi^+p)}{d\Omega}
+=
+|F^{3/2}(\theta)|^2
++|G^{3/2}(\theta)|^2.
+}
+$$
+
+For $\pi^-p$,
+
+$$
+\boxed{
+\begin{aligned}
+\frac{d\sigma(\pi^-p\to\pi^-p)}{d\Omega}
+&=
+\left|
+\frac{F^{3/2}(\theta)+2F^{1/2}(\theta)}{3}
+\right|^2
+\\
+&\quad+
+\left|
+\frac{G^{3/2}(\theta)+2G^{1/2}(\theta)}{3}
+\right|^2.
+\end{aligned}
+}
+$$
+
+Every $F^I$ and $G^I$ on the right is itself the partial-wave sum built from the definite-$(I,J,P)$ phase shifts $\delta_{l\pm}^I$.
+
+As a consistency check, the same Clebsch-Gordan algebra predicts the charge-exchange amplitude
+
+$$
+\mathcal F(\pi^-p\to\pi^0n)
+\propto
+\frac{\sqrt2}{3}
+\left(\mathcal F^{3/2}-\mathcal F^{1/2}\right),
+$$
+
+up to the phase chosen for the charge states. If the two isospin amplitudes were equal, charge exchange would disappear, as it should for an interaction blind to total isospin.
+
+<div className="answer-check">
+  <strong>Answer check</strong>
+  <p>
+    If all phase shifts vanish, then every $a_{l\pm}^{I}$ vanishes and so do both cross-sections. If only an $s$ wave is present, $G^I=0$ and $F^I=a_{0+}^{I}$ is isotropic. Both limits agree with angular-momentum expectations.
+  </p>
+</div>
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+The calculation separates three layers. Rotations decide which $J$ values occur and how their angular functions combine. Parity prevents the two orbital possibilities at fixed $J$ from mixing. Isospin determines how the physical charge channels sample the two strong-interaction eigenamplitudes.
+
+Common traps are:
+
+1. Adding $I=\tfrac12$ and $I=\tfrac32$ probabilities for $\pi^-p$. The amplitudes are coherent and must be combined before squaring.
+2. Forgetting that $\pi^+p$ is pure $I=\tfrac32$.
+3. Omitting the spin-flip amplitude $G$ when $l\ge1$.
+4. Assigning parity as $(-1)^l$ and forgetting the pion's negative intrinsic parity.
+5. Treating the sign of $G$ as physical without specifying both $\widehat{\mathbf n}$ and the associated-Legendre convention.
+6. Using real phase shifts above inelastic thresholds without an inelasticity parameter.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The symmetry labels are
+
+$$
+I\in\left\{\frac12,\frac32\right\},
+\qquad
+J=l\pm\frac12,
+\qquad
+P=(-1)^{l+1}.
+$$
+
+They enter through $S_{l\pm}^I=e^{2i\delta_{l\pm}^I}$, first building $F^I$ and $G^I$, then the physical $\pi^+p$ or $\pi^-p$ amplitude, and only at the end the cross-section.
+
+<ChapterSectionNav
+  currentSlug="pion-proton-partial-waves"
+  sections={scatteringTheoryProblems}
+  overviewRoute={scatteringTheoryProblemsRoute}
+  overviewLabel="Problem set overview"
+  chapterTitle="Scattering Theory problems"
+  completionRoute="/chapters/scattering-theory"
+  completionEyebrow="Problem set complete"
+  completionLabel="Scattering Theory overview"
+/>
+
+</ArticleLayout>

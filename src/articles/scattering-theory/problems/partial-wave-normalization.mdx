@@ -1,0 +1,374 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout } from '../../../components/MdxComponents'
+import {
+  scatteringTheoryProblems,
+  scatteringTheoryProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 2 · Problem 7 of 7"
+  title="Normalizing the Partial-Wave Basis"
+  subtitle="The prefactor in an energy-normalized two-particle state is not decoration. It is the square root of the radial phase-space Jacobian that turns a momentum delta function into an energy delta function."
+  updated="2026-08-01"
+  readingTime={scatteringTheoryProblems[6].readingTime}
+  parent={{ label: 'Scattering Theory problems', to: scatteringTheoryProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#definition', label: 'State definition' },
+    { href: '#completeness', label: 'Insert completeness' },
+    { href: '#delta-functions', label: 'Momentum and energy deltas' },
+    { href: '#radial', label: 'Radial Jacobian' },
+    { href: '#angular-spin', label: 'Angular and spin sums' },
+    { href: '#identical', label: 'Identical particles' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">Energy-normalized two-body states</span>
+  <p>
+    A two-particle state of fixed total energy, momentum, angular momentum, spin, and channel is defined by projecting product momentum states onto spherical harmonics and Clebsch-Gordan coefficients. Show that the factor $(kE_1E_2/E)^{-1/2}$ makes these partial-wave states delta-normalized in total energy.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    In the center-of-mass frame, first use the total-momentum delta function to set $\mathbf p_2=-\mathbf p_1$. Then convert $\delta(E-E_1(k)-E_2(k))$ into a radial momentum delta function. The remaining sums collapse by spherical-harmonic and Clebsch-Gordan orthogonality.
+  </p>
+</details>
+
+<p>
+  This calculation fills in the normalization step behind <Link to={scatteringTheoryProblems[6].theoryRoute}>the partial-wave expansion</Link>. We first follow the exercise's delta-normalized product basis and translate the meaning of the factors at the end.
+</p>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Insert the definition twice</strong>
+      <p>Express the composite-state inner product as momentum integrals over two projection coefficients.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Collapse the continuous labels</strong>
+      <p>Use total momentum, energy conservation, and the radial Jacobian in that order.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Collapse the discrete labels</strong>
+      <p>Apply spherical-harmonic and two successive Clebsch-Gordan orthogonality relations.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="definition">1. Write the projection coefficient clearly</h2>
+
+For two nonidentical particles in channel $n$, let
+
+$$
+|\mathbf p_1\sigma_1,\mathbf p_2\sigma_2;n\rangle
+$$
+
+be the product basis. In the source's normalization its scalar product contains ordinary three-momentum delta functions. Define the partial-wave state through
+
+$$
+\begin{aligned}
+&\langle
+\mathbf p_1\sigma_1,\mathbf p_2\sigma_2;n'
+|E\mathbf p;j\sigma ls;n\rangle
+\\
+&\quad=
+\left(\frac{kE_1E_2}{E}\right)^{-1/2}
+\delta^3(\mathbf p-\mathbf p_1-\mathbf p_2)
+\delta(E-E_1-E_2)
+\delta_{n'n}
+\\
+&\qquad\times
+\sum_{m,\mu}
+C_{s_1s_2}(s,\mu;\sigma_1,\sigma_2)
+C_{ls}(j,\sigma;m,\mu)
+Y_l^m(\widehat{\mathbf p}_1).
+\end{aligned}
+$$
+
+In the center-of-mass frame,
+
+$$
+\mathbf p=0,
+\qquad
+\mathbf p_2=-\mathbf p_1,
+\qquad
+k=|\mathbf p_1|,
+$$
+
+and
+
+$$
+E_r(k)=\sqrt{k^2+M_r^2},
+\qquad
+E=E_1+E_2.
+$$
+
+The first Clebsch-Gordan coefficient couples the constituent spins to total spin $s,\mu$. The second couples $s,\mu$ and $l,m$ to total angular momentum $j,\sigma$.
+
+<Callout title="What must be proved">
+Momentum conservation, energy normalization, spherical-harmonic orthogonality, and angular-momentum coupling should each produce one delta symbol. The prefactor is correct only if no unwanted function of $k$, $E_1$, or $E_2$ survives.
+</Callout>
+
+<h2 id="completeness">2. Insert the product basis</h2>
+
+Consider one state with arbitrary total momentum $\mathbf p'$ and one in the center-of-mass frame:
+
+$$
+\langle
+E'\mathbf p';j'\sigma'l's';n'
+|E\mathbf0;j\sigma ls;n
+\rangle.
+$$
+
+Insert the product-state identity between them. Schematically,
+
+$$
+\begin{aligned}
+&\langle
+E'\mathbf p';j'\sigma'l's';n'
+|E\mathbf0;j\sigma ls;n
+\rangle
+\\
+&\quad=
+\sum_{\sigma_1,\sigma_2,n''}
+\int d^3p_1\,d^3p_2\,
+A_{E'\mathbf p';j'\sigma'l's'n'}^*
+A_{E\mathbf0;j\sigma lsn},
+\end{aligned}
+$$
+
+where $A$ denotes the projection coefficient written above. We now simplify its continuous and discrete pieces separately.
+
+<h2 id="delta-functions">3. Collapse total momentum and total energy</h2>
+
+The two momentum delta functions satisfy
+
+$$
+\begin{aligned}
+&\delta^3(\mathbf p'-\mathbf p_1-\mathbf p_2)
+\delta^3(\mathbf p_1+\mathbf p_2)
+\\
+&\qquad=
+\delta^3(\mathbf p')
+\delta^3(\mathbf p_1+\mathbf p_2).
+\end{aligned}
+$$
+
+The $d^3p_2$ integration therefore sets
+
+$$
+\mathbf p_2=-\mathbf p_1
+$$
+
+and leaves the desired factor $\delta^3(\mathbf p')$.
+
+Likewise,
+
+$$
+\begin{aligned}
+&\delta(E'-E_1-E_2)
+\delta(E-E_1-E_2)
+\\
+&\qquad=
+\delta(E'-E)
+\delta(E-E_1-E_2).
+\end{aligned}
+$$
+
+This produces the target factor $\delta(E'-E)$, but the second delta function still has to perform the radial momentum integral.
+
+<h2 id="radial">4. Let the radial Jacobian cancel the prefactor</h2>
+
+Use spherical coordinates for $\mathbf p_1$:
+
+$$
+d^3p_1=k^2\,dk\,d\Omega.
+$$
+
+Differentiate the two-particle energy:
+
+$$
+\frac{d(E_1+E_2)}{dk}
+=
+\frac{k}{E_1}+\frac{k}{E_2}
+=
+\frac{k(E_1+E_2)}{E_1E_2}.
+$$
+
+On the support of the energy delta function, $E_1+E_2=E$, so
+
+$$
+\boxed{
+\delta(E-E_1-E_2)
+=
+\frac{E_1E_2}{kE}\,
+\delta(k-k_E),
+}
+$$
+
+where $k_E$ is the positive center-of-mass momentum at energy $E$.
+
+The two state coefficients each contribute a square-root normalization. Once $E'=E$, their product is
+
+$$
+\left(\frac{kE_1E_2}{E}\right)^{-1}.
+$$
+
+The complete radial factor is therefore
+
+$$
+\begin{aligned}
+&\int_0^\infty k^2dk\,
+\left(\frac{kE_1E_2}{E}\right)^{-1}
+\frac{E_1E_2}{kE}
+\delta(k-k_E)
+\\
+&\qquad=
+\int_0^\infty dk\,\delta(k-k_E)
+=1.
+\end{aligned}
+$$
+
+This is the heart of the exercise:
+
+$$
+\boxed{
+k^2
+\times
+\frac{E}{kE_1E_2}
+\times
+\frac{E_1E_2}{kE}
+=1.
+}
+$$
+
+No momentum- or energy-dependent factor survives.
+
+<h2 id="angular-spin">5. Collapse the angular and spin labels</h2>
+
+The angular integral gives
+
+$$
+\int d\Omega\,
+Y_{l'}^{m'*}(\widehat{\mathbf k})
+Y_l^m(\widehat{\mathbf k})
+=
+\delta_{l'l}\delta_{m'm}.
+$$
+
+The first spin-coupling coefficients obey
+
+$$
+\begin{aligned}
+&\sum_{\sigma_1,\sigma_2}
+C_{s_1s_2}(s',\mu';\sigma_1,\sigma_2)^*
+C_{s_1s_2}(s,\mu;\sigma_1,\sigma_2)
+\\
+&\qquad=
+\delta_{s's}\delta_{\mu'\mu}.
+\end{aligned}
+$$
+
+After the $l,m,s,\mu$ labels have been matched, the second coupling obeys
+
+$$
+\begin{aligned}
+&\sum_{m,\mu}
+C_{ls}(j',\sigma';m,\mu)^*
+C_{ls}(j,\sigma;m,\mu)
+\\
+&\qquad=
+\delta_{j'j}\delta_{\sigma'\sigma}.
+\end{aligned}
+$$
+
+Finally, the channel labels supply $\delta_{n'n}$. Combining the continuous and discrete factors yields
+
+$$
+\boxed{
+\begin{aligned}
+&\langle
+E'\mathbf p';j'\sigma'l's';n'
+|E\mathbf0;j\sigma ls;n
+\rangle
+\\
+&\quad=
+\delta^3(\mathbf p')\delta(E'-E)
+\delta_{j'j}\delta_{\sigma'\sigma}
+\delta_{l'l}\delta_{s's}\delta_{n'n}.
+\end{aligned}
+}
+$$
+
+For two arbitrary total momenta, the first delta function is
+
+$$
+\delta^3(\mathbf p'-\mathbf p).
+$$
+
+<h2 id="identical">6. What changes for identical particles?</h2>
+
+For nonidentical particles, $(\mathbf k,-\mathbf k)$ labels a different ordered product state from $(-\mathbf k,\mathbf k)$. For identical particles those two descriptions differ only by exchange.
+
+If one avoids double counting by integrating over only half of relative-momentum space, the angular domain is halved. The projection coefficient must then acquire an extra factor
+
+$$
+\boxed{\sqrt2}
+$$
+
+so that its squared magnitude compensates for the missing half of the domain.
+
+The state must also obey the appropriate Bose or Fermi exchange condition. That condition removes incompatible combinations of orbital and spin quantum numbers; the normalization factor alone does not impose statistics.
+
+<Callout title="Covariant normalization">
+The source begins with product states normalized by ordinary $\delta^3$ functions. In the notebook's covariant basis, each external momentum state carries $2E(2\pi)^3$. Those factors migrate between the product-state completeness relation and the projection coefficient, but the invariant content is unchanged: the energy-normalized radial factor is the inverse square root of the two-body density-of-states Jacobian.
+</Callout>
+
+<div className="answer-check">
+  <strong>Answer check</strong>
+  <p>
+    After all integrations, no factor of $k$, $E$, $E_1$, or $E_2$ remains. The result contains exactly one delta function for each continuous total label and one Kronecker delta for each discrete angular-momentum, spin, and channel label. That is the required normalization.
+  </p>
+</div>
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The normalization succeeds because three factors cancel:
+
+$$
+\underbrace{k^2dk}_{\text{radial measure}}
+\times
+\underbrace{\left(\frac{kE_1E_2}{E}\right)^{-1}}_{\text{two state coefficients}}
+\times
+\underbrace{\frac{E_1E_2}{kE}}_{\text{energy-delta Jacobian}}.
+$$
+
+Spherical harmonics then fix $l,m$, the first Clebsch-Gordan relation fixes $s,\mu$, and the second fixes $j,\sigma$.
+
+<ChapterSectionNav
+  currentSlug="partial-wave-normalization"
+  sections={scatteringTheoryProblems}
+  overviewRoute={scatteringTheoryProblemsRoute}
+  overviewLabel="Problem set overview"
+  chapterTitle="Scattering Theory problems"
+  completionRoute="/chapters/scattering-theory"
+  completionEyebrow="Problem set complete"
+  completionLabel="Scattering Theory overview"
+/>
+
+</ArticleLayout>

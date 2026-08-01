@@ -1,0 +1,410 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout } from '../../../components/MdxComponents'
+import {
+  scatteringTheoryProblems,
+  scatteringTheoryProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 2 · Problem 5 of 7"
+  title="Standing Waves and the Hermitian K-Matrix"
+  subtitle="Removing the on-shell imaginary part of the resolvent leaves a real standing-wave problem. Its Hermitian reaction matrix becomes a unitary S-matrix through a Cayley transform."
+  updated="2026-08-01"
+  readingTime={scatteringTheoryProblems[4].readingTime}
+  parent={{ label: 'Scattering Theory problems', to: scatteringTheoryProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#standing-wave', label: 'Standing-wave operator' },
+    { href: '#hermiticity', label: 'Hermiticity' },
+    { href: '#on-shell', label: 'Restore the on-shell part' },
+    { href: '#cayley', label: 'Cayley transform' },
+    { href: '#eigenchannel', label: 'Elastic eigenchannel' },
+    { href: '#interpretation', label: 'Interpretation and traps' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">Principal-value scattering states</span>
+  <p>
+    Define standing-wave states by replacing the incoming or outgoing resolvent with its principal value:
+  </p>
+
+  $$
+  |\Psi_\alpha^0\rangle
+  =
+  |\Phi_\alpha\rangle
+  +
+  \mathcal P\frac{1}{E_\alpha-H_0}
+  V|\Psi_\alpha^0\rangle.
+  $$
+
+  <p>
+    Show that the corresponding on-shell reaction matrix is Hermitian. Then express the unitary $S$-matrix in terms of it, translating the result to the notebook convention $S=1+i\mathcal T$.
+  </p>
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    At fixed energy, the principal-value resolvent is Hermitian. Solve the operator equation as $\mathcal K=V(1-RV)^{-1}$ and use the identity $V(1-RV)^{-1}=(1-VR)^{-1}V$. Then restore the missing $-i\pi\delta(E-H_0)$ part of the outgoing resolvent.
+  </p>
+</details>
+
+<p>
+  The final Cayley transform makes the <Link to={scatteringTheoryProblems[4].theoryRoute}>unitarity operator identity</Link> automatic rather than something checked order by order.
+</p>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Build the principal-value reaction operator</strong>
+      <p>Replace the state equation by a fixed-energy operator equation for $\mathcal K(E)$.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Prove it is Hermitian</strong>
+      <p>Use the reality of the principal-value resolvent and an elementary resolvent identity.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Restore outgoing boundary conditions</strong>
+      <p>Add the on-shell imaginary term, solve the resulting algebra, and read off the Cayley transform.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="standing-wave">1. Define the standing-wave reaction operator</h2>
+
+At fixed energy $E$, write
+
+$$
+R(E)
+=
+\mathcal P\frac{1}{E-H_0}.
+$$
+
+The standing-wave equation is
+
+$$
+|\Psi_\alpha^0\rangle
+=
+|\Phi_\alpha\rangle
++R(E_\alpha)V|\Psi_\alpha^0\rangle.
+$$
+
+Define the off-shell operator $\mathcal K(E)$ by
+
+$$
+\mathcal K(E)|\Phi_\alpha\rangle
+=
+V|\Psi_\alpha^0\rangle
+\qquad(E_\alpha=E).
+$$
+
+Multiplying the state equation by $V$ gives
+
+$$
+\mathcal K
+=
+V+VR\mathcal K.
+$$
+
+Thus
+
+$$
+\boxed{
+\mathcal K
+=
+(1-VR)^{-1}V
+=
+V(1-RV)^{-1}.
+}
+$$
+
+The equality of the two forms follows by expanding either side:
+
+$$
+V+VRV+VRVRV+\cdots.
+$$
+
+<h2 id="hermiticity">2. Prove Hermiticity</h2>
+
+Because $H_0$ is self-adjoint and the pole is interpreted symmetrically,
+
+$$
+R(E)^\dagger=R(E).
+$$
+
+The interaction Hamiltonian is also Hermitian:
+
+$$
+V^\dagger=V.
+$$
+
+Take the adjoint of one form of $\mathcal K$:
+
+$$
+\mathcal K^\dagger
+=
+\left[V(1-RV)^{-1}\right]^\dagger
+=
+(1-VR)^{-1}V.
+$$
+
+But this is the other equivalent form of $\mathcal K$. Hence
+
+$$
+\boxed{\mathcal K^\dagger=\mathcal K.}
+$$
+
+The source exercise packages the energy-shell delta function into a dimensionless matrix,
+
+$$
+K^{\rm src}_{\beta\alpha}
+=
+\pi\delta(E_\beta-E_\alpha)
+\langle\Phi_\beta|\mathcal K(E_\alpha)|\Phi_\alpha\rangle.
+$$
+
+The delta function is real and symmetric on shell, so
+
+$$
+\boxed{(K^{\rm src})^\dagger=K^{\rm src}.}
+$$
+
+<Callout title="Why principal value matters">
+The outgoing resolvent is not Hermitian because it contains an on-shell imaginary part. The principal value keeps virtual off-shell propagation but removes that irreversible-looking boundary choice. The standing-wave problem is therefore represented by a Hermitian matrix.
+</Callout>
+
+<h2 id="on-shell">3. Restore the on-shell imaginary part</h2>
+
+The outgoing resolvent decomposes as
+
+$$
+\frac{1}{E-H_0+i0}
+=
+R(E)-i\pi\delta(E-H_0).
+$$
+
+Let $\tau^+$ be the usual outgoing-wave transition operator,
+
+$$
+\tau^+
+=
+V+V\frac{1}{E-H_0+i0}\tau^+.
+$$
+
+Eliminating $V$ in favor of $\mathcal K$ gives
+
+$$
+\boxed{
+\tau^+
+=
+\mathcal K
+-i\pi\mathcal K\delta(E-H_0)\tau^+.
+}
+$$
+
+Now package both kernels as dimensionless energy-shell matrices:
+
+$$
+A_{\beta\alpha}
+=
+\pi\delta(E_\beta-E_\alpha)
+\tau^+_{\beta\alpha},
+$$
+
+$$
+K^{\rm src}_{\beta\alpha}
+=
+\pi\delta(E_\beta-E_\alpha)
+\mathcal K_{\beta\alpha}.
+$$
+
+The preceding operator equation becomes ordinary matrix algebra on the energy shell:
+
+$$
+A
+=
+K^{\rm src}-iK^{\rm src}A.
+$$
+
+Therefore
+
+$$
+(1+iK^{\rm src})A=K^{\rm src},
+$$
+
+and
+
+$$
+\boxed{
+A
+=
+(1+iK^{\rm src})^{-1}K^{\rm src}.
+}
+$$
+
+Because every factor is a function of the same matrix, their order may also be reversed.
+
+<h2 id="cayley">4. Derive the Cayley transform</h2>
+
+In the source's Hamiltonian convention,
+
+$$
+S=1-2iA.
+$$
+
+Substituting the expression for $A$ gives
+
+$$
+\begin{aligned}
+S
+&=1-2i(1+iK^{\rm src})^{-1}K^{\rm src}
+\\
+&=(1-iK^{\rm src})(1+iK^{\rm src})^{-1}.
+\end{aligned}
+$$
+
+Thus the answer in that convention is
+
+$$
+\boxed{
+S
+=
+(1-iK^{\rm src})(1+iK^{\rm src})^{-1}.
+}
+$$
+
+For the notebook, define
+
+$$
+K=-K^{\rm src}.
+$$
+
+Then
+
+$$
+\boxed{
+S
+=
+(1+iK)(1-iK)^{-1}.
+}
+$$
+
+Comparing with $S=1+i\mathcal T$ gives
+
+$$
+\boxed{
+\mathcal T
+=
+2K(1-iK)^{-1}.
+}
+$$
+
+The sign change is only a convention translation. It lets the notebook use the familiar elastic relation $K=\tan\delta$.
+
+To check unitarity, note that $K^\dagger=K$ and that $(1+iK)$ commutes with $(1-iK)$. Therefore
+
+$$
+S^\dagger
+=
+(1+iK)^{-1}(1-iK),
+$$
+
+so
+
+$$
+\boxed{S^\dagger S=1.}
+$$
+
+<h2 id="eigenchannel">5. Read the result in one elastic eigenchannel</h2>
+
+Suppose $K$ has a real eigenvalue $\kappa$. The corresponding S-matrix eigenvalue is
+
+$$
+S_\kappa
+=
+\frac{1+i\kappa}{1-i\kappa}.
+$$
+
+Every complex number of this form has unit modulus. Set
+
+$$
+\kappa=\tan\delta.
+$$
+
+Then
+
+$$
+S_\kappa
+=
+\frac{1+i\tan\delta}{1-i\tan\delta}
+=
+e^{2i\delta}.
+$$
+
+Thus
+
+$$
+\boxed{K=\tan\delta}
+$$
+
+in each uncoupled elastic channel. The K-matrix is a real coordinate for motion around the unitary S-matrix circle.
+
+<div className="answer-check">
+  <strong>Answer check</strong>
+  <p>
+    If $K=0$, then $S=1$. If $K$ is Hermitian, every eigenvalue $\kappa$ is real and $(1+i\kappa)/(1-i\kappa)$ lies on the unit circle. The construction therefore has the correct no-scattering limit and enforces unitarity eigenchannel by eigenchannel.
+  </p>
+</div>
+
+<h2 id="interpretation">Interpretation and common traps</h2>
+
+The K-matrix separates two ideas that are entangled in the usual outgoing resolvent. The principal-value part describes dispersive virtual propagation; the explicit on-shell delta function supplies the absorptive contribution demanded by open channels. The Cayley transform recombines them without losing unitarity.
+
+Common traps are:
+
+1. Claiming $VR$ is Hermitian. It generally is not; Hermiticity follows only after resumming the complete operator and using both equivalent forms.
+2. Dropping the energy-shell delta function when moving from $\mathcal K$ to the dimensionless matrix $K$.
+3. Mixing the source sign with the project's $S=1+i\mathcal T$ sign. The two Cayley transforms look inverted until $K=-K^{\rm src}$ is stated.
+4. Assuming a truncated ordinary Born series is exactly unitary. A Hermitian K-matrix parametrization is useful precisely because its Cayley transform remains unitary after a controlled approximation to $K$.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The logical chain is
+
+$$
+\text{principal-value resolvent}
+\Longrightarrow
+K^\dagger=K
+\Longrightarrow
+S=(1+iK)(1-iK)^{-1}
+\Longrightarrow
+S^\dagger S=1.
+$$
+
+For one elastic channel, this reduces to $K=\tan\delta$ and $S=e^{2i\delta}$.
+
+<ChapterSectionNav
+  currentSlug="k-matrix"
+  sections={scatteringTheoryProblems}
+  overviewRoute={scatteringTheoryProblemsRoute}
+  overviewLabel="Problem set overview"
+  chapterTitle="Scattering Theory problems"
+  completionRoute="/chapters/scattering-theory"
+  completionEyebrow="Problem set complete"
+  completionLabel="Scattering Theory overview"
+/>
+
+</ArticleLayout>

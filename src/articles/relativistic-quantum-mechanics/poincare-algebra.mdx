@@ -1,0 +1,396 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import { PoincareGeneratorsFigure } from '../../components/InteractiveFigures'
+
+<ArticleLayout
+  kicker="Chapter 1 · Section 3 of 7"
+  title="The Poincaré Algebra"
+  subtitle="Translations, rotations, and boosts form one spacetime symmetry. Its ten generators and three commutator families are the kinematical grammar of relativistic quantum theory."
+  updated="2026-08-01"
+  readingTime="18 min"
+  parent={{ label: 'Relativistic Quantum Mechanics', to: '/chapters/relativistic-quantum-mechanics' }}
+  toc={[
+    { href: '#group', label: 'The group' },
+    { href: '#semidirect', label: 'Why semidirect' },
+    { href: '#near-identity', label: 'Near the identity' },
+    { href: '#counting', label: 'Ten generators' },
+    { href: '#algebra', label: 'The algebra' },
+    { href: '#rotation-boost', label: 'Rotations and boosts' },
+    { href: '#meaning', label: 'Physical meaning' },
+    { href: '#casimirs', label: 'Casimirs' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="group">The spacetime symmetry group</h2>
+
+An inertial-frame transformation may rotate or boost the axes and may also move the origin. Its action on an event is
+
+$$
+x'^\mu
+=
+\Lambda^\mu{}_{\nu}x^\nu+a^\mu.
+$$
+
+The Lorentz matrix preserves the Minkowski metric,
+
+$$
+\Lambda^T\eta\Lambda=\eta,
+$$
+
+while $a^\mu$ is a constant spacetime displacement.
+
+The full Poincaré group is
+
+$$
+\mathbb R^{1,3}\rtimes O(1,3).
+$$
+
+The part continuously connected to the identity is
+
+$$
+\mathcal P_+^\uparrow
+=
+\mathbb R^{1,3}\rtimes SO^+(1,3).
+$$
+
+Its Lie algebra is the subject of this page. Discrete parity and time reversal do not add generators because no infinitesimal path reaches them from the identity.
+
+<Callout title="Convention ledger">
+We use $\eta=\operatorname{diag}(+,-,-,-)$, $\hbar=c=1$, $\epsilon_{0123}=+1$, and self-adjoint Hilbert-space generators. Changing metric or exponential conventions moves some signs but not the underlying geometry.
+</Callout>
+
+<h2 id="semidirect">Why the product is semidirect</h2>
+
+Compose two transformations:
+
+$$
+(\Lambda_2,a_2)(\Lambda_1,a_1)
+=
+(\Lambda_2\Lambda_1,\,\Lambda_2a_1+a_2).
+$$
+
+The second Lorentz transformation also acts on the first displacement. Translations form an Abelian normal subgroup, but the Lorentz part does not leave each translation generator untouched.
+
+This is the geometric reason the product is not direct. It is also the reason the mixed commutator $[M,P]$ will be nonzero: energy-momentum is a four-vector and boosts or rotations change its components.
+
+On the Hilbert space, the same geometry appears in the finite transformation laws
+
+$$
+U(\Lambda)^{-1}P^\mu U(\Lambda)
+=
+\Lambda^\mu{}_{\nu}P^\nu
+$$
+
+and
+
+$$
+U(a)^{-1}M^{\mu\nu}U(a)
+=
+M^{\mu\nu}-a^\mu P^\nu+a^\nu P^\mu.
+$$
+
+The first equation says that energy and momentum are components of one four-vector. Its ordering is also what makes $U(\Lambda)|p\rangle$ carry eigenvalue $\Lambda p$; with $U$ and $U^{-1}$ exchanged, the inverse Lorentz matrix appears. The second equation uses the same conjugation order and says that angular momentum changes by an orbital term when the spacetime origin is translated. Reversing the conjugation reverses the sign of that term. The convention-sensitive sign is less important than the invariant lesson: angular momentum *about an origin* changes, while the intrinsic particle label encoded by the Pauli-Lubanski vector does not.
+
+<div className="two-panel-grid">
+  <div>
+    <strong>Direct-product intuition</strong>
+    <p>Each factor would transform independently and all generators from different factors would commute.</p>
+  </div>
+  <div>
+    <strong>Poincaré reality</strong>
+    <p>Lorentz transformations act on the translation four-vector, so the factors are coupled kinematically.</p>
+  </div>
+</div>
+
+<h2 id="near-identity">Look near the identity</h2>
+
+Write an infinitesimal transformation as
+
+$$
+\Lambda^\mu{}_{\nu}
+=
+\delta^\mu{}_{\nu}
++\omega^\mu{}_{\nu}
++O(\omega^2),
+\qquad
+a^\mu=\epsilon^\mu.
+$$
+
+Then
+
+$$
+\delta x^\mu
+=
+\omega^\mu{}_{\nu}x^\nu+\epsilon^\mu.
+$$
+
+Insert $\Lambda=1+\omega$ into $\Lambda^T\eta\Lambda=\eta$ and keep only first order:
+
+$$
+\eta_{\rho\sigma}
+=
+\eta_{\rho\sigma}
++\omega_{\rho\sigma}
++\omega_{\sigma\rho}
++O(\omega^2).
+$$
+
+Therefore
+
+$$
+\boxed{\omega_{\mu\nu}=-\omega_{\nu\mu}},
+\qquad
+\omega_{\mu\nu}=\eta_{\mu\rho}\omega^\rho{}_{\nu}.
+$$
+
+It is the tensor with both indices lowered that is antisymmetric. The mixed matrix $\omega^\mu{}_{\nu}$ can look symmetric. For example, an infinitesimal boost in the $x$ direction may be written
+
+$$
+\omega^\mu{}_{\nu}
+=
+\begin{pmatrix}
+0&\xi&0&0\\
+\xi&0&0&0\\
+0&0&0&0\\
+0&0&0&0
+\end{pmatrix}.
+$$
+
+Lowering the first index gives $\omega_{01}=\xi$ and $\omega_{10}=-\xi$.
+
+<h2 id="counting">Why there are ten generators</h2>
+
+An antisymmetric $4\times4$ tensor has
+
+$$
+\frac{4(4-1)}2=6
+$$
+
+independent entries. They split into three spatial planes and three time-space planes:
+
+<div className="learning-goals">
+  <div>
+    <strong>4 translations</strong>
+    <p>$P^0$ generates time translation; $P^i$ generate spatial translations.</p>
+  </div>
+  <div>
+    <strong>3 rotations</strong>
+    <p>The components $M^{ij}$ rotate the three independent spatial planes.</p>
+  </div>
+  <div>
+    <strong>3 boosts</strong>
+    <p>The components $M^{0i}$ mix time with one spatial direction.</p>
+  </div>
+</div>
+
+Thus the identity-connected Poincaré group has
+
+$$
+4+3+3=10
+$$
+
+continuous generators.
+
+<PoincareGeneratorsFigure />
+
+<h2 id="algebra">The three commutator families</h2>
+
+Near the identity, the unitary operator is
+
+$$
+U(\epsilon,\omega)
+=
+1-i\epsilon_\mu P^\mu
+-\frac{i}{2}\omega_{\mu\nu}M^{\mu\nu}
++\cdots.
+$$
+
+The factor $1/2$ avoids counting both $(\mu,\nu)$ and $(\nu,\mu)$. With the conventions above,
+
+$$
+\boxed{[P^\mu,P^\nu]=0},
+$$
+
+$$
+\boxed{
+[M^{\mu\nu},P^\rho]
+=
+i\left(
+\eta^{\nu\rho}P^\mu
+-\eta^{\mu\rho}P^\nu
+\right)
+},
+$$
+
+and
+
+$$
+\boxed{
+\begin{aligned}
+[M^{\mu\nu},M^{\rho\sigma}]
+=i\big(&
+\eta^{\mu\sigma}M^{\nu\rho}
++\eta^{\nu\rho}M^{\mu\sigma}\\
+&-\eta^{\mu\rho}M^{\nu\sigma}
+-\eta^{\nu\sigma}M^{\mu\rho}
+\big).
+\end{aligned}
+}
+$$
+
+These equations are the Poincaré algebra. They are not additional dynamical laws. They specify how spacetime transformations compose in any relativistic quantum theory.
+
+<h2 id="rotation-boost">Rotation and boost notation</h2>
+
+Define
+
+$$
+J_i=\frac12\epsilon_{ijk}M^{jk},
+\qquad
+K_i=M^{i0},
+\qquad
+\epsilon_{123}=+1.
+$$
+
+The Lorentz subalgebra becomes
+
+$$
+[J_i,J_j]=i\epsilon_{ijk}J_k,
+$$
+
+$$
+[J_i,K_j]=i\epsilon_{ijk}K_k,
+$$
+
+$$
+\boxed{[K_i,K_j]=-i\epsilon_{ijk}J_k}.
+$$
+
+The first line is ordinary angular momentum. The second says boosts transform as a spatial vector under rotations. The third says boosts in different directions do not commute.
+
+Writing $H=P^0$ and using $P_i$ for ordinary Cartesian three-momentum components,
+
+$$
+[J_i,H]=0,
+\qquad
+[J_i,P_j]=i\epsilon_{ijk}P_k,
+$$
+
+$$
+[K_i,H]=iP_i,
+\qquad
+[K_i,P_j]=i\delta_{ij}H.
+$$
+
+<Sidenote>
+With the $(+,-,-,-)$ metric, a covariantly lowered spatial four-index introduces a minus sign. The $P_i$ in these three-vector relations denotes the usual Cartesian momentum component.
+</Sidenote>
+
+<h2 id="meaning">What the commutators say physically</h2>
+
+<div className="deep-grid">
+  <div>
+    <strong>Translations commute</strong>
+    <p>Two constant spacetime displacements have no order-dependent residue.</p>
+  </div>
+  <div>
+    <strong>Energy-momentum is a four-vector</strong>
+    <p>Rotations change spatial momentum; boosts mix momentum with energy.</p>
+  </div>
+  <div>
+    <strong>Lorentz transformations are non-Abelian</strong>
+    <p>The order of rotations or non-collinear boosts can change the final frame.</p>
+  </div>
+  <div>
+    <strong>Non-collinear boosts have a rotational residue</strong>
+    <p>Their composition contains a rotational part; closed boost sequences expose it as a Wigner rotation, and repeated infinitesimal residues produce Thomas precession.</p>
+  </div>
+</div>
+
+The algebra is a compact prediction engine. For example, $[K_i,H]=iP_i$ and $[K_i,P_j]=i\delta_{ij}H$ encode the fact that a boost mixes energy with the momentum along the boost direction.
+
+It also separates conserved stationary labels from spacetime charges whose expressions depend on the time slice. Since translations commute,
+
+$$
+[H,P_i]=0,
+\qquad
+[H,J_i]=0.
+$$
+
+Time evolution therefore preserves momentum and angular momentum operators, although only mutually compatible components can label the same state. A fixed-slice boost generator behaves differently: $[K_i,H]=iP_i$, so boost eigenvalues are not stationary labels.
+
+That does **not** mean boost symmetry has no conserved Noether charge. The equal-time expression for a boost charge contains explicit coordinate-time dependence. With the conventions used here, its Schrödinger-picture structure is schematically
+
+$$
+K_i(t)=K_i(0)-tP_i,
+$$
+
+so its total derivative vanishes:
+
+$$
+\frac{dK_i(t)}{dt}
+=
+i[H,K_i(t)]+\frac{\partial K_i(t)}{\partial t}
+=
+P_i-P_i
+=0.
+$$
+
+The commutator contribution and the explicit derivative cancel, so the corresponding Heisenberg-picture Noether charge is conserved. Its representative at a fixed reference slice still does not commute with $H$ and is therefore not a quantum number for stationary states.
+
+<h2 id="casimirs">What no Poincaré transformation can change</h2>
+
+A <Term>Casimir</Term> commutes with every generator. In four dimensions, the two standard Casimirs are
+
+$$
+P^2=P_\mu P^\mu
+$$
+
+and
+
+$$
+W^2=W_\mu W^\mu,
+\qquad
+W^\mu
+=
+\frac12\epsilon^{\mu\nu\rho\sigma}
+P_\nu M_{\rho\sigma}.
+$$
+
+$W^\mu$ is the Pauli-Lubanski vector. It packages angular momentum in a covariant form.
+
+For a positive-energy massive representation,
+
+$$
+P^2=m^2,
+\qquad
+W^2=-m^2j(j+1).
+$$
+
+For an ordinary massless helicity representation,
+
+$$
+P^2=0,
+\qquad
+W^2=0,
+\qquad
+W^\mu=hP^\mu.
+$$
+
+The last line is important: $W^2$ vanishes for every finite helicity and therefore does not by itself distinguish $h$. To understand where $j$ and $h$ come from, we must study the transformations that keep one reference momentum fixed.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The algebra can be remembered as three statements:
+
+1. Translations commute.
+2. Lorentz transformations act on translations as on a four-vector.
+3. Lorentz transformations do not generally commute with one another.
+
+The ten generators tell us how spacetime symmetry acts locally. The next section turns that algebra into a classification of actual one-particle states.
+
+<ChapterSectionNav currentSlug="poincare-algebra" />
+
+</ArticleLayout>

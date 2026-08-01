@@ -14,8 +14,8 @@ export default function ChaptersPage() {
         <p className="eyebrow">Long-form MDX</p>
         <h1>Chapters</h1>
         <p className="lede">
-          Each chapter is a self-contained note page with equations, conceptual checkpoints, and
-          links back into the study map.
+          Each chapter opens with a guided map, then continues through focused section pages with
+          equations, conceptual checkpoints, and links back into the study map.
         </p>
       </header>
       <div className="article-list">

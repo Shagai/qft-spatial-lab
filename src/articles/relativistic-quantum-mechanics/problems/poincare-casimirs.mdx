@@ -1,0 +1,279 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../../components/ArticleLayout'
+import ChapterSectionNav from '../../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../../components/MdxComponents'
+import {
+  relativisticQuantumMechanicsProblems,
+  relativisticQuantumMechanicsProblemsRoute,
+} from '../../../data/problemSets'
+
+<ArticleLayout
+  kicker="Chapter 1 · Problem 4 of 6"
+  title="Why the Poincaré Casimirs Are Invariant"
+  subtitle="Momentum changes from frame to frame and angular momentum changes when the origin moves. Two contractions nevertheless survive every Poincaré transformation and label the particle representation itself."
+  updated="2026-08-01"
+  readingTime={relativisticQuantumMechanicsProblems[3].readingTime}
+  parent={{ label: 'Relativistic Quantum Mechanics problems', to: relativisticQuantumMechanicsProblemsRoute }}
+  toc={[
+    { href: '#problem', label: 'Problem' },
+    { href: '#roadmap', label: 'Roadmap' },
+    { href: '#momentum', label: 'Momentum squared' },
+    { href: '#translations', label: 'Pauli-Lubanski and translations' },
+    { href: '#lorentz', label: 'Pauli-Lubanski and Lorentz' },
+    { href: '#meaning', label: 'Representation labels' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="problem">Problem</h2>
+
+<div className="problem-statement">
+  <span className="problem-label">The invariants hidden inside moving generators</span>
+  <p>
+    Show that $P_\mu P^\mu$ and $W_\mu W^\mu$ commute with every Poincaré transformation $U(\Lambda,a)$, where
+  </p>
+
+  $$
+  W^\mu
+  =
+  \frac12\epsilon^{\mu\nu\rho\sigma}
+  P_\nu M_{\rho\sigma}.
+  $$
+</div>
+
+<details className="problem-hint">
+  <summary>Hint</summary>
+  <p>
+    Treat Lorentz transformations and translations separately. Momentum is translation invariant and transforms as a four-vector. For $W^\mu$, insert the translation-induced shift of $M^{\rho\sigma}$ and let the antisymmetry of $\epsilon^{\mu\nu\rho\sigma}$ do the work.
+  </p>
+</details>
+
+<p>
+  These are the two operators introduced in <Link to="/chapters/relativistic-quantum-mechanics/poincare-algebra#casimirs">the Casimir section</Link>. Here we prove rather than quote their invariance.
+</p>
+
+<Callout title="Convention ledger">
+We use $\eta=\operatorname{diag}(+,-,-,-)$ and $\epsilon_{0123}=+1$. With these conventions, a massive representation has $P^2=m^2$ and $W^2=-m^2j(j+1)$.
+</Callout>
+
+<h2 id="roadmap">Solution roadmap</h2>
+
+<div className="solution-roadmap">
+  <div>
+    <div>
+      <strong>Prove $P^2$ is a scalar</strong>
+      <p>Transform both momentum factors and use $\Lambda^T\eta\Lambda=\eta$.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Remove the origin dependence</strong>
+      <p>Show that the orbital shift in $M^{\mu\nu}$ drops out of $W^\mu$ under translations.</p>
+    </div>
+  </div>
+  <div>
+    <div>
+      <strong>Contract the axial vector</strong>
+      <p>Use the Lorentz transformation of $W^\mu$ to conclude that $W^2$ is invariant.</p>
+    </div>
+  </div>
+</div>
+
+<h2 id="momentum">1. Momentum squared is invariant</h2>
+
+Finite Lorentz transformations act as
+
+$$
+U(\Lambda)^{-1}P^\mu U(\Lambda)
+=
+\Lambda^\mu{}_{\nu}P^\nu.
+$$
+
+Translations commute with all momentum components, so they leave $P^\mu$ unchanged. Under the Lorentz part,
+
+$$
+\begin{aligned}
+U(\Lambda)^{-1}P^2U(\Lambda)
+&=
+\eta_{\mu\nu}
+\Lambda^\mu{}_{\rho}P^\rho
+\Lambda^\nu{}_{\sigma}P^\sigma\\
+&=
+\left(\Lambda^T\eta\Lambda\right)_{\rho\sigma}
+P^\rho P^\sigma\\
+&=
+\eta_{\rho\sigma}P^\rho P^\sigma\\
+&=P^2.
+\end{aligned}
+$$
+
+Hence
+
+$$
+\boxed{
+U(\Lambda,a)^{-1}P^2U(\Lambda,a)=P^2.
+}
+$$
+
+Multiplying by $U(\Lambda,a)$ on the appropriate side gives
+
+$$
+\boxed{[P^2,U(\Lambda,a)]=0.}
+$$
+
+The calculation is the operator version of the elementary four-vector identity $(\Lambda p)^2=p^2$.
+
+<h2 id="translations">2. The Pauli-Lubanski vector forgets the origin</h2>
+
+Angular momentum depends on the spacetime origin. With the conjugation order used in this notebook,
+
+$$
+U(a)^{-1}M^{\rho\sigma}U(a)
+=
+M^{\rho\sigma}-a^\rho P^\sigma+a^\sigma P^\rho.
+$$
+
+Insert this into $W^\mu$. The possible change is
+
+$$
+\Delta W^\mu
+=
+\frac12\epsilon^{\mu\nu\rho\sigma}P_\nu
+\left(-a_\rho P_\sigma+a_\sigma P_\rho\right).
+$$
+
+Consider the first term. It contains
+
+$$
+\epsilon^{\mu\nu\rho\sigma}P_\nu P_\sigma.
+$$
+
+The momentum components commute, so $P_\nu P_\sigma$ is symmetric under $\nu\leftrightarrow\sigma$. The Levi-Civita tensor is antisymmetric under the same exchange. Their contraction is zero. The second term vanishes for the same reason. Therefore
+
+$$
+\boxed{
+U(a)^{-1}W^\mu U(a)=W^\mu.
+}
+$$
+
+This is the essential cancellation. Although total angular momentum about an origin changes, the intrinsic information packaged in $W^\mu$ does not.
+
+<Sidenote>
+Geometrically, translating the origin adds an orbital bivector $a\wedge P$ to $M$. Wedging that term with another $P$ gives $P\wedge P=0$.
+</Sidenote>
+
+<h2 id="lorentz">3. The Pauli-Lubanski vector is axial</h2>
+
+Under a proper Lorentz transformation, both $P_\nu$ and $M_{\rho\sigma}$ transform tensorially. The Levi-Civita tensor converts their contraction into a four-vector:
+
+$$
+U(\Lambda)^{-1}W^\mu U(\Lambda)
+=
+\Lambda^\mu{}_{\nu}W^\nu,
+\qquad
+\det\Lambda=+1.
+$$
+
+For an improper transformation, $W^\mu$ is an axial vector and acquires an extra determinant:
+
+$$
+U(\Lambda)^{-1}W^\mu U(\Lambda)
+=
+(\det\Lambda)\Lambda^\mu{}_{\nu}W^\nu.
+$$
+
+In either case,
+
+$$
+\begin{aligned}
+U(\Lambda)^{-1}W^2U(\Lambda)
+&=
+(\det\Lambda)^2
+\eta_{\mu\nu}
+\Lambda^\mu{}_{\rho}W^\rho
+\Lambda^\nu{}_{\sigma}W^\sigma\\
+&=
+\eta_{\rho\sigma}W^\rho W^\sigma\\
+&=W^2,
+\end{aligned}
+$$
+
+because $(\det\Lambda)^2=1$ and $\Lambda^T\eta\Lambda=\eta$.
+
+Translations already leave $W^\mu$ unchanged, so
+
+$$
+\boxed{
+U(\Lambda,a)^{-1}W^2U(\Lambda,a)=W^2,
+}
+$$
+
+and consequently
+
+$$
+\boxed{[W^2,U(\Lambda,a)]=0.}
+$$
+
+<h2 id="meaning">4. Why these invariants label a particle</h2>
+
+A <Term>Casimir operator</Term> commutes with every element of the symmetry representation. By Schur's lemma, it acts as a fixed number on an irreducible representation.
+
+For a massive positive-energy representation,
+
+$$
+P^2=m^2,
+$$
+
+$$
+W^2=-m^2j(j+1).
+$$
+
+Thus the pair $(m,j)$ is not attached to one convenient frame. It labels the entire family of states connected by Poincaré transformations.
+
+For an ordinary massless helicity representation,
+
+$$
+P^2=0,
+\qquad
+W^2=0,
+\qquad
+W^\mu=hP^\mu.
+$$
+
+The first two Casimirs do not distinguish different finite helicities because every null vector has zero norm. The proportionality between $W^\mu$ and $P^\mu$, together with the little-group representation, retains the helicity information. This is why the <Link to="/chapters/relativistic-quantum-mechanics/one-particle-states#little-group">little-group analysis</Link> is still necessary after the Casimirs are known.
+
+<div className="answer-check">
+  <strong>Rest-frame check</strong>
+  <p>
+    For a massive state at rest, $P^\mu=(m,\mathbf0)$ and $W^\mu=(0,m\mathbf J)$ up to the fixed index convention. Hence $W^2=-m^2\mathbf J^2=-m^2j(j+1)$, confirming both the sign and the physical interpretation.
+  </p>
+</div>
+
+**Common trap:** proving only that $W^\mu$ transforms covariantly under Lorentz transformations. Because $M^{\mu\nu}$ changes under translations, translation invariance must be checked separately. The antisymmetric contraction is what removes the origin-dependent orbital part.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+Momentum transforms as a four-vector, while the Pauli-Lubanski vector is a translation-invariant axial four-vector. Their invariant contractions therefore satisfy
+
+$$
+\boxed{
+[P^2,U(\Lambda,a)]=0,
+\qquad
+[W^2,U(\Lambda,a)]=0.
+}
+$$
+
+These operators measure what no change of inertial frame or spacetime origin can alter: the mass and intrinsic spin content of a Poincaré representation.
+
+<ChapterSectionNav
+  currentSlug="poincare-casimirs"
+  sections={relativisticQuantumMechanicsProblems}
+  overviewRoute={relativisticQuantumMechanicsProblemsRoute}
+  overviewLabel="Problem set"
+  chapterTitle="Relativistic Quantum Mechanics problems"
+  completionRoute="/chapters/relativistic-quantum-mechanics"
+  completionEyebrow="Problem set complete"
+  completionLabel="Relativistic Quantum Mechanics"
+/>
+
+</ArticleLayout>

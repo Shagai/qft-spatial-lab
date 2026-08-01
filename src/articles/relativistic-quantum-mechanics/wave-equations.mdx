@@ -1,0 +1,286 @@
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote } from '../../components/MdxComponents'
+import { RelativisticEquationFigure } from '../../components/InteractiveFigures'
+
+<ArticleLayout
+  kicker="Chapter 1 · Section 6 of 7"
+  title="Relativistic Wave Equations"
+  subtitle="The Klein-Gordon and Dirac equations are two ways to turn the relativistic mass shell into local wave dynamics. Their successes identify spin; their tensions reveal the need for fields."
+  updated="2026-08-01"
+  readingTime="16 min"
+  parent={{ label: 'Relativistic Quantum Mechanics', to: '/chapters/relativistic-quantum-mechanics' }}
+  toc={[
+    { href: '#mass-shell', label: 'The mass shell' },
+    { href: '#quantize', label: 'From momentum to waves' },
+    { href: '#klein-gordon', label: 'Klein-Gordon' },
+    { href: '#kg-tension', label: 'The KG tension' },
+    { href: '#dirac', label: 'Dirac factorization' },
+    { href: '#spin', label: 'Spin and current' },
+    { href: '#negative-energy', label: 'Negative energy' },
+    { href: '#comparison', label: 'What each equation teaches' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="mass-shell">Start from the invariant mass shell</h2>
+
+For a positive-energy free particle,
+
+$$
+p^\mu=(E,\mathbf p),
+\qquad
+p^2=m^2
+$$
+
+with metric $(+,-,-,-)$. Therefore,
+
+$$
+E^2-|\mathbf p|^2=m^2
+$$
+
+or
+
+$$
+\boxed{E^2=|\mathbf p|^2+m^2}.
+$$
+
+This equation is not yet a wave equation. It says which four-momenta lie on the particle's Lorentz orbit. The one-particle states in the previous section were built on precisely this surface.
+
+The question now changes:
+
+> Can a spacetime wave carry only momenta on that orbit while transforming locally and covariantly?
+
+<h2 id="quantize">Turn energy and momentum into derivatives</h2>
+
+Plane waves have the form
+
+$$
+e^{-ip\cdot x}
+=
+e^{-iEt+i\mathbf p\cdot\mathbf x}.
+$$
+
+They are eigenfunctions of
+
+$$
+i\partial_t
+\quad\text{and}\quad
+-i\nabla,
+$$
+
+so the quantum substitutions are
+
+$$
+E\to i\partial_t,
+\qquad
+\mathbf p\to-i\nabla.
+$$
+
+The nonrelativistic relation $E=|\mathbf p|^2/2m$ gives the Schrödinger equation, first order in time but second order in space. That asymmetry is acceptable when time is an external Newtonian parameter. Relativity demands an equation organized covariantly in spacetime.
+
+<RelativisticEquationFigure />
+
+<h2 id="klein-gordon">The Klein-Gordon equation</h2>
+
+Replace $p^\mu$ by $i\partial^\mu$ in
+
+$$
+p^2-m^2=0.
+$$
+
+The result is
+
+$$
+\boxed{(\Box+m^2)\phi=0},
+$$
+
+where
+
+$$
+\Box=\partial_\mu\partial^\mu
+=
+\partial_t^2-\nabla^2.
+$$
+
+This equation is manifestly Lorentz covariant because both $\Box$ and $m^2$ are scalars.
+
+For a plane wave,
+
+$$
+\phi(x)=e^{-ip\cdot x},
+$$
+
+the equation returns
+
+$$
+p^2=m^2.
+$$
+
+The field has no component index, so it transforms as a scalar:
+
+$$
+\phi'(x)=\phi(\Lambda^{-1}x).
+$$
+
+This matches a spin-zero particle representation.
+
+<h2 id="kg-tension">Why Klein-Gordon is awkward as a one-particle wavefunction</h2>
+
+The Klein-Gordon equation has a conserved current,
+
+$$
+j^\mu
+=
+i\left(
+\phi^*\partial^\mu\phi
+-\phi\partial^\mu\phi^*
+\right),
+\qquad
+\partial_\mu j^\mu=0.
+$$
+
+But
+
+$$
+j^0
+=
+i\left(
+\phi^*\dot\phi
+-\phi\dot\phi^*
+\right)
+$$
+
+is not positive for every solution. It cannot be a probability density in the same straightforward way as $|\psi|^2$ in Schrödinger quantum mechanics.
+
+The equation is also second order in time. Initial data require both $\phi$ and $\dot\phi$, and the solution space contains two frequency branches:
+
+$$
+E=+\sqrt{|\mathbf p|^2+m^2}
+$$
+
+and
+
+$$
+E=-\sqrt{|\mathbf p|^2+m^2}.
+$$
+
+These features are not defects in the equation as a field equation. The current becomes a charge current rather than a one-particle probability current, and the two frequency branches become the seeds of annihilation and creation operators. For a charged complex field they separate particle and antiparticle sectors; for a real scalar field the particle is its own antiparticle.
+
+<Callout title="Interpretation matters">
+The Klein-Gordon equation is an excellent equation for a relativistic scalar field. The difficulty appears only when we insist that every solution behave like a single-particle Schrödinger wavefunction.
+</Callout>
+
+<h2 id="dirac">Dirac's factorization</h2>
+
+Dirac sought an equation first order in both time and space. Write
+
+$$
+\boxed{(i\gamma^\mu\partial_\mu-m)\psi=0}.
+$$
+
+For this equation to imply the Klein-Gordon mass shell, the gamma matrices must satisfy the Clifford algebra
+
+$$
+\boxed{
+\{\gamma^\mu,\gamma^\nu\}
+=
+2\eta^{\mu\nu}.
+}
+$$
+
+Multiply by the conjugate operator:
+
+$$
+(i\gamma^\mu\partial_\mu+m)
+(i\gamma^\nu\partial_\nu-m)\psi=0.
+$$
+
+The antisymmetric gamma-matrix part drops out against the symmetric derivatives, leaving
+
+$$
+(\Box+m^2)\psi=0.
+$$
+
+Every component therefore lies on the same relativistic mass shell.
+
+The price of linearizing the square root is that $\psi$ must have several components. Those components transform as a spinor, not a four-vector.
+
+<h2 id="spin">Spin and a positive density</h2>
+
+Define the Dirac adjoint
+
+$$
+\bar\psi=\psi^\dagger\gamma^0.
+$$
+
+The conserved current is
+
+$$
+j^\mu=\bar\psi\gamma^\mu\psi,
+\qquad
+\partial_\mu j^\mu=0.
+$$
+
+Its time component is
+
+$$
+j^0=\psi^\dagger\psi\geq0.
+$$
+
+This looks much more like a one-particle probability density. The spinor transformation law also carries spin-$\tfrac12$, connecting the equation to the $j=\tfrac12$ massive Poincaré representation.
+
+Yet the four field components are not four electron spin states. Positive-energy solutions provide two electron spin states; negative-frequency solutions provide the additional structure that becomes antiparticle creation after quantization.
+
+<Sidenote>
+For a massless Dirac equation, chirality and helicity become closely related. For a massive particle they are distinct because boosts can change the relation between spin and momentum.
+</Sidenote>
+
+<h2 id="negative-energy">What the negative-frequency branch is telling us</h2>
+
+Both relativistic equations contain solutions with both signs of frequency. Trying to interpret the negative branch as ordinary negative-energy particles leads to instability: an interacting system could lower its energy without bound.
+
+Relativistic QFT makes a different identification. In a field expansion,
+
+$$
+\text{positive frequency}
+\longleftrightarrow
+\text{particle annihilation},
+$$
+
+while
+
+$$
+\text{negative frequency}
+\longleftrightarrow
+\text{creation of a positive-energy quantum}.
+$$
+
+For charged complex or Dirac fields, the quantum created by the second branch is the antiparticle. For a neutral real scalar field, it is the same particle species. In every case the physical excitations have positive energy. “Antiparticle” never means “negative-energy particle”; it means a distinct positive-energy excitation when the field carries a charge that distinguishes the two sectors.
+
+The Dirac equation therefore does not eliminate the second branch. It organizes it in a way that makes spin and a positive density visible, then field quantization supplies the stable many-particle interpretation.
+
+<h2 id="comparison">What each equation teaches</h2>
+
+| Equation | Relativistic object | Main success | One-particle warning |
+| --- | --- | --- | --- |
+| Schrödinger | Fixed-particle wavefunction | Clear probability interpretation | Time and space are not covariant |
+| Klein-Gordon | Scalar field or scalar mode | Manifest covariance and spin zero | $j^0$ is not positive definite |
+| Dirac | Spinor field or spinor mode | Spin-$\tfrac12$ and positive $j^0$ | Negative-frequency sector still requires creation operators and, for charged fields, antiparticles |
+
+The equations do not compete for one universal role. They describe different Lorentz representations. Klein-Gordon is appropriate for spin-zero fields; Dirac is appropriate for spin-$\tfrac12$ fields.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+1. The invariant $p^2=m^2$ defines the relativistic mass shell.
+2. The Klein-Gordon equation is the local scalar implementation of that shell.
+3. Its conserved density is not a general one-particle probability density.
+4. The Dirac equation factorizes the mass shell using gamma matrices.
+5. Spinor components implement spin-$\tfrac12$ covariance.
+6. Negative-frequency solutions become positive-energy creation operators; for charged fields they create antiparticles.
+
+The equations have now done their job: they reveal which local fields can create the particle representations allowed by Poincaré symmetry. The final section explains why the field, rather than a fixed-particle wavefunction, must become fundamental.
+
+<ChapterSectionNav currentSlug="wave-equations" />
+
+</ArticleLayout>

@@ -1,0 +1,334 @@
+import { Link } from 'react-router-dom'
+import ArticleLayout from '../../components/ArticleLayout'
+import ChapterSectionNav from '../../components/ChapterSectionNav'
+import { Callout, Sidenote, Term } from '../../components/MdxComponents'
+import {
+  scatteringTheoryRoute,
+  scatteringTheorySections,
+} from '../../data/scatteringTheory'
+
+<ArticleLayout
+  kicker="Chapter 2 · Section 1 of 7"
+  title="The Experiment at Infinity"
+  subtitle="A collision is complicated only in a finite region. Scattering theory uses the simple particle records far before and far after that region to define an exact quantum question."
+  updated="2026-08-01"
+  readingTime="16 min"
+  parent={{ label: 'Scattering Theory', to: '/chapters/scattering-theory' }}
+  toc={[
+    { href: '#experiment', label: 'The experiment' },
+    { href: '#asymptotic-labels', label: 'Asymptotic particle labels' },
+    { href: '#wave-packets', label: 'Why wave packets?' },
+    { href: '#free-hamiltonian', label: 'The asymptotic Hamiltonian' },
+    { href: '#moller-operators', label: 'Møller operators' },
+    { href: '#intertwining', label: 'Intertwining dynamics' },
+    { href: '#completeness', label: 'Asymptotic completeness' },
+    { href: '#limitations', label: 'Where the picture needs care' },
+    { href: '#checkpoint', label: 'Checkpoint' },
+  ]}
+>
+
+<h2 id="experiment">Scattering asks a question at the edges of the collision</h2>
+
+Imagine two localized particle beams aimed toward one another. Near the crossing point, the state may become extremely complicated: particles exchange momentum, virtual excitations contribute, and the final particle number need not equal the initial one. A detector does not reconstruct that entire microscopic history. It records stable excitations after they have separated again.
+
+Scattering theory is built around this experimental fact. It asks for the amplitude connecting
+
+$$
+\boxed{
+\text{freely identifiable particles in the remote past}
+\longrightarrow
+\text{freely identifiable particles in the remote future}.
+}
+$$
+
+“Remote” is more important than “infinite.” No laboratory waits forever. The mathematical limits $t\to\pm\infty$ idealize a finite separation large enough that the packets no longer interact appreciably and can be identified independently.
+
+<div className="learning-goals">
+  <div>
+    <strong>Preparation</strong>
+    <p>Incoming beams specify particle species, momenta, polarizations, and spatial profiles.</p>
+  </div>
+  <div>
+    <strong>Interaction region</strong>
+    <p>The exact Hamiltonian acts, and particle number or identity may change.</p>
+  </div>
+  <div>
+    <strong>Detection</strong>
+    <p>Separated outgoing particles leave macroscopic records in detectors.</p>
+  </div>
+</div>
+
+The theory does not need to assign a classical path through the middle. It needs a quantum map between the two experimentally meaningful ends.
+
+<h2 id="asymptotic-labels">The detector language is a free-particle language</h2>
+
+Far from the collision, each stable particle carries the one-particle labels developed in <Link to="/chapters/relativistic-quantum-mechanics/one-particle-states">One-Particle States</Link>:
+
+$$
+|p,\sigma,n\rangle.
+$$
+
+Here $p$ is on the physical mass shell, $\sigma$ is a spin or helicity label, and $n$ identifies the species and its internal quantum numbers. A multiparticle label
+
+$$
+\alpha
+=
+\big\{(p_1,\sigma_1,n_1),\ldots,(p_N,\sigma_N,n_N)\big\}
+$$
+
+stands for the corresponding bosonic or fermionic Fock-space state $|\alpha\rangle_0$. The subscript reminds us that this is an asymptotic free state. Identical particles are already symmetrized or antisymmetrized; exchanging two identical labels does not create a new physical configuration.
+
+With the covariant one-particle measure
+
+$$
+d\Pi(p)
+=
+\frac{d^3p}{(2\pi)^3\,2E_{\mathbf p}},
+$$
+
+the total asymptotic four-momentum is additive:
+
+$$
+P_\alpha^\mu
+=
+\sum_{r=1}^{N}p_r^\mu,
+\qquad
+E_\alpha
+=
+\sum_{r=1}^{N}E_{\mathbf p_r}.
+$$
+
+This additivity describes the separated particles. During the collision, the interacting state need not factorize into individual particles at all.
+
+<Callout title="Only stable particles reach infinity">
+An unstable resonance cannot be prepared at $t=-\infty$ and detected unchanged at $t=+\infty$. It is inferred from the amplitudes of its stable decay products. Likewise, a stable composite such as a hydrogen atom may be a perfectly good asymptotic particle even though it is not elementary.
+</Callout>
+
+<h2 id="wave-packets">Why the limit must be taken with wave packets</h2>
+
+A momentum eigenstate $|p,\sigma,n\rangle$ extends throughout space. It is useful algebraically, but it never becomes a localized beam approaching a localized target. An exact energy eigenstate also acquires only a phase under time translation, so one cannot point to a moment when it enters or leaves a collision region.
+
+The physical object is a smooth superposition. Schematically,
+
+$$
+|f\rangle_0
+=
+\sum_\alpha
+\int d\Pi_\alpha\,
+f_\alpha\,|\alpha\rangle_0,
+$$
+
+where $d\Pi_\alpha$ includes the on-shell measures and discrete sums for the particles in channel $\alpha$. Suitable phases in $f_\alpha$ localize the particles into packets. Their centers move with their group velocities, so packets aimed at one another overlap for a finite time and separate again afterward.
+
+If the packet spans an energy range $\Delta E$, its temporal resolution is roughly
+
+$$
+\Delta t\sim\frac{1}{\Delta E}.
+$$
+
+The asymptotic comparison becomes meaningful at times much larger than this scale and than the duration of the collision.
+
+<Sidenote>
+Plane-wave amplitudes are distributions extracted from packet calculations. Their delta functions are not probabilities that can be squared in isolation; flux and phase-space factors will restore the experimental normalization later.
+</Sidenote>
+
+<h2 id="free-hamiltonian">What the asymptotic Hamiltonian means</h2>
+
+Introduce a comparison dynamics
+
+$$
+H=H_0+V.
+$$
+
+$H$ is the exact Hamiltonian. $H_0$ evolves the freely separated particle channels, and $V$ is the remainder. For an asymptotic basis state,
+
+$$
+H_0|\alpha\rangle_0
+=
+E_\alpha|\alpha\rangle_0.
+$$
+
+The word “free” can be misleading here. $H_0$ must be built from the particles that the actual experiment sees. It therefore uses physical masses, not uncorrected bare parameters. If the full theory contains a stable bound state that can travel to a detector, the asymptotic description must include a channel for that bound state as if it were another particle species.
+
+Thus the split is not
+
+$$
+\text{reality}=\text{naive bare particles}+\text{small correction}.
+$$
+
+It is instead
+
+$$
+\boxed{
+\text{exact dynamics}
+=
+\text{dynamics of the observed asymptotic species}
++
+\text{everything that makes them interact}.
+}
+$$
+
+The interaction is not physically switched off at early or late times. Rather, its effect between appropriately separating packets becomes negligible. Artificial adiabatic switching is a calculational device, not part of the experiment.
+
+<h2 id="moller-operators">Two Møller operators connect the two descriptions</h2>
+
+At a common time $t$, compare exact evolution with free evolution through
+
+$$
+e^{+iHt}e^{-iH_0t}.
+$$
+
+Taking its remote-time limits on smooth asymptotic packets defines the <Term>Møller operators</Term>, also called wave operators:
+
+$$
+\boxed{
+\Omega_{\mathrm{in}}
+=
+\operatorname*{s-lim}_{t\to-\infty}
+e^{+iHt}e^{-iH_0t},
+}
+$$
+
+$$
+\boxed{
+\Omega_{\mathrm{out}}
+=
+\operatorname*{s-lim}_{t\to+\infty}
+e^{+iHt}e^{-iH_0t}.
+}
+$$
+
+The prefix “s-lim” means a strong limit: after the operator acts on a physical packet, the norm of the difference must approach zero. The formula should not be read as an ordinary pointwise limit on a single delta-normalized plane wave.
+
+The exact scattering states are
+
+$$
+|\alpha,\mathrm{in}\rangle
+=
+\Omega_{\mathrm{in}}|\alpha\rangle_0,
+$$
+
+$$
+|\beta,\mathrm{out}\rangle
+=
+\Omega_{\mathrm{out}}|\beta\rangle_0.
+$$
+
+$|\alpha,\mathrm{in}\rangle$ is the exact state whose remote-past appearance is the freely prepared packet $|\alpha\rangle_0$. The same exact state generally becomes a superposition of many possible free configurations in the future. An out-state is defined in the opposite direction: its remote-future appearance is specified.
+
+<Callout title="Two dictionaries, one interacting theory">
+$\Omega_{\mathrm{in}}$ and $\Omega_{\mathrm{out}}$ do not create two universes. They are two maps from the common detector language into the same interacting Hilbert space. Scattering compares the maps.
+</Callout>
+
+<h2 id="intertwining">The wave operators intertwine free and exact dynamics</h2>
+
+Shift the time in the defining limits by a finite amount $\tau$. The limits are unchanged, giving
+
+$$
+e^{-iH\tau}\Omega_{\mathrm{in/out}}
+=
+\Omega_{\mathrm{in/out}}e^{-iH_0\tau}.
+$$
+
+Differentiating at $\tau=0$ yields
+
+$$
+\boxed{
+H\Omega_{\mathrm{in/out}}
+=
+\Omega_{\mathrm{in/out}}H_0.
+}
+$$
+
+This is the <Term>intertwining relation</Term>. A free channel with total energy $E_\alpha$ is mapped to an exact scattering state with that same total energy. The interaction changes how the state is assembled, not the conserved energy label carried by the full state.
+
+When the theory is Poincaré invariant, the same idea extends from time translations to the full symmetry:
+
+$$
+U(g)\Omega_{\mathrm{in/out}}
+=
+\Omega_{\mathrm{in/out}}U_0(g).
+$$
+
+$U_0(g)$ acts on the asymptotic multiparticle labels using the one-particle transformations, while $U(g)$ acts in the interacting theory. This is the bridge back to <Link to="/chapters/relativistic-quantum-mechanics/poincare-algebra">the Poincaré algebra</Link>: the exact collision and its free particle records carry the same spacetime symmetry, even though their generators need not have the same operator form.
+
+In particular, adding an interaction to $H_0$ generally also changes the exact boost generators. The algebra ties boosts to the Hamiltonian; one cannot keep every generator free while changing the dynamics.
+
+<h2 id="completeness">Inner products and asymptotic completeness</h2>
+
+When the wave operators exist, they preserve inner products on the asymptotic space:
+
+$$
+\Omega_{\mathrm{in}}^\dagger\Omega_{\mathrm{in}}
+=
+\Omega_{\mathrm{out}}^\dagger\Omega_{\mathrm{out}}
+=
+\mathbf 1_{\mathrm{asym}}.
+$$
+
+They are therefore isometries. But an isometry need not cover the entire interacting Hilbert space. A permanently bound state, for example, does not evolve into widely separated particles unless it has been included as its own asymptotic channel.
+
+The claim that all scattering states are captured by the asymptotic particle channels is called <Term>asymptotic completeness</Term>:
+
+$$
+\operatorname{Ran}\Omega_{\mathrm{in}}
+=
+\operatorname{Ran}\Omega_{\mathrm{out}}
+=
+\mathcal H_{\mathrm{scatt}}.
+$$
+
+Under this assumption the incoming and outgoing labels provide complete bases for the same scattering subspace. It is exactly the condition needed for the scattering operator on the asymptotic space to be unitary.
+
+Asymptotic completeness is not a trivial consequence of writing down a Lagrangian. It is a deep dynamical statement, and rigorous proofs exist only for restricted classes of interacting theories.
+
+<h2 id="limitations">Where the particle-at-infinity picture needs care</h2>
+
+The ordinary construction works best when stable particles separate cleanly and long-range interactions do not leave an eternal tail. Several important theories require refinements.
+
+<div className="two-panel-grid">
+  <div>
+    <strong>Massless gauge fields</strong>
+    <p>A charged particle is accompanied by arbitrarily soft radiation. Sharp finite-photon Fock states can give infrared-divergent amplitudes, so inclusive observables or suitably dressed asymptotic states are needed.</p>
+  </div>
+  <div>
+    <strong>Confinement</strong>
+    <p>Quarks and gluons label fields in the microscopic theory but not isolated detector states. The asymptotic species are color-neutral hadrons and other physical states.</p>
+  </div>
+</div>
+
+Unstable particles also lie outside the strict asymptotic basis. Their masses and lifetimes are read from resonance poles in amplitudes, not from exact one-particle states at infinite time.
+
+Finally, the Møller operators compare the free and interacting theories only in asymptotic limits. They do not assert that the interacting QFT is globally equivalent to a free Fock theory at every finite time. This distinction is part of why the asymptotic formulation remains useful even when a naive global interaction picture is too simple.
+
+<h2 id="checkpoint">Checkpoint</h2>
+
+The construction can be compressed into eight statements:
+
+1. Detectors identify stable, well-separated particles rather than the detailed history inside a collision.
+2. Those particle configurations form a free asymptotic Fock-space language.
+3. Smooth wave packets, not isolated plane waves, make spatial separation and remote-time limits meaningful.
+4. $H_0$ uses the physical asymptotic spectrum, including any stable composite species.
+5. $\Omega_{\mathrm{in}}$ dresses a free past configuration into its exact scattering state.
+6. $\Omega_{\mathrm{out}}$ dresses a free future configuration into its exact scattering state.
+7. The intertwining relation preserves the total energy and symmetry labels across these maps.
+8. Asymptotic completeness says that both maps cover the same scattering subspace.
+
+The collision can now be asked as a precise question:
+
+$$
+\boxed{
+\text{How does the in dictionary compare with the out dictionary?}
+}
+$$
+
+The answer is the $S$-matrix.
+
+<ChapterSectionNav
+  currentSlug="asymptotic-states"
+  sections={scatteringTheorySections}
+  overviewRoute={scatteringTheoryRoute}
+  chapterTitle="Scattering Theory"
+/>
+
+</ArticleLayout>
