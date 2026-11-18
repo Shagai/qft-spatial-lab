@@ -6,6 +6,8 @@ import HomePage from './pages/HomePage'
 import TopicsPage from './pages/TopicsPage'
 import { problemSolutionRoutes } from './routes/problemRoutes'
 
+const LabPage = lazy(() => import('./labs/LabPages').then(module => ({ default: module.LabPage })))
+
 const RelativisticQuantumMechanicsPage = lazy(
   () => import('./pages/RelativisticQuantumMechanicsPage'),
 )
@@ -67,7 +69,11 @@ export default function App() {
   return (
     <Routes>
       <Route element={<Layout />}>
-        <Route index element={<HomePage />} />
+        <Route index element={<Navigate to="/labs/spinor" replace />} />
+        <Route path="notebook" element={<HomePage />} />
+        <Route path="labs" element={<Navigate to="/labs/spinor" replace />} />
+        <Route path="labs/spinor" element={<LabPage which="spinor" />} />
+        <Route path="labs/field-modes" element={<LabPage which="field-modes" />} />
         <Route path="chapters" element={<ChaptersPage />} />
         <Route
           path="chapters/relativistic-quantum-mechanics"

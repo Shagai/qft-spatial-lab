@@ -2,7 +2,8 @@ import { Suspense, useEffect, useRef } from 'react'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 
 const navItems = [
-  { label: 'Home', to: '/' },
+  { label: 'Spatial labs', to: '/labs' },
+  { label: 'Notebook', to: '/notebook' },
   { label: 'Chapters', to: '/chapters' },
   { label: 'Topics', to: '/topics' },
 ]
@@ -19,7 +20,7 @@ export default function Layout() {
   return (
     <div className="app-shell">
       <header className="site-header">
-        <NavLink className="brand" to="/" aria-label="QFT Learning Notebook home">
+        <NavLink className="brand" to="/notebook" aria-label="QFT Learning Notebook home">
           <span className="brand-mark">QFT</span>
           <span>
             <strong>QFT Learning Notebook</strong>
