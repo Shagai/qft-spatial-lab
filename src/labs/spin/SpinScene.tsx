@@ -219,6 +219,7 @@ export default function SpinScene(props: SceneProps) {
 
     let last: SceneProps | undefined
     let lastPulse = liveProps.current.pulse ?? 0
+    let packetCounts: SceneProps['counts']
     let packetStart = -Infinity
     let packetVisible = false
     renderer.setAnimationLoop((now, frame) => {
@@ -257,7 +258,10 @@ export default function SpinScene(props: SceneProps) {
           experiment.readout.write(`A  ${p.counts.a}    B  ${p.counts.b}`)
         }
         const pulse = p.pulse ?? (p.counts ? p.counts.a + p.counts.b : 0)
-        if (pulse > lastPulse) packetStart = now
+        if (pulse > lastPulse) {
+          packetStart = now
+          packetCounts = p.counts && { a: p.counts.a - (last?.counts?.a ?? 0), b: p.counts.b - (last?.counts?.b ?? 0) }
+        }
         if (pulse < lastPulse) packetStart = -Infinity
         lastPulse = pulse
         last = p
@@ -265,7 +269,7 @@ export default function SpinScene(props: SceneProps) {
       }
       const packetTime = (now - packetStart) / 1050
       if (packetTime <= 1 || packetVisible) {
-        experiment.showPacket(packetTime, p.counts)
+        experiment.showPacket(packetTime, packetCounts)
         packetVisible = packetTime <= 1
         dirty = true
       }

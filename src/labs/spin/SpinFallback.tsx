@@ -117,6 +117,7 @@ export default function SpinFallback(props: Props) {
     }
     let previous: Props | null = null
     let request = 0
+    let packetCounts: Props['counts']
     let pulseAt = -Infinity
     let pulseVisible = false
     function paint(now: number) {
@@ -126,7 +127,10 @@ export default function SpinFallback(props: Props) {
       const p = live.current
       if (p !== previous) {
         experiment.setFrames(p.angle, p.progress, p.reversed, p.overlay)
-        if (previous && (p.pulse ?? 0) > (previous.pulse ?? 0)) pulseAt = now
+        if (previous && (p.pulse ?? 0) > (previous.pulse ?? 0)) {
+          pulseAt = now
+          packetCounts = p.counts && { a: p.counts.a - (previous.counts?.a ?? 0), b: p.counts.b - (previous.counts?.b ?? 0) }
+        }
         if ((p.pulse ?? 0) < (previous?.pulse ?? 0)) pulseAt = -Infinity
       }
       const t = (now - pulseAt) / 1050
@@ -173,12 +177,11 @@ export default function SpinFallback(props: Props) {
         drawLabel(experiment.outputTags[i].position, i === 0 ? 'A' : 'B', '#d1e3e7')
       }
       pulseVisible = t <= 1
-      experiment.showPacket(t, p.counts)
-      experiment.dots.forEach((dot, i) => {
+      experiment.showPacket(t, packetCounts)
+      experiment.dots.forEach(dot => {
         if (!dot.visible) return
         const at = project(dot.position)
-        ctx.fillStyle = tints[i]
-        ctx.shadowColor = tints[i]
+        ctx.fillStyle = ctx.shadowColor = dot.material.color.getStyle()
         ctx.shadowBlur = 8 * dpr
         ctx.beginPath()
         ctx.arc(at.x, at.y, 4 * dpr, 0, Math.PI * 2)

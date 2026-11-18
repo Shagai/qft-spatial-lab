@@ -205,6 +205,7 @@ export function buildExperiment() {
     dots.forEach((dot, i) => {
       dot.visible = t >= 0 && t <= 1
       if (!dot.visible) return
+      dot.material.color.set(t < 0.1 || t >= 0.84 ? '#d9ecf3' : i === 0 ? teal : amber)
       if (t < 0.1) {
         dot.visible = i === 0
         dot.position.copy(input).lerp(split, t / 0.1)
