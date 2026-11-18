@@ -1,0 +1,39 @@
+.spin-lab{--spin-ink:#162d31;--spin-line:#c9d3c8;--spin-teal:#00665e;color:var(--spin-ink);font:16px/1.5 var(--sans);container-type:inline-size}
+.spin-lab .spin-title{margin:0 0 1.3rem}
+.spin-lab .spin-title :is(h1,h3){font:500 clamp(2.15rem,5vw,4.75rem)/1.04 var(--serif);letter-spacing:-.055em;margin:0 0 .55rem;color:var(--spin-ink)}
+.spin-lab .spin-title p{font-size:clamp(.95rem,1.8vw,1.15rem);margin:0;color:#4c6262;max-width:56rem}
+.spin-workbench{display:grid;grid-template-columns:minmax(0,2.35fr) minmax(230px,1fr);border:1px solid var(--spin-line);border-radius:12px;overflow:hidden;background:#fafaf3}
+.spin-visual{min-width:0;display:flex;flex-direction:column;background:#11282c}
+.spin-viewport{flex:1;min-width:0;position:relative;isolation:isolate}
+.spin-transport{display:flex;align-items:center;gap:.8rem;padding:.65rem .95rem;color:#d5e5de;background:#11282c;border-top:1px solid #385457;font:500 .75rem/1.15 var(--sans)}
+.spin-transport label{display:flex;align-items:center;gap:.7rem;flex:1;min-width:0}
+.spin-transport output,.spin-angle output,.spin-counts strong{font-variant-numeric:tabular-nums}
+.spin-lab input[type=range]{accent-color:#0a796c;min-width:0;cursor:pointer;width:100%}
+.spin-transport input[type=range]{accent-color:#85dfc7;flex:1}
+.spin-lab button{font:600 .82rem/1.2 var(--sans);cursor:pointer}
+.spin-lab button:focus-visible,.spin-lab input:focus-visible,.spin-lab summary:focus-visible{outline:3px solid #d08b21;outline-offset:2px}
+.spin-replay{color:#eef9f1;background:transparent;border:0;padding:.6rem .1rem;white-space:nowrap}
+.spin-settings,.spin-predict,.spin-readout{padding:clamp(1rem,2.2vw,1.65rem);min-width:0}
+.spin-lab :is(.spin-settings,.spin-predict,.spin-readout) h2{font:600 1.12rem/1.3 var(--sans);letter-spacing:-.03em;margin:0 0 1rem;color:var(--spin-ink)}
+.spin-arm{display:flex;align-items:center;gap:.55rem;font-size:.9rem;margin:.5rem 0}
+.spin-arm b{margin-left:auto;font:600 .83rem var(--mono)}
+.spin-dot{width:9px;height:9px;display:inline-block;border-radius:50%}.spin-dot.teal{background:#09998a}.spin-dot.amber{background:#d28121}
+.spin-segment,.spin-choices{display:flex;gap:4px;flex-wrap:wrap}
+.spin-segment{padding:.25rem;margin:.85rem 0 1.3rem;background:#e8ede5;border-radius:8px;flex-wrap:nowrap}
+.spin-segment button,.spin-choices button{padding:.6rem .7rem;border:1px solid transparent;border-radius:5px;background:transparent;color:var(--spin-ink)}
+.spin-segment button{flex:1}
+.spin-segment button[aria-pressed=true],.spin-choices button[aria-pressed=true]{color:white;background:#194e48}
+.spin-angle{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.45rem;font-size:.88rem;font-weight:600}
+.spin-angle input{grid-column:1/-1;margin:.3rem 0}
+.spin-check{display:flex;gap:.5rem;align-items:center;margin:1rem 0;font-size:.88rem;cursor:pointer}.spin-check input{accent-color:var(--spin-teal);width:17px;height:17px}
+.spin-lab .spin-help,.spin-readout p{color:#536360;font-size:.84rem;line-height:1.5;margin:.8rem 0 0}
+.spin-measure{display:grid;grid-template-columns:1fr 1fr;border:1px solid var(--spin-line);border-radius:10px;background:#fffef7;margin:.9rem 0}
+.spin-readout{border-left:1px solid var(--spin-line)}.spin-choices{gap:.35rem}
+.spin-choices button{border-color:#c7d1c8}.spin-choices button:disabled{cursor:default}
+.spin-fire{background:#153e3b;color:#fff;border:0;border-radius:6px;margin-top:.85rem;padding:.75rem .95rem}.spin-fire span{margin-left:.55rem}.spin-clear{background:none;border:0;text-decoration:underline;color:var(--spin-teal);padding:.6rem}
+.spin-counts{display:flex;gap:2.3rem}.spin-counts span{display:flex;align-items:baseline;gap:.6rem;color:#526762;font:600 .8rem var(--mono)}
+.spin-counts strong{color:var(--spin-ink);font-size:1.7rem;font-weight:500}
+.spin-meter{height:7px;border-radius:5px;background:#e4e9df;overflow:hidden;margin:.7rem 0}.spin-meter.measured{background:#d3974c}.spin-meter i{display:block;background:#158a7d;height:100%}
+.spin-derivation{border-bottom:1px solid var(--spin-line);padding:.8rem 0;color:var(--spin-ink)}.spin-derivation summary{cursor:pointer;font-weight:600}.spin-derivation p{max-width:70ch;line-height:1.65}.spin-equation{border-left:3px solid #3e8a7e;padding:.6rem 1rem;font:1.2rem/1.6 var(--serif)}
+@container(max-width:740px){.spin-workbench,.spin-measure{grid-template-columns:1fr}.spin-readout{border-left:0;border-top:1px solid var(--spin-line)}.spin-arm b{margin-left:1rem}.spin-settings{display:block}}
+@container(max-width:480px){.spin-transport{gap:.45rem;padding:.5rem .65rem}.spin-transport label{font-size:0}.spin-transport label input{min-width:45px}.spin-lab .spin-title :is(h1,h3){font-size:2.4rem}.spin-readout,.spin-settings,.spin-predict{padding:1rem}}

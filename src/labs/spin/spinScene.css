@@ -1,0 +1,41 @@
+.spin-stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: var(--spin-stage-height, clamp(320px, 40vw, 445px));
+  min-height: 100%;
+  overflow: hidden;
+  background: #11202a;
+  color: #d8e5ea;
+}
+.spin-canvas, .spin-schematic { display: block; flex: 1; width: 100%; min-height: 0; }
+.spin-canvas[hidden] { display: none; }
+.spin-canvas { position: relative; }
+.spin-canvas canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; touch-action: none; }
+.spin-canvas canvas:focus-visible { outline: 2px solid #86d8cb; outline-offset: -3px; }
+.spin-stage-tools {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 5px;
+  padding: 5px 13px 10px;
+  color: #9eb6c0;
+  font: 500 11px/1.4 var(--sans, sans-serif);
+}
+.spin-stage-tools span { flex: 1 1 120px; }
+.spin-lab .spin-stage-tools button {
+  padding: 5px 8px;
+  border: 1px solid #52666b;
+  border-radius: 4px;
+  background: #192d36;
+  color: #dfe9e8;
+  font: 600 11px/1.4 var(--sans, sans-serif);
+}
+.spin-lab .spin-stage-tools button:hover:enabled { border-color: #8bc8b9; }
+.spin-lab .spin-stage-tools button:disabled { cursor: default; opacity: .64; }
+.spin-stage .spin-xr-status { margin: 0; padding: 0 13px 9px; color: #f3c284; font: 12px/1.4 var(--sans, sans-serif); }
+@container(max-width: 480px) {
+  .spin-stage { height: var(--spin-stage-height, 285px); }
+  .spin-stage-tools { padding-inline: 9px; }
+}
