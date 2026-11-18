@@ -1,0 +1,125 @@
+.field-lab {
+  --fl-ink: #163c37;
+  --fl-muted: #53645a;
+  --fl-border: #cfd6c7;
+  --fl-paper: #faf9f3;
+  --fl-mint: #83e4bd;
+  --fl-amber: #ffc470;
+  --fl-mono: 'IBM Plex Mono', 'SFMono-Regular', Consolas, monospace;
+  --fl-sans: var(--sans, system-ui, sans-serif);
+  container-type: inline-size;
+  width: 100%;
+  margin: 0;
+  color: var(--fl-ink);
+  font-family: var(--fl-sans);
+}
+.field-lab--embedded { width: 100%; padding: 0; }
+.field-lab .field-intro { margin: 0 0 1.3rem; }
+.field-lab .field-intro h1 { margin: 0 0 .55rem; font: 500 clamp(2.15rem, 5vw, 4.75rem)/1.04 var(--serif, Georgia, serif); letter-spacing: -.055em; }
+.field-lab .field-intro p { max-width: 65ch; color: var(--fl-muted); font-size: clamp(.95rem, 1.8vw, 1.15rem); }
+.field-lab .field-instrument { background: var(--fl-paper); border: 1px solid var(--fl-border); border-radius: 13px; padding: clamp(14px, 2.4cqi, 26px); }
+.field-lab button { font-family: inherit; }
+.field-lab button:focus-visible,
+.field-lab input:focus-visible,
+.field-lab summary:focus-visible { outline: 3px solid #a46214; outline-offset: 3px; }
+.field-lab .field-tabs { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 17px; }
+.field-lab .field-tabs button,
+.field-lab .field-choices button,
+.field-lab .field-measure {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  margin: 0;
+  border: 1px solid var(--fl-border);
+  border-radius: 6px;
+  background: transparent;
+  color: var(--fl-ink);
+  padding: 6px 13px;
+  font: 650 .8rem/1.15 var(--fl-sans);
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.field-lab .field-tabs button[aria-pressed="true"],
+.field-lab .field-measure { border-color: var(--fl-ink); background: var(--fl-ink); color: #f9faf4; }
+.field-lab .field-tabs button:hover,
+.field-lab .field-choices button:hover { border-color: var(--fl-ink); }
+.field-lab .field-charts,
+.field-lab .field-osc-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.field-lab .field-plot {
+  margin: 0;
+  padding: 15px 13px 8px;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  background: #123635;
+  color: #f1f6e9;
+  --fl-trace: var(--fl-mint);
+}
+.field-lab .field-plot--amber { --fl-trace: var(--fl-amber); }
+.field-lab .field-plot figcaption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 7px;
+  color: #f1f6e9;
+  font: 650 .88rem/1.35 var(--fl-sans);
+  letter-spacing: 0;
+}
+.field-lab .field-plot-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 8px; background: var(--fl-trace); }
+.field-lab .field-plot figcaption small { margin-left: auto; color: #bfd5c8; font: 500 .68rem/1.3 var(--fl-mono); white-space: nowrap; }
+.field-lab .field-plot svg { display: block; width: 100%; height: auto; overflow: visible; }
+.field-lab .field-gridline { stroke: #44615b; stroke-dasharray: 2 5; stroke-width: 1; }
+.field-lab .field-axis, .field-lab .field-axis-title { fill: #c1d6cb; font: 12px var(--fl-mono); }
+.field-lab .field-axis-title { font-size: 12px; fill: #deeadc; }
+.field-lab .field-amplitude-dot { fill: var(--fl-amber); }
+.field-lab .field-stem { stroke: var(--fl-amber); stroke-width: 2.8; stroke-linecap: round; }
+.field-lab .field-phase-ring { fill: #3c4233; stroke: #968152; stroke-width: 1; }
+.field-lab .field-phase-hand { stroke: var(--fl-amber); stroke-width: 1.6; stroke-linecap: round; }
+.field-lab .field-prob-area { fill: #71d7a9; opacity: .16; }
+.field-lab .field-prob-line { fill: none; stroke: var(--fl-mint); stroke-width: 2.4; stroke-linejoin: round; stroke-linecap: round; }
+.field-lab .field-site { fill: #b6f3cf; }
+.field-lab .field-hist-bin { fill: var(--fl-amber); opacity: .73; }
+.field-lab .field-controls { display: grid; grid-template-columns: 1.15fr 1fr 1fr; gap: clamp(16px, 3cqi, 32px); padding: 19px 0 16px; align-items: start; }
+.field-lab fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.field-lab legend,
+.field-lab .field-slider label { padding: 0; margin: 0 0 8px; font: 680 .81rem/1.4 var(--fl-sans); color: var(--fl-ink); }
+.field-lab .field-choices { display: inline-flex; flex-wrap: wrap; gap: 3px; }
+.field-lab .field-choices button { min-width: 32px; min-height: 33px; padding: 5px 8px; font-size: .75rem; }
+.field-lab .field-choices button[aria-pressed="true"] { border-color: #a7722e; background: #f6deac; color: #513c1b; }
+.field-lab .field-slider label { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 3px; margin-bottom: 0; }
+.field-lab .field-slider output { font: 500 .66rem/1.4 var(--fl-mono); color: var(--fl-muted); }
+.field-lab .field-slider input { display: block; width: 100%; height: 34px; margin: 0; padding: 0; accent-color: #286a58; cursor: pointer; }
+.field-lab .field-slider input:disabled { cursor: default; opacity: .5; }
+.field-lab .field-readout { display: flex; flex-wrap: wrap; gap: 7px 24px; border-top: 1px solid var(--fl-border); padding-top: 13px; }
+.field-lab .field-readout span { display: inline-flex; align-items: baseline; gap: 7px; color: var(--fl-muted); font: 480 .74rem/1.55 var(--fl-sans); }
+.field-lab .field-readout b { color: var(--fl-ink); font: 650 .76rem/1.3 var(--fl-mono); }
+.field-lab .field-hint, .field-lab .field-detail p, .field-lab .field-osc-panel p { max-width: 88ch; margin: 9px 0 0; font: 450 .86rem/1.55 var(--fl-sans); color: var(--fl-muted); }
+.field-lab .field-detail { border-top: 1px solid var(--fl-border); margin-top: 15px; padding-top: 8px; }
+.field-lab .field-detail summary { padding: 5px 0; width: fit-content; color: var(--fl-ink); font: 650 .82rem/1.5 var(--fl-sans); cursor: pointer; }
+.field-lab .field-math { color: var(--fl-ink); font: 500 1.04em/1.5 var(--serif, Georgia, serif); }
+.field-lab .field-osc-grid { margin-bottom: 18px; }
+.field-lab .field-osc-panel { display: flex; flex-direction: column; align-items: flex-start; justify-content: center; padding: 6px clamp(4px, 2cqi, 24px); }
+.field-lab .field-osc-panel .field-choices button { padding: 7px 11px; }
+.field-lab .field-osc-panel p { margin: 14px 0; }
+.field-lab .field-measure { gap: 13px; padding-inline: 13px; }
+.field-lab .field-measure:hover { background: #255448; }
+.field-lab [hidden] { display: none !important; }
+@container (max-width: 720px) {
+  .field-lab .field-controls { grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+  .field-lab .field-mode-control { grid-column: 1 / -1; }
+}
+@container (max-width: 570px) {
+  .field-lab .field-charts, .field-lab .field-osc-grid { grid-template-columns: minmax(0, 1fr); }
+  .field-lab .field-plot { padding: 12px 10px 4px; }
+  .field-lab .field-axis, .field-lab .field-axis-title { font-size: 15px; }
+  .field-lab .field-osc-panel { padding: 8px 0 0; }
+  .field-lab .field-tabs button, .field-lab .field-choices button { min-height: 42px; }
+  .field-lab .field-tabs { margin-bottom: 12px; }
+}
+@container (max-width: 360px) {
+  .field-lab .field-tabs button { padding-inline: 8px; font-size: .72rem; }
+  .field-lab .field-controls { grid-template-columns: 1fr; }
+  .field-lab .field-mode-control { grid-column: auto; }
+  .field-lab .field-readout { gap: 4px 12px; }
+}
